@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<h1>Projects</h1>
+<a href="#create-project">Create a Project</a>
+
+{% for project in projects %}
+<div class="project">
+    <h3><a href="{{project.path()}}">{{project.name}}</a></h3>
+    <p>{{project.desc}}</p>
+</div>
+{% endfor %}
+
+<div id="create-project" class="card card-block">
+    <h4 class="card-title">Create a Project</h4>
+    <form action="/projects" method="post">
+        <fieldset class="form-group">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" class="form-control" required>
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="url">URL</label>
+            <input type="url" name="url" id="url" class="form-control" required>
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="desc">Description</label>
+            <textarea name="desc" id="desc" cols="30" rows="10" class="form-control"></textarea>
+        </fieldset>
+        <button class="btn btn-primary">Add Project</button>
+    </form>
+</div>
+{% endblock %}

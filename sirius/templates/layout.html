@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% block head %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <title>Sirius{% block title %}{% endblock %}</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://npmcdn.com/bootstrap@4.0.0-alpha.2/dist/css/bootstrap.min.css">
+    
+    {% endblock %}
+  </head>
+  <body>
+
+    <div class="container-fluid">
+    {% block body %}{% endblock %}
+    </div>
+
+  </body>
+</html>
