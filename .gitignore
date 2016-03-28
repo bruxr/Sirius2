@@ -2,5 +2,5 @@ bin/
 include/
 lib/
 .Python
-.pyc
+*.pyc
 .DS_Store
