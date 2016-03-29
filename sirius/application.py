@@ -5,7 +5,7 @@ import projects.projects as projects
 app = Flask('sirius')
 
 # Add blueprints
-app.register_blueprint(projects.app, url_prefix='/projects')
+app.register_blueprint(projects.app)
 
 @app.route('/')
 def hello():
