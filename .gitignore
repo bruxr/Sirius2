@@ -5,6 +5,7 @@ lib/
 node_modules/
 public/assets/bootstrap.css
 public/assets/bootstrap.js
+public/assets/bundle.js
 
 .Python
 *.pyc
