@@ -3,6 +3,9 @@ var browserify = require('browserify');
 var gulp = require('gulp');
 var concat = require('gulp-concat');
 var fs = require('fs-extra');
+var reactify = require('reactify');
+var source = require('vinyl-source-stream');
+var watchify = require('watchify');
 
 gulp.task('bootstrap', function() {
     fs.copySync('node_modules/bootstrap/dist/js/bootstrap.js',
@@ -16,10 +19,26 @@ gulp.task('bootstrap', function() {
 });
 
 gulp.task('scripts', function() {
-    return browserify({ debug: true })
-        .transform(babelify)
-        .require('./sirius/assets/javascripts/main.js', { entry: true })
-        .bundle()
-        .on('error', function(err) { console.log('Error: ' + err.message) })
-        .pipe(fs.createWriteStream('public/assets/bundle.js'));
+    var bundler = browserify({
+      entries: ['./sirius/assets/javascripts/main.js'],
+      debug: true,
+      transform: [babelify, reactify],
+      cache: {}, packageCache: {}, fullPaths: true
+    }).on('error', function(err) {
+      console.log('ERROR: '+ err.message);
+    });
+    
+    var watcher = watchify(bundler);
+    
+    watcher.on('update', function() {
+      var time = Date.now();
+      watcher.bundle()
+        .pipe(source('bundle.js'))
+        .pipe(gulp.dest('public/assets'));
+        console.log('Bundle done.', (Date.now() - time) + 'ms');
+    }).bundle()
+      .pipe(source('bundle.js'))
+      .pipe(gulp.dest('public/assets'));
+      
+    return watcher;
 });

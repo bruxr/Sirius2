@@ -16,13 +16,16 @@
   },
   "homepage": "https://github.com/bruxr/Sirius2#readme",
   "dependencies": {
-    "bootstrap": "^3.3.6",
-    "fs-extra": "^0.26.7",
-    "gulp": "^3.9.1",
-    "gulp-concat": "^2.6.0"
+    "bootstrap": "^3.3.6"
   },
   "devDependencies": {
     "babelify": "^7.2.0",
-    "browserify": "^13.0.0"
+    "browserify": "^13.0.0",
+    "fs-extra": "^0.26.7",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "reactify": "^1.1.1",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.7.0"
   }
 }
