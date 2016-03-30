@@ -1,6 +1,12 @@
 bin/
 include/
 lib/
+
+node_modules/
+public/assets/bootstrap.css
+public/assets/bootstrap.js
+
 .Python
 *.pyc
+
 .DS_Store

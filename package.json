@@ -1,0 +1,24 @@
+{
+  "name": "sirius2",
+  "version": "1.0.0",
+  "description": "project management service",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bruxr/Sirius2.git"
+  },
+  "author": "brux romuar <brux.romuar@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/bruxr/Sirius2/issues"
+  },
+  "homepage": "https://github.com/bruxr/Sirius2#readme",
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "fs-extra": "^0.26.7",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0"
+  }
+}
