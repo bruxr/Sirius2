@@ -23,24 +23,26 @@ def create(project_id):
     if project == None: abort(404)
 
     body = request.get_json()
-    integration = Integration(parent=ndb.Key('Project', long(project_id)))
+    integration = Integration(parent=project.key)
     integration.kind = body['kind'].strip()
     integration.set_data(body['data'])
     integration.put()
     return jsonify(integration=integration.json())
 
-@blueprint.route('/projects/<int:project_id>', methods=['GET'])
-def show(project_id):
-    project = Project.get_by_id(long(project_id))
-    if (project == None):
-        return abort(404)
-    else:
-        return render_template('show.html', project=project)
+@blueprint.route('/integrations/<int:integration_id>', methods=['PATCH'])
+def show(integration_id):
+    integration = Integration.get_by_id(long(integration))
+    if integration == None: return abort(404)
 
-@blueprint.route('/projects/<int:project_id>', methods=['PATCH'])
-def update(project_id):
-    abort(503)
+    body = request.json()
+    integration.set_data(body['data'])
+    integration.put()
+    return jsonify(integration=integration.json())
 
-@blueprint.route('/projects/<int:project_id>', methods=['DELETE'])
-def destroy(project_id):
-    abort(503)
+@blueprint.route('/integrations/<int:integration_id>', methods=['DELETE'])
+def destroy(integration_id):
+    integration = Integration.get_by_id(long(integration))
+    if integration == None: return abort(404)
+
+    integration.key.delete_async()
+    return render_template('empty.html', 204)

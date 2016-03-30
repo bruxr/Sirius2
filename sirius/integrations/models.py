@@ -8,7 +8,7 @@ class Integration(ndb.Model):
 
     @classmethod
     def get_all(cls, project):
-        return cls.query(ancestor=project).order(cls.kind).fetch()
+        return cls.query(ancestor=project).fetch()
 
     def set_data(self, data):
         if not isinstance(data, basestring):
