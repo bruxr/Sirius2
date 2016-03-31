@@ -39,11 +39,11 @@ export default React.createClass({
                 <a className="navbar-brand" href="#/overview">{this.props.project.name}</a>
               </div>
               <ul className="nav navbar-nav">
-                <li className="active"><a href="#/overview">Overview</a></li>
-                <li><a href="#/integrations">Integrations</a></li>
-                <li><a href="#/contracts">Contracts</a></li>
-                <li><a href="#/files">Files</a></li>
-                <li><a href="#/settings">Settings</a></li>
+                <li className="active"><a href="#/overview" onClick={this.handleNavigate}>Overview</a></li>
+                <li><a href="#/integrations" onClick={this.handleNavigate}>Integrations</a></li>
+                <li><a href="#/contracts" onClick={this.handleNavigate}>Contracts</a></li>
+                <li><a href="#/files" onClick={this.handleNavigate}>Files</a></li>
+                <li><a href="#/settings" onClick={this.handleNavigate}>Settings</a></li>
               </ul>
             </div>
           </nav>
