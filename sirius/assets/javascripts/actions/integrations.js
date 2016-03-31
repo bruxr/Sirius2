@@ -1,3 +1,5 @@
+import fetch from '../fetch';
+
 export function requestIntegrations() {
   return {
     type: 'REQUEST_INTEGRATIONS'
@@ -26,7 +28,7 @@ export function fetchIntegrations() {
     var state = getState();
     if (shouldFetch(state)) {
       dispatch(requestIntegrations());
-      return Sirius.fetch('/projects/' + state.project.id + '/integrations')
+      return fetch('/projects/' + state.project.id + '/integrations')
         .then(function(resp) {
           dispatch(receiveIntegrations(resp.integration));
         }, function(err) {

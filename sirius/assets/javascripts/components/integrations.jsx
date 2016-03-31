@@ -1,4 +1,5 @@
 import React from 'react';
+import { fetchIntegrations } from '../actions/integrations';
 
 export default React.createClass({
   contextTypes: {
@@ -22,7 +23,7 @@ export default React.createClass({
       });
     }.bind(this));
     
-    this.context.store.dispatch(Sirius.fetchIntegrations());
+    this.context.store.dispatch(fetchIntegrations());
   },
   
   render: function() {
