@@ -1,3 +1,4 @@
+import json
 from models import Project
 from flask import Blueprint, abort, redirect, render_template, request, url_for
 
@@ -30,7 +31,8 @@ def show(project_id):
     if (project == None):
         return abort(404)
     else:
-        return render_template('show.html', project=project)
+        pjson = json.dumps(project.json(), ensure_ascii=False)
+        return render_template('show.html', project=project, project_json=pjson)
 
 @app.route('/projects/<int:project_id>', methods=['PATCH'])
 def update(project_id):

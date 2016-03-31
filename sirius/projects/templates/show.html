@@ -5,5 +5,8 @@
 {% endblock %}
 
 {% block scripts %}
+<script>
+var sirius_project = {{project_json|safe}};
+</script>
 <script src="/assets/bundle.js"></script>
 {% endblock %}

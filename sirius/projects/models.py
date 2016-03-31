@@ -14,3 +14,14 @@ class Project(ndb.Model):
 
     def path(self):
         return '/projects/' + str(self.key.id())
+
+    def json(self):
+        return {
+            'id': self.key.id(),
+            'name': self.name,
+            'url': self.url,
+            'desc': self.desc,
+            'status': self.status,
+            'created': self.created.isoformat(),
+            'updated': self.updated.isoformat()
+        }
