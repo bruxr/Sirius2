@@ -30,30 +30,4 @@ class Sirius {
 
 }
 
-/*
-  Wraps the Fetch API, automatically sets
-  request headers, parses JSON responses and
-  performs error handling.
-
-  Works the same as fetch() but returns a
-  Promise that is resolved with JSON.
-*/
-Sirius.fetch = function(url) {
-  let req = new Request(url, {
-    mode: 'cors',
-    credentials: 'same-origin',
-    headers: new Headers({
-      'Accept': 'application/json'
-    })
-  });
-  
-  return fetch(req).then(function(resp) {
-    if (resp.ok) {
-      return resp.json();
-    } else {
-      throw new Error('Received HTTP '+ resp.status +' when fetching '+ resp.url);
-    }
-  });
-}
-
 export default Sirius;
