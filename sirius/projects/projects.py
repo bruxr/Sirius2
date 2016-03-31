@@ -23,7 +23,7 @@ def create():
     project = Project(name=name, url=url, desc=desc)
     project.put()
 
-    redirect('/projects/' + str(project.key.id()))
+    return redirect('/projects/' + str(project.key.id()))
 
 @app.route('/projects/<int:project_id>', methods=['GET'])
 def show(project_id):
