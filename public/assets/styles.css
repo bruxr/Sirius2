@@ -255,7 +255,7 @@ button,
 input,
 select,
 textarea {
-  font: inherit;
+  /*font: inherit;*/
 }
 
 /**
@@ -461,4 +461,8 @@ a:hover {
 
 .navbar-nav li a {
 
+}
+
+.form-h > * {
+  margin-right: 5px;
 }

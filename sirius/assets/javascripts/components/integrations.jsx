@@ -41,9 +41,24 @@ export default React.createClass({
         <div className="project-overview">
           <header className="page-header">
             <h3>Integrations</h3>
+            <form className="form-h" onSubmit={this.addIntegration}>
+              <select id="add-integration-kind" defaultValue="">
+                <option value="">Select Integration&hellip;</option>
+                <option value="basecamp">Basecamp</option>
+                <option value="sftp">SFTP</option>
+                <option value="wordpress">Wordpress</option>
+              </select>
+              <button>Add Integration</button>
+            </form>
           </header>
         </div>
       );
     }
+  },
+
+  addIntegration(e) {
+    e.preventDefault();
+    let kind = document.getElementById('add-integration-kind').value;
+    
   }
 });
