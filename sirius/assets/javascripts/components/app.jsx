@@ -23,21 +23,21 @@ export default React.createClass({
     var section = this.elementBySection(this.state.currentSection);
     
     return (
-      <header className="main-header">
-        <nav className="navbar">
-          <h3 className="navbar-brand">{this.props.project.name}</h3>
-          <ul className="navbar-nav">
-            <li className="active"><a href="#/overview" onClick={this.handleNavigate}>Overview</a></li>
-            <li><a href="#/integrations" onClick={this.handleNavigate}>Integrations</a></li>
-            <li><a href="#/contracts" onClick={this.handleNavigate}>Contracts</a></li>
-            <li><a href="#/files" onClick={this.handleNavigate}>Files</a></li>
-            <li><a href="#/settings" onClick={this.handleNavigate}>Settings</a></li>
-          </ul>
-        </nav>
-      </header>
-      <section class="content">
-        {section}
-      </section>
+      <div className="project-app">
+        <header className="main-header">
+          <nav className="navbar">
+            <h3 className="navbar-brand">{this.props.project.name}</h3>
+            <ul className="navbar-nav">
+              <li className="active"><a href="#/overview" onClick={this.handleNavigate}>Overview</a></li>
+              <li><a href="#/integrations" onClick={this.handleNavigate}>Integrations</a></li>
+              <li><a href="#/contracts" onClick={this.handleNavigate}>Contracts</a></li>
+              <li><a href="#/files" onClick={this.handleNavigate}>Files</a></li>
+              <li><a href="#/settings" onClick={this.handleNavigate}>Settings</a></li>
+            </ul>
+          </nav>
+        </header>
+        <section className="content">{section}</section>
+      </div>
     );
   },
 

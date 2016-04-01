@@ -31,7 +31,7 @@ class Sirius {
       <Provider store={this.store}>
         <App project={project} />
       </Provider>
-    , document.getElementById('wrap'));
+    , document.getElementById('project'));
   }
 
 }
