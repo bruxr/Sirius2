@@ -27,14 +27,23 @@ export default React.createClass({
   },
   
   render: function() {
-    var loader = this.state.isFetching ? (<div className="preloader">Loading Integrations&hellip;</div>) : 'have integrations now :)';
-    return (
-      <div className="project-overview">
-        <header className="page-header">
-          <h3 className="display-1">Integrations</h3>
-        </header>
-        {loader}
-      </div>
-    );
+    if (this.state.isFetching) {
+      return (
+        <div className="project-integrations">
+          <header className="page-header">
+            <h3>Integrations</h3>
+          </header>
+          <div className="preloader">Loading Integrations&hellip;</div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="project-overview">
+          <header className="page-header">
+            <h3>Integrations</h3>
+          </header>
+        </div>
+      );
+    }
   }
 });
