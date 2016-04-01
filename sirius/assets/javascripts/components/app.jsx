@@ -19,14 +19,6 @@ export default React.createClass({
     }
   },
   
-  navigateTo: function(route) {
-    var section = route.slice(1); // section is route without leading /
-    
-    document.title = this.props.project.name + ' - ' + _.titleize(section);
-    history.pushState({ route: route }, '', '#' + route);
-    this.setState({ currentSection: section });
-  },
-  
   render: function() {
     var section = this.elementBySection(this.state.currentSection);
     
@@ -56,7 +48,7 @@ export default React.createClass({
   },
 
   elementBySection(section) {
-    var component;
+    var component = null;
     switch(section) {
       case 'overview':
         component = Overview;
@@ -64,14 +56,19 @@ export default React.createClass({
       case 'integrations':
         component = Integrations;
         break;
+      default:
+        console.error(`Unknown section ${section}`);
     }
-    return React.createElement(component);
+
+    if (component !== null) {
+      return React.createElement(component);
+    }
   },
   
   handleNavigate: function(e) {
     e.preventDefault();
     var el = e.target;
-    var route = el.attributes.getNamedItem('href').value.slice('1'); // Remove leading #
+    var href = el.attributes.getNamedItem('href').value;
     
     var menuItems = el.parentNode.parentNode.childNodes;
     for (var i = 0; i < menuItems.length; i++) {
@@ -79,6 +76,6 @@ export default React.createClass({
     }
     el.parentNode.classList.add('active');
     
-    this.navigateTo(route);
+    this.setState({ currentSection: href.slice(2) });
   }
 });

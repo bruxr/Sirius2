@@ -19,7 +19,11 @@ class Sirius {
   }
 
   start() {
-    console.info('sirius started.');
+    this._render();
+    console.info('Sirius started.');
+  }
+
+  _render() {
     let project = this.store.getState().project;
     render(
       <Provider store={this.store}>
