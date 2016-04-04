@@ -1,7 +1,17 @@
 import React from 'react';
 import { fetchIntegrations } from '../actions/integrations';
 
+import Basecamp from './integrations/basecamp';
+import SFTP from './integrations/sftp';
+import Wordpress from './integrations/wordpress';
+
 export default React.createClass({
+  kindToComponents: {
+    basecamp: Basecamp,
+    sftp: SFTP,
+    wordpress: Wordpress
+  },
+
   contextTypes: {
     store: React.PropTypes.object
   },
@@ -48,7 +58,7 @@ export default React.createClass({
                 <option value="sftp">SFTP</option>
                 <option value="wordpress">Wordpress</option>
               </select>
-              <button>Add Integration</button>
+              <button onClick={this.addIntegration}>Add Integration</button>
             </form>
           </header>
         </div>
@@ -59,6 +69,6 @@ export default React.createClass({
   addIntegration(e) {
     e.preventDefault();
     let kind = document.getElementById('add-integration-kind').value;
-    
+    console.log(kind);
   }
 });
