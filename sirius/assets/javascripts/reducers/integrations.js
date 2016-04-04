@@ -24,9 +24,13 @@ export default function(state, action) {
         }
       });
 
+      let items = action.items.map(function(item) {
+        return Immutable.Map(item);
+      });
+
       return state.merge({
         isFetching: false,
-        items: Immutable.List(action.items)
+        items: Immutable.List(items)
       });
       
     default:
