@@ -1,38 +1,36 @@
 import React from 'react';
 import { fetchIntegrations } from '../actions/integrations';
 
-import Basecamp from './integrations/basecamp';
-import SFTP from './integrations/sftp';
-import Wordpress from './integrations/wordpress';
+//import Basecamp from './integrations/basecamp';
+//import SFTP from './integrations/sftp';
+//import Wordpress from './integrations/wordpress';
 
 export default React.createClass({
-  kindToComponents: {
-    basecamp: Basecamp,
-    sftp: SFTP,
-    wordpress: Wordpress
-  },
+  //kindToComponents: {
+  //  basecamp: Basecamp,
+  //  sftp: SFTP,
+  //  wordpress: Wordpress
+  //},
 
   contextTypes: {
     store: React.PropTypes.object
   },
   
   getInitialState: function() {
-    var state = this.context.store.getState();
     return {
       isFetching: true,
-      integrations: []
+      items: []
     }
   },
   
   componentDidMount: function() {
-    this.context.store.subscribe(function() {
-      var state = this.context.store.getState();
+    this.context.store.subscribe(() => {
+      let state = this.context.store.getState().integrations;
       this.setState({
-        isFetching: state.integrations.isFetching,
-        integrations: state.integrations.items
+        isFetching: state.get('isFetching'),
+        items: state.get('items').toArray()
       });
-    }.bind(this));
-    
+    });
     this.context.store.dispatch(fetchIntegrations());
   },
   

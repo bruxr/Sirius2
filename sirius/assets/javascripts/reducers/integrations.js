@@ -1,23 +1,34 @@
 import _ from 'underscore';
+import Immutable from 'immutable';
 
 export default function(state, action) {
   if (_.isUndefined(state)) {
-    return {
+    return Immutable.Map({
       isFetching: false,
-      items: []
-    };
+      items: Immutable.List()
+    });
   }
   
   switch(action.type) {
     case 'REQUEST_INTEGRATIONS':
-      return Object.assign({}, state, {
-        isFetching: true
-      });
+      return state.set('isFetching', true);
+
     case 'RECEIVE_INTEGRATIONS':
-      return Object.assign({}, state, {
-        isFetching: false,
-        items: action.items
+      action.items.sort(function(a, b) {
+        if (a.kind < b.kind)  {
+          return -1;
+        } else if ( a.kind > b.kind ) {
+          return 1;
+        } else {
+          return 0;
+        }
       });
+
+      return state.merge({
+        isFetching: false,
+        items: Immutable.List(action.items)
+      });
+      
     default:
       return state;
   }

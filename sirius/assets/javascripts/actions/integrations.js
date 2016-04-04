@@ -16,8 +16,9 @@ export function receiveIntegrations(integrations, err) {
 
 export function fetchIntegrations() {
   function shouldFetch(state) {
-    var integrations = state.integrations;
-    if (integrations.isFetching === false && integrations.items.length === 0) {
+    let isFetching = state.integrations.get('isFetching');
+    let itemCount = state.integrations.get('items').size;
+    if (isFetching === false && itemCount === 0) {
       return true;
     } else {
       return false;
@@ -28,14 +29,14 @@ export function fetchIntegrations() {
     var state = getState();
     if (shouldFetch(state)) {
       dispatch(requestIntegrations());
-      return fetch('/projects/' + state.project.id + '/integrations')
+      return fetch('/projects/' + state.project.get('id') + '/integrations')
         .then(function(resp) {
           dispatch(receiveIntegrations(resp.integration));
         }, function(err) {
           dispatch(receiveIntegrations([], err));
         });
     } else {
-      return Promise.resolve(state.integrations.items);
+      return Promise.resolve();
     }
   }
 }

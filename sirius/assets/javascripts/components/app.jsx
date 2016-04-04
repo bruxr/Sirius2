@@ -26,7 +26,7 @@ export default React.createClass({
       <div className="project-app">
         <header className="main-header">
           <nav className="navbar">
-            <h3 className="navbar-brand">{this.props.project.name}</h3>
+            <h3 className="navbar-brand">{this.props.project.get('name')}</h3>
             <ul className="navbar-nav">
               <li className="active"><a href="#/overview" onClick={this.handleNavigate}>Overview</a></li>
               <li><a href="#/integrations" onClick={this.handleNavigate}>Integrations</a></li>

@@ -16,6 +16,7 @@
   },
   "homepage": "https://github.com/bruxr/Sirius2#readme",
   "dependencies": {
+    "immutable": "^3.7.6",
     "react": "^0.14.8",
     "react-dom": "^0.14.8",
     "react-redux": "^4.4.1",

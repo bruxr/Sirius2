@@ -1,5 +1,6 @@
 import React from 'react';
 import thunk from 'redux-thunk';
+import Immutable from 'immutable';
 import createLogger from 'redux-logger';
 import App from './components/app.jsx';
 import { render } from 'react-dom';
@@ -15,7 +16,7 @@ class Sirius {
 
     this.store = createStore(
       reducers,
-      { project: project },
+      { project: Immutable.Map(project) },
       applyMiddleware(thunk, logger)
     );
   }
