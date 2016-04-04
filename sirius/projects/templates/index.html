@@ -11,27 +11,22 @@
 </div>
 {% endfor %}
 
-<div id="create-project" class="card card-block">
-    <h4 class="card-title">Create a Project</h4>
+<div id="create-project">
+    <h2>Create a Project</h2>
     <form action="/projects" method="post">
-        <fieldset class="form-group">
+        <p>
             <label for="name">Name</label>
             <input type="text" name="name" id="name" class="form-control" required>
-        </fieldset>
-        <fieldset class="form-group">
+        </p>
+        <p>
             <label for="url">URL</label>
             <input type="url" name="url" id="url" class="form-control" required>
-        </fieldset>
-        <fieldset class="form-group">
+        </p>
+        <p>
             <label for="desc">Description</label>
             <textarea name="desc" id="desc" cols="30" rows="10" class="form-control"></textarea>
-        </fieldset>
+        </p>
         <button class="btn btn-primary">Add Project</button>
     </form>
 </div>
-{% endblock %}
-
-{% block scripts %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-<script src="/assets/bootstrap.js"></script>
 {% endblock %}
