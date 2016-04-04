@@ -12,7 +12,7 @@ import reducers from './reducers/reducers';
 class Sirius {
 
   constructor(project) {
-    let logger = createLogger();
+    let logger = createLogger({ collapsed: true });
 
     this.store = createStore(
       reducers,
