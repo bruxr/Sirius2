@@ -1,5 +1,30 @@
 import fetch from '../fetch';
 
+export function deleteIntegration(id) {
+  return function(dispatch, getState) {
+    let project_id = getState().project.get('id');
+    dispatch(deletingIntegration(id));
+    return fetch(`/integrations/${id}?project_id=${project_id}`, { method: 'DELETE' })
+      .then(function(resp) {
+        dispatch(deletedIntegration(id));
+      });
+  }
+}
+
+export function deletingIntegration(id) {
+  return {
+    type: 'DELETING_INTEGRATION',
+    id
+  }
+}
+
+export function deletedIntegration(id) {
+  return {
+    type: 'DELETED_INTEGRATION',
+    id
+  }
+}
+
 export function newIntegration(kind) {
   return {
     type: 'NEW_INTEGRATION',

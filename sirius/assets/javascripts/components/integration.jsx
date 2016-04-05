@@ -6,7 +6,8 @@ const Basecamp = React.createClass({
     id: React.PropTypes.string,
     kind: React.PropTypes.string,
     data: React.PropTypes.object,
-    save: React.PropTypes.func
+    save: React.PropTypes.func,
+    delete: React.PropTypes.func
   },
 
   getInitialState() {
@@ -42,6 +43,13 @@ const Basecamp = React.createClass({
     this.setState({ url: e.target.value });
   },
 
+  onDelete(e) {
+    e.preventDefault();
+    if (confirm('Are you sure you want to remove this integration?')) {
+      this.props.delete(this.props.id);
+    }
+  },
+
   render() {
     let url, actions;
     if (this.state.isEditing) {
@@ -49,7 +57,7 @@ const Basecamp = React.createClass({
       actions = <ul className="integration-actions">
         <li><button>Save Changes</button></li>
         <li><a href="#" onClick={this.cancelEdit}>Cancel</a></li>
-        <li><a href="#" onClick={this.delete}>Delete</a></li>
+        <li><a href="#" onClick={this.onDelete}>Delete</a></li>
       </ul>
     } else {
       url = <a href={this.state.url} target="_blank" rel="noreferrer noopener">{this.state.url}</a>

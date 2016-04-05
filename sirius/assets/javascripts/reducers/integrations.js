@@ -10,6 +10,14 @@ export default function(state, action) {
   }
   
   switch(action.type) {
+
+    case 'DELETING_INTEGRATION':
+      return state.merge({
+        items: state.get('items').filter(item => {
+          return item.get('id') !== action.id;
+        })
+      });
+
     case 'NEW_INTEGRATION':
       let integration = Immutable.Map({
         id: '?' + (+ new Date()),

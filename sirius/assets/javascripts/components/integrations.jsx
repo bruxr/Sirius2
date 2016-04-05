@@ -1,6 +1,6 @@
 import React from 'react';
 import Integration from './integration.jsx';
-import { newIntegration, fetchIntegrations, saveIntegration } from '../actions/integrations';
+import { deleteIntegration, newIntegration, fetchIntegrations, saveIntegration } from '../actions/integrations';
 
 export default React.createClass({
 
@@ -29,11 +29,16 @@ export default React.createClass({
   saveIntegration(id, kind, data) {
     this.context.store.dispatch(saveIntegration(id, kind, data));
   },
+
+  deleteIntegration(id) {
+    this.context.store.dispatch(deleteIntegration(id));
+  },
   
   render: function() {
     let integrations = this.state.items.map((props) => {
       let component = props.kind.charAt(0).toUpperCase() + props.kind.slice(1);
       props.doSave = this.saveIntegration;
+      props.delete = this.deleteIntegration;
       return React.createElement(Integration[component], props);
     });
 
