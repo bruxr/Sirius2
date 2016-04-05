@@ -43,7 +43,7 @@ def show(integration_id):
 
 @blueprint.route('/integrations/<int:integration_id>', methods=['DELETE'])
 def destroy(integration_id):
-    integration = Integration.get_by_id(long(integration))
+    integration = Integration.get_by_id(long(integration_id))
     if integration == None: return abort(404)
 
     integration.key.delete_async()
