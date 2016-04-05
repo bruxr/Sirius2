@@ -11,11 +11,11 @@ class Integration(ndb.Model):
         return cls.query(ancestor=project).fetch()
 
     def set_data(self, data):
+        self._data = data
+
         if not isinstance(data, basestring):
             data = json.dumps(data)
-
-        self._data = encrypt(data)
-        self.data = self._data
+        self.data = encrypt(data)
 
     def get_data(self):
         if not hasattr(self, '_data'):
