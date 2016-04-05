@@ -10,6 +10,28 @@ export default function(state, action) {
   }
   
   switch(action.type) {
+    case 'NEW_INTEGRATION':
+      let integration = Immutable.Map({
+        id: '?' + (+ new Date()),
+        kind: action.kind,
+        data: {}
+      });
+      let items = state.get('items');
+      let index = items.size;
+
+      // Find the proper index to insert the new integration
+      for (let i = items.size; i < 0; i--) {
+        let item = item.get(i);
+        if (item.get('kind') >= integration.get('kind')) {
+          index = i + 1;
+          break;
+        }
+      }
+
+      return state.merge({
+        items: items.insert(index, integration)
+      });
+
     case 'REQUEST_INTEGRATIONS':
       return state.set('isFetching', true);
 
@@ -24,13 +46,30 @@ export default function(state, action) {
         }
       });
 
-      let items = action.items.map(function(item) {
+      let items2 = action.items.map(function(item) {
+        item.id = item.id + '';
         return Immutable.Map(item);
       });
 
       return state.merge({
         isFetching: false,
-        items: Immutable.List(items)
+        items: Immutable.List(items2)
+      });
+
+    case 'SAVED_INTEGRATION':
+      // If the integration is a new one, update its ID
+      var items = state.get('items');
+      if (action.prevId.charAt(0) === '?') {
+        items = items.map(item => {
+          if (item.get('id') === action.prevId) {
+            item = item.set('id', action.integration.id + '');
+          }
+          return item;
+        });
+      }
+
+      return state.merge({
+        items
       });
       
     default:

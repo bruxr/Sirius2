@@ -470,3 +470,22 @@ label {
 .form-h > * {
   margin-right: 5px;
 }
+
+/* Integrations */
+.integration {
+  margin: 2rem 0;
+}
+
+.integration-actions {
+  list-style-type: none;
+  padding: 0;
+}
+
+.integration-actions li {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.integration-actions li a {
+  font-size: smaller;
+}

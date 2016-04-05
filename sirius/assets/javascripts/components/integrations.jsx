@@ -1,16 +1,8 @@
 import React from 'react';
-import { fetchIntegrations } from '../actions/integrations';
-
-//import Basecamp from './integrations/basecamp';
-//import SFTP from './integrations/sftp';
-//import Wordpress from './integrations/wordpress';
+import Integration from './integration.jsx';
+import { newIntegration, fetchIntegrations, saveIntegration } from '../actions/integrations';
 
 export default React.createClass({
-  //kindToComponents: {
-  //  basecamp: Basecamp,
-  //  sftp: SFTP,
-  //  wordpress: Wordpress
-  //},
 
   contextTypes: {
     store: React.PropTypes.object
@@ -28,13 +20,23 @@ export default React.createClass({
       let state = this.context.store.getState().integrations;
       this.setState({
         isFetching: state.get('isFetching'),
-        items: state.get('items').toArray()
+        items: state.get('items').toJS()
       });
     });
     this.context.store.dispatch(fetchIntegrations());
   },
+
+  saveIntegration(id, kind, data) {
+    this.context.store.dispatch(saveIntegration(id, kind, data));
+  },
   
   render: function() {
+    let integrations = this.state.items.map((props) => {
+      let component = props.kind.charAt(0).toUpperCase() + props.kind.slice(1);
+      props.doSave = this.saveIntegration;
+      return React.createElement(Integration[component], props);
+    });
+
     if (this.state.isFetching) {
       return (
         <div className="project-integrations">
@@ -46,7 +48,7 @@ export default React.createClass({
       );
     } else {
       return (
-        <div className="project-overview">
+        <div className="project-integrations">
           <header className="page-header">
             <h3>Integrations</h3>
             <form className="form-h" onSubmit={this.addIntegration}>
@@ -59,6 +61,7 @@ export default React.createClass({
               <button onClick={this.addIntegration}>Add Integration</button>
             </form>
           </header>
+          {integrations}
         </div>
       );
     }
@@ -67,6 +70,6 @@ export default React.createClass({
   addIntegration(e) {
     e.preventDefault();
     let kind = document.getElementById('add-integration-kind').value;
-    console.log(kind);
+    this.context.store.dispatch(newIntegration(kind));
   }
 });
