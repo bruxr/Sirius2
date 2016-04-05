@@ -476,6 +476,17 @@ label {
   margin: 2rem 0;
 }
 
+.integration-form-group {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.integration-form-control {
+  display: block;
+  margin-top: 5px;
+  width: 200px;
+}
+
 .integration-actions {
   list-style-type: none;
   padding: 0;
