@@ -1,3 +1,4 @@
+import re
 from models import Integration
 from sirius.projects.models import Project
 from flask import Blueprint, abort, jsonify, redirect, request
@@ -17,8 +18,9 @@ def index(project_id):
 
     return jsonify(integration=integrations)
 
-@blueprint.route('/projects/<int:project_id>/integrations', methods=['POST'])
-def create(project_id):
+@blueprint.route('/integrations', methods=['POST'])
+def create():
+    project_id = request.args.get('project_id');
     project = Project.get_by_id(long(project_id))
     if project == None: abort(404)
 
