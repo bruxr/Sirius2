@@ -1,13 +1,19 @@
-export default function(url) {
-  let req = new Request(url, {
-    mode: 'cors',
+export default function(url, opts) {
+  let headers = {
+    'Accept': 'application/json'
+  }
+  if (typeof opts !== 'undefined' && (opts.method === 'POST' || opts.method == 'PATCH')) {
+    headers['Content-type'] = 'application/json';
+  }
+
+  let init = Object.assign({
+    method: 'GET',
+    mode: 'same-origin',
     credentials: 'same-origin',
-    headers: new Headers({
-      'Accept': 'application/json'
-    })
-  });
+    headers
+  }, opts);
   
-  return fetch(req).then(function(resp) {
+  return fetch(url, init).then(function(resp) {
     if (resp.ok) {
       return resp.json();
     } else {
