@@ -20,7 +20,7 @@ def index(project_id):
 
 @blueprint.route('/integrations', methods=['POST'])
 def create():
-    project_id = request.args.get('project_id');
+    project_id = request.args.get('project_id')
     project = Project.get_by_id(long(project_id))
     if project == None: abort(404)
 
@@ -43,8 +43,17 @@ def show(integration_id):
 
 @blueprint.route('/integrations/<int:integration_id>', methods=['DELETE'])
 def destroy(integration_id):
-    integration = Integration.get_by_id(long(integration_id))
-    if integration == None: return abort(404)
+    project = get_project()
+    if project == None:
+        return abort(404)
 
-    integration.key.delete_async()
-    return render_template('empty.html', 204)
+    integration = Integration.get_by_id(long(integration_id), project.key)
+    if integration == None:
+        return abort(404)
+
+    integration.key.delete()
+    return ('', 204)
+
+def get_project():
+    project_id = request.args.get('project_id')
+    return Project.get_by_id(long(project_id))
