@@ -2,21 +2,19 @@ import React from 'react';
 import _ from 'underscore';
 
 const Basecamp = React.createClass({
-  propTypes: {
-    id: React.PropTypes.string,
-    kind: React.PropTypes.string,
-    data: React.PropTypes.object,
-    save: React.PropTypes.func,
-    delete: React.PropTypes.func
-  },
+    propTypes: {
+        integration: React.PropTypes.object,
+        save: React.PropTypes.func,
+        delete: React.PropTypes.func
+    },
 
-  getInitialState() {
-    let isNew = this.props.id.charAt(0) === '?';
-    return {
-      isEditing: isNew,
-      url: this.props.data.url
-    }
-  },
+    getInitialState() {
+        let isNew = this.props.integration.get('id').charAt(0) === '?';
+        return {
+            isEditing: isNew,
+            url: this.props.integration.get('data').url
+        }
+    },
 
   doEdit(e) {
     e.preventDefault();
@@ -80,22 +78,21 @@ const Basecamp = React.createClass({
 });
 
 const Wordpress = React.createClass({
-  propTypes: {
-    id: React.PropTypes.string,
-    kind: React.PropTypes.string,
-    data: React.PropTypes.object,
-    save: React.PropTypes.func
-  },
+    propTypes: {
+        integration: React.PropTypes.object,
+        save: React.PropTypes.func,
+        delete: React.PropTypes.func
+      },
 
-  getInitialState() {
-    let isNew = this.props.id.charAt(0) === '?';
-    return {
-      isEditing: isNew,
-      user: this.props.data.user,
-      password: this.props.data.password,
-      url: this.props.data.url
-    }
-  },
+    getInitialState() {
+        let isNew = this.props.integration.get('id').charAt(0) === '?';
+        return {
+          isEditing: isNew,
+          user: this.props.integration.get('data').user,
+          password: this.props.integration.get('data').password,
+          url: this.props.integration.get('data').url
+        }
+    },
 
   doEdit(e) {
     e.preventDefault();
@@ -128,14 +125,14 @@ const Wordpress = React.createClass({
     let actions;
 
     if (isEditing) {
-      url = <input type="url" data-key="url" value={this.props.data.password} onChange={this.updateStateFromInput} required />
+      url = <input type="url" data-key="url" value={this.state.url} onChange={this.updateStateFromInput} required />
       actions = <ul className="integration-actions">
         <li><button>Save Changes</button></li>
         <li><a href="#" onClick={this.cancelEdit}>Cancel</a></li>
         <li><a href="#">Delete</a></li>
       </ul>
     } else {
-      url = <a href={this.props.data.url} target="_blank" rel="noreferrer noopener">{this.props.data.url}</a>
+      url = <a href={this.state.url} target="_blank" rel="noreferrer noopener">{this.state.url}</a>
       actions = <ul className="integration-actions">
         <li><button type="button">Admin</button></li>
         <li><a href="#" onClick={this.doEdit}>Edit</a></li>
@@ -149,11 +146,11 @@ const Wordpress = React.createClass({
           <dl className="integration-credentials">
             <dt>User:</dt>
             <dd>
-              <input type="text" data-key="user" value={this.props.data.user} readOnly={!isEditing} autoFocus={isEditing} onChange={this.updateStateFromInput} required />
+              <input type="text" data-key="user" value={this.state.user} readOnly={!isEditing} autoFocus={isEditing} onChange={this.updateStateFromInput} required />
             </dd>
             <dt>Password:</dt>
             <dd>
-              <input type="text" data-key="password" value={this.props.data.password} readOnly={!isEditing} onChange={this.updateStateFromInput} required />
+              <input type="text" data-key="password" value={this.state.password} readOnly={!isEditing} onChange={this.updateStateFromInput} required />
             </dd>
             <dt>URL:</dt>
             <dd>

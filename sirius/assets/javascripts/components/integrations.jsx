@@ -20,9 +20,10 @@ export default React.createClass({
       let state = this.context.store.getState().integrations;
       this.setState({
         isFetching: state.get('isFetching'),
-        items: state.get('items').toJS()
+        items: state.get('items')
       });
     });
+
     this.context.store.dispatch(fetchIntegrations());
   },
 
@@ -33,14 +34,13 @@ export default React.createClass({
   deleteIntegration(id) {
     this.context.store.dispatch(deleteIntegration(id));
   },
-  
-  render: function() {
-    let integrations = this.state.items.map((props) => {
-      let component = props.kind.charAt(0).toUpperCase() + props.kind.slice(1);
-      props.doSave = this.saveIntegration;
-      props.delete = this.deleteIntegration;
-      return React.createElement(Integration[component], props);
-    });
+
+    render: function() {
+        let integrations = this.state.items.map((item) => {
+            let identifier = item.get('kind').charAt(0).toUpperCase() + item.get('kind').slice(1);
+            let Component = Integration[identifier];
+            return <Component key={item.get('id')} integration={item} save={this.saveIntegration} delete={this.deleteIntegration} />
+        });
 
     if (this.state.isFetching) {
       return (
