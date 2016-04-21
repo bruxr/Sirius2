@@ -5,13 +5,29 @@ from flask import Blueprint, abort, redirect, render_template, request, url_for
 app = Blueprint('projects', __name__,
                 template_folder='templates')
 
-@app.route('/projects')
+@app.route('/a')
 def index():
+    """Projects index route.
+    
+    GET /a
+    
+    Lists all the projects managed by Sirius.
+    The page also allows creation of new projects through
+    a quick entry form.
+    """
+    
     projects = Project.get_all()
     return render_template('index.html', projects=projects)
 
 @app.route('/projects', methods=['POST'])
 def create():
+    """Create project route.
+    
+    Accepts submitted forms to create a new managed project.
+    This will insert the project into the database and redirect
+    the user to the project page afterwards.
+    """
+    
     name = request.form['name'].strip()
     if (name == ''): abort(400)
 
@@ -25,8 +41,14 @@ def create():
 
     return redirect('/projects/' + str(project.key.id()))
 
-@app.route('/projects/<int:project_id>', methods=['GET'])
+@app.route('/a/<int:project_id>', methods=['GET'])
 def show(project_id):
+    """Project page route.
+    
+    Renders the single page app (SPA) for the project. The SPA will
+    be the main interface of the user to Sirius.
+    """
+    
     project = Project.get_by_id(long(project_id))
     if (project == None):
         return abort(404)
@@ -36,8 +58,24 @@ def show(project_id):
 
 @app.route('/projects/<int:project_id>', methods=['PATCH'])
 def update(project_id):
+    """Update project route.
+    
+    Processes requests for updating project details.
+    Responds with the updated project details when succesful.
+    
+    TODO: implement this
+    """
+    
     abort(503)
 
 @app.route('/projects/<int:project_id>', methods=['DELETE'])
 def destroy(project_id):
+    """Delete project route.
+    
+    Processes requests for deleting a project.
+    Responds with an HTTP 204 if the project has been deleted.
+    
+    TODO: implement this
+    """
+     
     abort(503)

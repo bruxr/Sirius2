@@ -9,8 +9,14 @@ blueprint = Blueprint('integrations', __name__,
 
 @blueprint.route('/projects/<int:project_id>/integrations')
 def index(project_id):
+    """Integrations list API.
+    
+    Responds with a list of all integrations added to a project.
+    Integrations are not sorted so the order may differ between requests.
+    """
+    
     project = Project.get_by_id(long(project_id))
-    if (project == None): abort(404)
+    if not project: return abort(404)
 
     integrations = []
     for i in Integration.get_all(project.key):
@@ -18,11 +24,15 @@ def index(project_id):
 
     return jsonify(integration=integrations)
 
-@blueprint.route('/integrations', methods=['POST'])
-def create():
-    project_id = request.args.get('project_id')
+@blueprint.route('/projects/<int:project_id>/integrations', methods=['POST'])
+def create(project_id):
+    """Add integration API.
+    
+    Processes requests for adding an integration to an existing project.
+    """
+    
     project = Project.get_by_id(long(project_id))
-    if project == None: abort(404)
+    if not project: return abort(404)
 
     body = request.get_json()
     integration = Integration(parent=project.key)
@@ -31,29 +41,38 @@ def create():
     integration.put()
     return jsonify(integration=integration.json())
 
-@blueprint.route('/integrations/<int:integration_id>', methods=['PATCH'])
-def show(integration_id):
-    integration = Integration.get_by_id(long(integration))
-    if integration == None: return abort(404)
+@blueprint.route('/projects/<int:project_id>/integrations/<int:integration_id>', methods=['PATCH'])
+def show(project_id, integration_id):
+    """Update integration API.
+    
+    Processes requests for updating an existing integration.
+    Take note that the kind field will be ignored because an existing
+    integration cannot have its kind/type changed.
+    """
+    
+    project = Project.get_by_id(long(project_id))
+    if not project: return abort(404)
+    
+    integration = Integration.get_by_id(long(integration_id))
+    if not integration: return abort(404)
 
     body = request.json()
     integration.set_data(body['data'])
     integration.put()
     return jsonify(integration=integration.json())
 
-@blueprint.route('/integrations/<int:integration_id>', methods=['DELETE'])
+@blueprint.route('/projects/<int:project_id>/integrations/<int:integration_id>', methods=['DELETE'])
 def destroy(integration_id):
-    project = get_project()
-    if project == None:
-        return abort(404)
-
-    integration = Integration.get_by_id(long(integration_id), project.key)
-    if integration == None:
-        return abort(404)
+    """Delete integration API.
+    
+    Processes requests for deleting an existing integration.
+    """
+    
+    project = Project.get_by_id(long(project_id))
+    if not project: return abort(404)
+    
+    integration = Integration.get_by_id(long(integration_id))
+    if not integration: return abort(404)
 
     integration.key.delete()
     return ('', 204)
-
-def get_project():
-    project_id = request.args.get('project_id')
-    return Project.get_by_id(long(project_id))
