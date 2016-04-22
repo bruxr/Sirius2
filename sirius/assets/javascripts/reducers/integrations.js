@@ -1,6 +1,12 @@
 import _ from 'underscore';
 import Immutable from 'immutable';
 
+const Integration = Immutable.Record({
+    id: null,
+    kind: null,
+    data: {}
+}, 'Integration');
+
 export default function(state, action) {
   if (_.isUndefined(state)) {
     return Immutable.Map({
@@ -54,14 +60,14 @@ export default function(state, action) {
         }
       });
 
-      let items2 = action.items.map(function(item) {
-        item.id = item.id + '';
-        return Immutable.Map(item);
+      let records = action.items.map(function(item) {
+          item.id = item + '';
+          return new Integration(item);
       });
 
       return state.merge({
         isFetching: false,
-        items: Immutable.List(items2)
+        items: Immutable.List(records)
       });
 
     case 'SAVED_INTEGRATION':
