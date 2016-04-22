@@ -79,33 +79,34 @@ export function fetchIntegrations() {
 }
 
 export function saveIntegration(id, kind, data) {
-  return function(dispatch, getState) {
-    let state = getState();
-    let project_id = state.project.get('id');
-    let payload = { kind, data }
-    let push;
-    if (id.charAt(0) === '?') {
-      push = fetch(`/integrations?project_id=${project_id}`, {
-        method: 'POST',
-        body: JSON.stringify(payload)
-      });
-    } else {
-      push = fetch(`/integrations/${id}`, {
-        method: 'PATCH',
-        body: JSON.stringify(payload)
-      });
-    }
+    return function(dispatch, getState) {
+        let state = getState();
+        let project_id = state.project.get('id');
+        let payload = { kind, data }
+        let push;
+        
+        if (id.charAt(0) === '?') {
+            push = fetch(`/projects/${project_id}/integrations`, {
+                method: 'POST',
+                body: JSON.stringify(payload)
+            });
+        } else {
+            push = fetch(`/projects/${project_id}/integrations/${id}`, {
+                method: 'PATCH',
+                body: JSON.stringify(payload)
+            });
+        }
 
-    return push.then(function(resp) {
-      dispatch(savedIntegration(resp.integration, id));
-    });
+        return push.then(function(resp) {
+            dispatch(changedIntegration(resp.integration, id));
+        });
   }
 }
 
-export function savedIntegration(integration, prevId) {
-  return {
-    type: 'SAVED_INTEGRATION',
-    integration,
-    prevId
-  }
+export function changedIntegration(integration, prevId) {
+    return {
+        type: 'CHANGED_INTEGRATION',
+        integration,
+        prevId
+    }
 }

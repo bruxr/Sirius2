@@ -67,11 +67,6 @@ export default React.createClass({
           this.props.delete(this.props.id);
         }
     },
-
-    saveChanges(e) {
-        e.preventDefault();
-        this.props.save(this.props.id, this._fields());
-    },
     
     componentDidMount() {
         this._autofocus();
@@ -121,6 +116,12 @@ export default React.createClass({
         </div>
     },
     
+    // Invoke save callback when the form is saved
+    saveChanges(e) {
+        e.preventDefault();
+        this.props.save(this.props.id, this.props.kind, this._fields());
+    },
+    
     // Update state when a data form field changes
     updateField(e) {
         let state = {};
@@ -141,7 +142,7 @@ export default React.createClass({
     _fields() {
         let fields = {};
         integrationTypes[this.props.kind].attributes.map(field => {
-            fields[field] = this.state[field];
+            fields[field.key] = this.state[field.key];
         });
         return fields;
     },

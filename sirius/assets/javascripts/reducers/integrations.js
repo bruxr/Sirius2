@@ -70,21 +70,29 @@ export default function(state, action) {
         items: Immutable.List(records)
       });
 
-    case 'SAVED_INTEGRATION':
-      // If the integration is a new one, update its ID
-      var items = state.get('items');
-      if (action.prevId.charAt(0) === '?') {
-        items = items.map(item => {
-          if (item.get('id') === action.prevId) {
-            item = item.set('id', action.integration.id + '');
-          }
-          return item;
-        });
-      }
+        case 'CHANGED_INTEGRATION':
+            var items = state.get('items');
+            // For existing integrations, update just the data
+            if (_.isUndefined(action.prevId)) {
+                items = items.map(item => {
+                    if (item.get('id') === action.integration.id) {
+                        item = item.set('data', action.integration.data);
+                    }
+                });
+            // For new integrations, update the id and data
+            } else {
+                items = items.map(item => {
+                    if (item.get('id') === action.prevId) {
+                        item = item.set('id', action.integration.id + '');
+                        item = item.set('data', action.integration.data);
+                    }
+                    return item;
+                });
+            }
 
-      return state.merge({
-        items
-      });
+            return state.merge({
+                items
+            });
       
     default:
       return state;

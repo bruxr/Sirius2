@@ -27,9 +27,9 @@ export default React.createClass({
     this.context.store.dispatch(fetchIntegrations());
   },
 
-  saveIntegration(id, kind, data) {
-    this.context.store.dispatch(saveIntegration(id, kind, data));
-  },
+    saveIntegration(id, kind, data) {
+        this.context.store.dispatch(saveIntegration(id, kind, data));
+    },
 
     deleteIntegration(id) {
         this.context.store.dispatch(deleteIntegration(id));
