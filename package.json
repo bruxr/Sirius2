@@ -4,7 +4,9 @@
   "description": "project management service",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "compile": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack -w"
   },
   "repository": {
     "type": "git",
