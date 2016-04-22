@@ -1,17 +1,15 @@
 import fetch from '../fetch';
 
-export function deleteIntegration(id) {
+export function deleteIntegration(integration_id) {
     return function(dispatch, getState) {
         let project_id = getState().project.get('id');
-        dispatch(deletingIntegration(id));
-        debugger;
-        if (project_id.charAt(0) === '?') {
-            dispatch(deletedIntegration(id));
-            return Promise.resolve();
+        dispatch(deletingIntegration(integration_id));
+        if (integration_id.charAt(0) === '?') {
+            dispatch(deletedIntegration(integration_id));
         } else {
-            return fetch(`/integrations/${id}?project_id=${project_id}`, { method: 'DELETE' })
+            return fetch(`/integrations/${integration_id}?project_id=${project_id}`, { method: 'DELETE' })
                 .then(function(resp) {
-                    dispatch(deletedIntegration(id));
+                    dispatch(deletedIntegration(integration_id));
                 });
    
         }
