@@ -53,7 +53,7 @@ def show(project_id, integration_id):
     project = Project.get_by_id(long(project_id))
     if not project: return abort(404)
     
-    integration = Integration.get_by_id(long(integration_id))
+    integration = Integration.get_by_id(long(integration_id), parent=project.key)
     if not integration: return abort(404)
 
     body = request.json()
@@ -71,7 +71,7 @@ def destroy(project_id, integration_id):
     project = Project.get_by_id(long(project_id))
     if not project: return abort(404)
     
-    integration = Integration.get_by_id(long(integration_id))
+    integration = Integration.get_by_id(long(integration_id), parent=project.key)
     if not integration: return abort(404)
 
     integration.key.delete()
