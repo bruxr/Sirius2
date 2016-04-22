@@ -55,8 +55,7 @@ def show(project_id, integration_id):
     
     integration = Integration.get_by_id(long(integration_id), parent=project.key)
     if not integration: return abort(404)
-
-    body = request.json()
+    body = request.get_json()
     integration.set_data(body['data'])
     integration.put()
     return jsonify(integration=integration.json())
