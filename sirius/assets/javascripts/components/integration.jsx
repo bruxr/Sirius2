@@ -115,11 +115,20 @@ export default React.createClass({
         </div>
     },
     
-    // Invoke save callback when the form is saved
+    // Collect all data field values and then invoke the save callback.
     saveChanges(e) {
         e.preventDefault();
-        this._commitFields();
-        this.props.save(this.props.id, this.props.kind, this._fields());
+        
+        let data = {};
+        let fields = this.refs.form.querySelectorAll('[data-key]');
+        for (let i = 0; i < fields.length; i++) {
+            data[fields[i].dataset.key] = fields[i].value;
+        }
+        
+        this.props.save(this.props.id, this.props.kind, data);
+        
+        data['isEditing'] = false;
+        this.setState(data);
     },
     
     // Automatically focuses the very first form field.
@@ -127,28 +136,8 @@ export default React.createClass({
         this.refs.form.getElementsByTagName('input')[0].focus();
     },
     
-    // Updates the state with values from the data form fields
-    _commitFields() {
-        let state = {};
-        let fields = this.refs.form.querySelectorAll('[data-key]');
-        for (let i = 0; i < fields.length; i++) {
-            state[fields[i].dataset.key] = fields[i].value;
-        }
-        debugger;
-        this.setState(state);
-    },
-    
     _isNew() {
         return this.props.id.charAt(0) === '?';
-    },
-    
-    // Returns an object containing all of this integration's custom fields. 
-    _fields() {
-        let fields = {};
-        integrationTypes[this.props.kind].attributes.map(field => {
-            fields[field.key] = this.state[field.key];
-        });
-        return fields;
-    },
+    }
 
 });
