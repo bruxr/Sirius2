@@ -41,8 +41,9 @@ def create():
 
     return redirect('/projects/' + str(project.key.id()))
 
-@app.route('/a/<int:project_id>', methods=['GET'])
-def show(project_id):
+@app.route('/a/<int:project_id>', methods=['GET'], defaults={'path': ''})
+@app.route('/a/<int:project_id>/<path:path>', methods=['GET'])
+def show(project_id, path):
     """Project page route.
     
     Renders the single page app (SPA) for the project. The SPA will
