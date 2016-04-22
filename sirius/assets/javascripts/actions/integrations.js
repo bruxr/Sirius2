@@ -7,7 +7,7 @@ export function deleteIntegration(integration_id) {
         if (integration_id.charAt(0) === '?') {
             dispatch(deletedIntegration(integration_id));
         } else {
-            return fetch(`/integrations/${integration_id}?project_id=${project_id}`, { method: 'DELETE' })
+            return fetch(`/projects/${project_id}/integrations/${integration_id}`, { method: 'DELETE' })
                 .then(function(resp) {
                     dispatch(deletedIntegration(integration_id));
                 });
@@ -17,17 +17,17 @@ export function deleteIntegration(integration_id) {
 }
 
 export function deletingIntegration(id) {
-  return {
-    type: 'DELETING_INTEGRATION',
-    id
-  }
+    return {
+        type: 'DELETING_INTEGRATION',
+        id
+    }
 }
 
 export function deletedIntegration(id) {
-  return {
-    type: 'DELETED_INTEGRATION',
-    id
-  }
+    return {
+        type: 'DELETED_INTEGRATION',
+        id
+    }
 }
 
 export function newIntegration(kind) {

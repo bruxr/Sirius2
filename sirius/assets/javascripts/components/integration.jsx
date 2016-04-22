@@ -64,7 +64,7 @@ export default React.createClass({
     onDelete(e) {
         e.preventDefault();
         if (confirm('Are you sure you want to remove this integration?')) {
-          this.props.delete(this.props.id);
+            this.props.delete(this.props.id);
         }
     },
     
@@ -107,7 +107,6 @@ export default React.createClass({
                             value={this.state[attr.key]}
                             className="integration-form-control"
                             readOnly={!this.state.isEditing}
-                            onChange={this.updateField}
                             required />
                     </label>
                 })}
@@ -119,19 +118,24 @@ export default React.createClass({
     // Invoke save callback when the form is saved
     saveChanges(e) {
         e.preventDefault();
+        this._commitFields();
         this.props.save(this.props.id, this.props.kind, this._fields());
-    },
-    
-    // Update state when a data form field changes
-    updateField(e) {
-        let state = {};
-        state[e.target.dataset.key] = e.target.value;
-        this.setState(state);
     },
     
     // Automatically focuses the very first form field.
     _autofocus() {
         this.refs.form.getElementsByTagName('input')[0].focus();
+    },
+    
+    // Updates the state with values from the data form fields
+    _commitFields() {
+        let state = {};
+        let fields = this.refs.form.querySelectorAll('[data-key]');
+        for (let i = 0; i < fields.length; i++) {
+            state[fields[i].dataset.key] = fields[i].value;
+        }
+        debugger;
+        this.setState(state);
     },
     
     _isNew() {
