@@ -13,7 +13,7 @@ const integrationTypes = {
         label: 'Wordpress',
         attributes: [
             { label: 'User', key: 'user', type: 'text' },
-            { label: 'Password', key: 'user', type: 'text' },
+            { label: 'Password', key: 'password', type: 'text' },
             { label: 'Address', key: 'url', type: 'url' }
         ],
         commands: [
