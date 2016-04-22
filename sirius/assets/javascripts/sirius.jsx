@@ -6,34 +6,45 @@ import App from './components/app.jsx';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
+import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router'
+
+import Overview from './components/overview.jsx';
+import Integrations from './components/integrations.jsx';
 
 import reducers from './reducers/reducers';
 
 class Sirius {
 
-  constructor(project) {
-    let logger = createLogger({ collapsed: true });
+    // Constructor. setups the app.
+    constructor(project) {
+        let logger = createLogger({ collapsed: true });
 
-    this.store = createStore(
-      reducers,
-      { project: Immutable.Map(project) },
-      applyMiddleware(thunk, logger)
-    );
-  }
+        this.store = createStore(
+            reducers,
+            { project: Immutable.Map(project) },
+            applyMiddleware(thunk, logger)
+        );
+    }
 
-  start() {
-    this._render();
-    console.info('Sirius started.');
-  }
+    // Starts the app and renders the component hierarchy.
+    start() {
+        this._render();
+        console.info('Sirius started.');
+    }
 
-  _render() {
-    let project = this.store.getState().project;
-    render(
-      <Provider store={this.store}>
-        <App project={project} />
-      </Provider>
-    , document.getElementById('project'));
-  }
+    // Performs rendering.
+    _render() {
+        render(
+            <Provider store={this.store}>
+                <Router history={browserHistory}>
+                    <Route path={`/a/${sirius_project.id}`} component={App}>
+                        <IndexRoute component={Overview} />
+                        <Route path="integrations" component={Integrations} />
+                    </Route>
+                </Router>
+            </Provider>
+        , document.getElementById('project'));
+    }
 
 }
 
