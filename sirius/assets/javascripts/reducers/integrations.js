@@ -61,7 +61,7 @@ export default function(state, action) {
       });
 
       let records = action.items.map(function(item) {
-          item.id = item + '';
+          item.id = item.id + '';
           return new Integration(item);
       });
 
