@@ -74,9 +74,13 @@ export default React.createClass({
         }
     },
 
-  addIntegration(e) {
-    e.preventDefault();
-    let kind = document.getElementById('add-integration-kind').value;
-    this.context.store.dispatch(newIntegration(kind));
-  }
+    addIntegration(e) {
+        e.preventDefault();
+        let dropdown = document.getElementById('add-integration-kind');
+        let kind = dropdown.value;
+        if (kind !== '') {
+            dropdown.value = '';
+            this.context.store.dispatch(newIntegration(kind));
+        }
+    }
 });
