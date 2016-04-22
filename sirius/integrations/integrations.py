@@ -62,7 +62,7 @@ def show(project_id, integration_id):
     return jsonify(integration=integration.json())
 
 @blueprint.route('/projects/<int:project_id>/integrations/<int:integration_id>', methods=['DELETE'])
-def destroy(integration_id):
+def destroy(project_id, integration_id):
     """Delete integration API.
     
     Processes requests for deleting an existing integration.
