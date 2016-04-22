@@ -1,6 +1,6 @@
 import React from 'react';
 import Integration from './integration.jsx';
-import { deleteIntegration, newIntegration, fetchIntegrations, saveIntegration } from '../actions/integrations';
+import { deleteIntegration, deleteNewIntegration, newIntegration, fetchIntegrations, saveIntegration } from '../actions/integrations';
 
 export default React.createClass({
 
@@ -31,9 +31,9 @@ export default React.createClass({
     this.context.store.dispatch(saveIntegration(id, kind, data));
   },
 
-  deleteIntegration(id) {
-    this.context.store.dispatch(deleteIntegration(id));
-  },
+    deleteIntegration(id) {
+        this.context.store.dispatch(deleteIntegration(id));
+    },
 
     render: function() {
         if (this.state.isFetching) {

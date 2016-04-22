@@ -38,8 +38,7 @@ export default React.createClass({
             throw new Error(`Cannot generate integration component for "${this.props.kind}" without a manifest.`);
         }
 
-        let isNew = this.props.id.charAt(0) === '?';
-        let state = { isEditing: isNew }
+        let state = { isEditing: this._isNew() }
 
         integrationTypes[this.props.kind].attributes.map(attr => {
             state[attr.key] = this.props.data[attr.key];
@@ -59,7 +58,11 @@ export default React.createClass({
 
     onCancelEdit(e) {
         e.preventDefault();
-        this.setState({ isEditing: false });
+        if (this._isNew()) {
+            this.props.delete(this.props.id);
+        } else {
+            this.setState({ isEditing: false });
+        }
     },
 
     onDelete(e) {
@@ -77,19 +80,21 @@ export default React.createClass({
 
     render() {
         let integration = integrationTypes[this.props.kind];
-        var formClass, actions;
-        if (this.state.isEditing) {
+        let actions = [];
+        let formClass = '';
+        
+        if (this._isNew()) {
             formClass = 'integration-form editing';
-            actions = <ul className="integration-actions">
-                <li><button>Save Changes</button></li>
-                <li><a href="#" onClick={this.onCancelEdit}>Cancel</a></li>
-                <li><a href="#" onClick={this.onDelete}>Delete</a></li>
-            </ul>
+            actions.push(<li key="save"><button>Save Changes</button></li>);
+            actions.push(<li key="cancel"><a href="#" onClick={this.onCancelEdit}>Cancel</a></li>)
+        } else if (this.state.isEditing) {
+            formClass = 'integration-form editing';
+            actions.push(<li key="save"><button>Save Changes</button></li>);
+            actions.push(<li key="cancel"><a href="#" onClick={this.onCancelEdit}>Cancel</a></li>);
+            actions.push(<li key="delete"><a href="#" onClick={this.onDelete}>Delete</a></li>);
         } else {
             formClass = 'integration-form';
-            actions = <ul className="integration-actions">
-                <li><a href="#" onClick={this.onEdit}>Edit</a></li>
-            </ul>
+            actions.push(<li key="edit"><a href="#" onClick={this.onEdit}>Edit</a></li>);
         }
 
         return <div className="integration">
@@ -108,9 +113,13 @@ export default React.createClass({
                             required />
                     </label>
                 })}
-                {actions}
+                <ul className="integration-actions">{actions}</ul>
             </form>
         </div>
+    },
+    
+    _isNew() {
+        return this.props.id.charAt(0) === '?';
     }
 
 });
