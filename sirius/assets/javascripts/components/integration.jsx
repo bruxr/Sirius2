@@ -47,10 +47,6 @@ export default React.createClass({
         return state;
     },
 
-    updateInput(e) {
-        debugger;
-    },
-
     onEdit(e) {
         e.preventDefault();
         this.setState({ isEditing: true });
@@ -74,8 +70,15 @@ export default React.createClass({
 
     saveChanges(e) {
         e.preventDefault();
-        // TODO: finish me
-        debugger;
+        this.props.save(this.props.id, this._fields());
+    },
+    
+    componentDidMount() {
+        this._autofocus();
+    },
+    
+    componentDidUpdate() {
+        this._autofocus();
     },
 
     render() {
@@ -99,7 +102,7 @@ export default React.createClass({
 
         return <div className="integration">
             <h4 className="integration-title">{integration.label}</h4>
-            <form className={formClass} onSubmit={this.saveChanges}>
+            <form className={formClass} onSubmit={this.saveChanges} ref="form">
                 {integration.attributes.map(attr => {
                     return <label key={attr.key} className="integration-form-group">
                         {attr.label}
@@ -109,7 +112,6 @@ export default React.createClass({
                             value={this.state[attr.key]}
                             className="integration-form-control"
                             readOnly={!this.state.isEditing}
-                            onChange={this.updateInput}
                             required />
                     </label>
                 })}
@@ -118,8 +120,22 @@ export default React.createClass({
         </div>
     },
     
+    // Automatically focuses the very first form field.
+    _autofocus() {
+        this.refs.form.getElementsByTagName('input')[0].focus();
+    },
+    
     _isNew() {
         return this.props.id.charAt(0) === '?';
-    }
+    },
+    
+    // Returns an object containing all of this integration's custom fields. 
+    _fields() {
+        let fields = {};
+        integrationTypes[this.props.kind].attributes.map(field => {
+            fields[field] = this.state[field];
+        });
+        return fields;
+    },
 
 });
