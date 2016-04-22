@@ -1,7 +1,8 @@
 /* Main Styles */
 
 body {
-  
+    color: #333;
+    line-height: 1.6;
 }
 
 label {
@@ -14,7 +15,7 @@ label {
   max-width: 900px;
 }
 
-.main-header {
+.pure-menu-horizontal {
     margin-left: -1rem;
 }
 
@@ -26,11 +27,6 @@ label {
 
 .integration {
   margin: 2rem 0;
-}
-
-.integration-form-group {
-  display: inline-block;
-  cursor: pointer;
 }
 
 .integration-form-group input {

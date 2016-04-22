@@ -9,6 +9,15 @@ const integrationTypes = {
         ],
         commands: []
     },
+    sftp: {
+        label: 'SFTP',
+        attributes: [
+            { label: 'Host', key: 'host', type: 'url' },
+            { label: 'User', key: 'user', type: 'text' },
+            { label: 'Password', key: 'pass', type: 'text' },
+            { label: 'Path', key: 'path', type: 'text' }
+        ]
+    },
     wordpress: {
         label: 'Wordpress',
         attributes: [
