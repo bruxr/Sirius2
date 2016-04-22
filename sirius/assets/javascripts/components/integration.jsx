@@ -104,7 +104,7 @@ export default React.createClass({
                         <input
                             type={attr.type}
                             data-key={attr.key}
-                            value={this.state[attr.key]}
+                            defaultValue={this.state[attr.key]}
                             className="integration-form-control"
                             readOnly={!this.state.isEditing}
                             required />
