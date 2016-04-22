@@ -12,16 +12,16 @@ export default React.createClass({
     }
   },
   
-  render: function() {
-    return (
-      <div className="project-overview">
-        <header className="page-header">
-          <h3 className="display-1">Overview</h3>
-        </header>
-        <div className="project-desc">
-          {this.state.desc}
-        </div>
-      </div>
-    );
-  }
+    render: function() {
+        return (
+            <div className="project-overview pure-g">
+                <header className="page-header">
+                    <h3 className="display-1">Overview</h3>
+                </header>
+                <div className="project-desc">
+                    {this.state.desc}
+                </div>
+            </div>
+        );
+    }
 });

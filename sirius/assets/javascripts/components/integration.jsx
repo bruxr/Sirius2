@@ -83,34 +83,33 @@ export default React.createClass({
         
         if (this._isNew()) {
             formClass = 'integration-form editing';
-            actions.push(<li key="save"><button>Save Changes</button></li>);
-            actions.push(<li key="cancel"><a href="#" onClick={this.onCancelEdit}>Cancel</a></li>)
+            actions.push(<li key="save" className="pure-menu-item"><button className="pure-button">Save Changes</button></li>);
+            actions.push(<li key="cancel" className="pure-menu-item"><a href="#" onClick={this.onCancelEdit} className="pure-menu-link">Cancel</a></li>)
         } else if (this.state.isEditing) {
             formClass = 'integration-form editing';
-            actions.push(<li key="save"><button>Save Changes</button></li>);
-            actions.push(<li key="cancel"><a href="#" onClick={this.onCancelEdit}>Cancel</a></li>);
-            actions.push(<li key="delete"><a href="#" onClick={this.onDelete}>Delete</a></li>);
+            actions.push(<li key="save" className="pure-menu-item"><button className="pure-button">Save Changes</button></li>);
+            actions.push(<li key="cancel" className="pure-menu-item"><a href="#" onClick={this.onCancelEdit} className="pure-menu-link">Cancel</a></li>);
+            actions.push(<li key="delete" className="pure-menu-item"><a href="#" onClick={this.onDelete} className="pure-menu-link">Delete</a></li>);
         } else {
             formClass = 'integration-form';
-            actions.push(<li key="edit"><a href="#" onClick={this.onEdit}>Edit</a></li>);
+            actions.push(<li key="edit" className="pure-menu-item"><a href="#" onClick={this.onEdit} className="pure-menu-link">Edit</a></li>);
         }
 
         return <div className="integration">
             <h4 className="integration-title">{integration.label}</h4>
             <form className={formClass} onSubmit={this.saveChanges} ref="form">
                 {integration.attributes.map(attr => {
-                    return <label key={attr.key} className="integration-form-group">
+                    return <label key={attr.key} className="pure-form pure-form-stacked integration-form-group">
                         {attr.label}
                         <input
                             type={attr.type}
                             data-key={attr.key}
                             defaultValue={this.state[attr.key]}
-                            className="integration-form-control"
                             readOnly={!this.state.isEditing}
                             required />
                     </label>
                 })}
-                <ul className="integration-actions">{actions}</ul>
+                <ul className="integration-actions pure-menu pure-menu-horizontal">{actions}</ul>
             </form>
         </div>
     },
@@ -133,6 +132,7 @@ export default React.createClass({
     
     // Automatically focuses the very first form field.
     _autofocus() {
+        if (!this.state.isEditing) return;
         this.refs.form.getElementsByTagName('input')[0].focus();
     },
     
