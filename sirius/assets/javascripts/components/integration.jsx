@@ -112,12 +112,20 @@ export default React.createClass({
                             value={this.state[attr.key]}
                             className="integration-form-control"
                             readOnly={!this.state.isEditing}
+                            onChange={this.updateField}
                             required />
                     </label>
                 })}
                 <ul className="integration-actions">{actions}</ul>
             </form>
         </div>
+    },
+    
+    // Update state when a data form field changes
+    updateField(e) {
+        let state = {};
+        state[e.target.dataset.key] = e.target.value;
+        this.setState(state);
     },
     
     // Automatically focuses the very first form field.
