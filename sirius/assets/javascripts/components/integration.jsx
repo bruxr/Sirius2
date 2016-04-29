@@ -7,16 +7,21 @@ const integrationTypes = {
         attributes: [
             { label: 'Address', key: 'url', type: 'url' }
         ],
-        commands: []
+        commands: {
+            todos: { label: 'To-dos', callback() { let a = window.open(); a.opener = null; a.location = `${this.state.url}/todolists`; } }
+        }
     },
     sftp: {
         label: 'SFTP',
         attributes: [
-            { label: 'Host', key: 'host', type: 'url' },
+            { label: 'Host', key: 'host', type: 'text' },
             { label: 'User', key: 'user', type: 'text' },
             { label: 'Password', key: 'pass', type: 'text' },
             { label: 'Path', key: 'path', type: 'text' }
-        ]
+        ],
+        commands: {
+            snapshot: { label: 'Snapshot' }
+        }
     },
     wordpress: {
         label: 'Wordpress',
@@ -25,10 +30,9 @@ const integrationTypes = {
             { label: 'Password', key: 'password', type: 'text' },
             { label: 'Address', key: 'url', type: 'url' }
         ],
-        commands: [
-            { label: 'Admin', callback: function() { let a = window.open(); a.opener = null; a.location = this.state.url; } },
-
-        ]
+        commands: {
+            admin: { label: 'Admin', callback: function() { let a = window.open(); a.opener = null; a.location = this.state.url; } },
+        }
     }
 };
 
@@ -39,7 +43,8 @@ export default React.createClass({
         kind: React.PropTypes.string,
         data: React.PropTypes.object,
         save: React.PropTypes.func,
-        delete: React.PropTypes.func
+        delete: React.PropTypes.func,
+        send: React.PropTypes.func
     },
 
     getInitialState() {
@@ -101,6 +106,10 @@ export default React.createClass({
             actions.push(<li key="delete" className="pure-menu-item"><a href="#" onClick={this.onDelete} className="pure-menu-link">Delete</a></li>);
         } else {
             formClass = 'integration-form';
+            Object.keys(integration.commands).map((key) => {
+                let disabled = this.state[key] === true;
+                actions.push(<li key={key} className="pure-menu-item"><button className="pure-button" data-command={key} onClick={this.doCommand} disabled={disabled}>{integration.commands[key].label}</button></li>);
+            });
             actions.push(<li key="edit" className="pure-menu-item"><a href="#" onClick={this.onEdit} className="pure-menu-link">Edit</a></li>);
         }
 
@@ -121,6 +130,19 @@ export default React.createClass({
                 <ul className="integration-actions pure-menu pure-menu-horizontal">{actions}</ul>
             </form>
         </div>
+    },
+    
+    // Performs an integration command. If a callback is specified in the
+    // manifest, it is invoked. Otherwise, a remote call will be sent.
+    doCommand(e) {
+        e.preventDefault();
+        let key = e.target.dataset.command;
+        let cmd = integrationTypes[this.props.kind].commands[key];
+        if (_.isUndefined(cmd.callback)) {
+            this.props.send(key);
+        } else {
+            cmd.callback.call(this);
+        }
     },
     
     // Collect all data field values and then invoke the save callback.

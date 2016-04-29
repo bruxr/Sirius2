@@ -110,3 +110,7 @@ export function changedIntegration(integration, prevId) {
         prevId
     }
 }
+
+export function sendIntegrationCommand(id, command) {
+    
+}

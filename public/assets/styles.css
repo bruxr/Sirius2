@@ -15,7 +15,7 @@ label {
   max-width: 900px;
 }
 
-.pure-menu-horizontal {
+.main-header .pure-menu {
     margin-left: -1rem;
 }
 
