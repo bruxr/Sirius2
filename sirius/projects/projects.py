@@ -39,7 +39,7 @@ def create():
     project = Project(name=name, url=url, desc=desc)
     project.put()
 
-    return redirect('/projects/' + str(project.key.id()))
+    return redirect('/a/' + str(project.key.id()))
 
 @app.route('/a/<int:project_id>', methods=['GET'], defaults={'path': ''})
 @app.route('/a/<int:project_id>/<path:path>', methods=['GET'])
