@@ -1,7 +1,7 @@
 import _ from 'underscore';
 import Immutable from 'immutable';
 
-const Project = Immutable.Record({
+export const Project = Immutable.Record({
     id: null,
     name: null,
     description: null,
