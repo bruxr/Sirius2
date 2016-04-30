@@ -6,3 +6,4 @@
 # Note: The `lib` directory is added to `sys.path` by `appengine_config.py`.
 Flask==0.10
 pycrypto==2.6
+GoogleAppEngineCloudStorageClient==0.6
