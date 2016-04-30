@@ -48,13 +48,14 @@ def index(project_id):
     """
     
     project = Project.get_by_id(long(project_id))
-    if not project: return abort(404)
+    if not project:
+        return abort(404)
 
-    integrations = []
-    for i in Integration.get_all(project.key):
-        integrations.append(i.json())
+    files = []
+    for f in File.get_all(project.key):
+        files.append(f.json())
 
-    return jsonify(integration=integrations)
+    return jsonify(file=files)
 
 @blueprint.route('/projects/<int:project_id>/files', methods=['POST'])
 def create(project_id):
