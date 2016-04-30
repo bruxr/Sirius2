@@ -37,5 +37,5 @@ class File(ndb.Model):
             'name': self.name,
             'type': self.type,
             'size': self.size,
-            'date': self.date
+            'date': self.date.isoformat()
         }
