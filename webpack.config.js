@@ -1,3 +1,6 @@
+var webpack = require('webpack');
+var BellOnBundlerErrorPlugin = require('bell-on-bundler-error-plugin');
+
 module.exports = {
   debug: true,
   entry: {
@@ -18,6 +21,10 @@ module.exports = {
       }
     ]
   },
+  plugins: [
+      new webpack.ContextReplacementPlugin(/moment[\\\/]lang$/, /^\.\/(en-gb)$/),
+      new BellOnBundlerErrorPlugin()
+  ],
   devtool: 'source-map',
   output: {
     filename: 'bundle.js',
