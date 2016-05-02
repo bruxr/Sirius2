@@ -90,7 +90,7 @@ export default class Files extends React.Component {
     _humanifySize(bytes) {
         let thresh = 1024;
         if (Math.abs(bytes) < thresh) {
-            return bytes + 'B';
+            return bytes + ' B';
         }
         let units = ['KB', 'MB', 'GB', 'TB', 'PB']; // challenge accepted: download PB-sized files 
         let u = -1;
