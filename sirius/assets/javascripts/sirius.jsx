@@ -9,6 +9,7 @@ import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router'
 
 import Overview from './components/overview.jsx';
 import Integrations from './components/integrations.jsx';
+import Files from './components/files.jsx';
 
 import reducers from './reducers/reducers';
 import { Project } from './reducers/project';
@@ -40,6 +41,7 @@ class Sirius {
                     <Route path={`/a/${sirius_project.id}`} component={App}>
                         <IndexRoute component={Overview} />
                         <Route path="integrations" component={Integrations} />
+                        <Route path="files" component={Files} />
                     </Route>
                 </Router>
             </Provider>

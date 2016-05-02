@@ -3,9 +3,11 @@ import { combineReducers } from 'redux';
 import routingReducer from './routing';
 import projectReducer from './project';
 import integrationsReducer from './integrations';
+import filesReducer from './files';
 
 export default combineReducers({
   routing: routingReducer,
   project: projectReducer,
-  integrations: integrationsReducer
+  integrations: integrationsReducer,
+  files: filesReducer
 });

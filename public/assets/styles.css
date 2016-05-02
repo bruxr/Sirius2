@@ -5,6 +5,14 @@ body {
     line-height: 1.6;
 }
 
+a {
+    color: #0078e7;
+}
+
+a:hover {
+    color: #1f8dd6;
+}
+
 label {
   display: block;
 }
@@ -17,6 +25,19 @@ label {
 
 .main-header .pure-menu {
     margin-left: -1rem;
+}
+
+/* Page Header */
+.page-header  {
+    margin-bottom: 30px;
+}
+
+.page-header h2 {
+    margin-bottom: 0;
+}
+
+.page-header p {
+    margin-top: 5px;
 }
 
 /* Integrations */
@@ -49,4 +70,30 @@ label {
 
 .integration-actions li a {
   font-size: smaller;
+}
+
+/* Files */
+.files-table {
+    margin-top: 15px;
+    width: 100%;
+}
+
+.files-table .cb-col {
+    text-align: center;
+    width: 15px;
+}
+
+.upload-form {
+    position: relative;
+}
+
+.upload-form-input {
+    display: block;
+    height: 34px;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    width: 120px;
+    z-index: 1;
 }
