@@ -88,7 +88,7 @@ export default class Files extends React.Component {
     // Thanks mpen!
     // stackoverflow.com/a/14919494
     _humanifySize(bytes) {
-        let thresh = 1024;
+        let thresh = 1000;
         if (Math.abs(bytes) < thresh) {
             return bytes + ' B';
         }
