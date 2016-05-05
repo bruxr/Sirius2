@@ -33,7 +33,7 @@ def _unique_filename(project, filename):
     new_name = filename
     i = 1
     while File.get_by_name(project.key, new_name):
-        new_name = base + '-' + i + '.' + ext
+        new_name = base + '-' + str(i) + '.' + ext
         i += 1
     return new_name
 
@@ -78,8 +78,7 @@ def create(project_id):
     
     file = request.files[filename]
     filename = secure_filename(filename.strip())
-    filename = _unique_filename(project, filename)
-    path = str(project.key.id()) + '/' + filename
+    path = str(project.key.id()) + '/' + _unique_filename(project, filename)
     
     size = storage.put(file, path, file.mimetype)
     logging.info('[601] FILES: Uploaded file ' + filename + ' with ' + str(size) + ' bytes.')
