@@ -35,6 +35,7 @@ export function receivedFiles(files) {
 
 export function pushFile(file) {    
     return function(dispatch, getState) {
+        dispatch(uploadingFile(file));
         return new Promise(function(resolve) {
             let state = getState();
             let project_id = state.project.id;
@@ -44,17 +45,28 @@ export function pushFile(file) {
             let xhr = new XMLHttpRequest();
             xhr.open('POST', `/projects/${project_id}/files`, true);
             xhr.onload = function(e) {
-                dispatch(pushedFile(e.file));
-                resolve(e.file);
+                if (e.target.status === 200) {
+                    let resp = JSON.parse(e.target.responseText);
+                    dispatch(uploadedFile(resp.file, file));
+                    resolve(resp.file);
+                }
             }
             xhr.send(fd);
         });
     }
 }
 
-export function pushedFile(file) {
+export function uploadingFile(file) {
     return {
-        type: 'PUSHED_FILE',
+        type: 'UPLOADING_FILE',
         file: file
+    }
+}
+
+export function uploadedFile(file, old_file) {
+    return {
+        type: 'UPLOADED_FILE',
+        file: file,
+        old_file: old_file
     }
 }

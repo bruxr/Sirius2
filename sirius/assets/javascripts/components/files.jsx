@@ -1,4 +1,5 @@
 import React from 'react';
+import File from './file.jsx';
 import { fetchFiles, pushFile } from '../actions/files';
 
 export default class Files extends React.Component {
@@ -34,14 +35,7 @@ export default class Files extends React.Component {
             totalFiles = this.state.files.length;
             for (let i = 0; i < totalFiles; i++) {
                 let file = this.state.files[i];
-                let size = this._humanifySize(file.size);
-                filesList.push(<tr key={file.id}>
-                    <td className="cb-col"><input type="checkbox" className="cb" date-file-id={file.id} /></td>
-                    <td><a href="#">{file.name}</a></td>
-                    <td>{size}</td>
-                    <td>{file.date.fromNow()}</td>
-                    <td><a href="#" data-file-id={file.id}>Delete</a></td>
-                </tr>)
+                filesList.push(<File key={file.id} id={file.id + ''} name={file.name} size={file.size} type={file.type} date={file.date} />);
                 totalSize += file.size;
             }
         }

@@ -1,6 +1,21 @@
 import Immutable from 'immutable';
 import moment from 'moment';
 
+function insertFile(file, set) {
+    if (set.length === 0) {
+        set.push(file);
+    } else {
+        let index = set.length;
+        for (let j = 0; j < set.length; j++) {
+            if (file.date.isAfter(set[j].date)) {
+                index = j;
+                break;
+            }
+        }
+        set.splice(index, 0, file);
+    }
+}
+
 export default function (state, action) {
     if (typeof state === 'undefined') {
         return {
@@ -10,6 +25,28 @@ export default function (state, action) {
     }
     
     switch(action.type) {
+        case 'UPLOADING_FILE':
+            var file = {
+                id: '?' + (+new Date()),
+                name: action.file.name,
+                size: action.file.size,
+                type: action.file.type,
+                date: moment.utc()
+            };
+            insertFile(file, state.items);
+            return state;
+
+        case 'UPLOADED_FILE':
+            var old_id = action.old_file.id;
+            for (let i = 0; i < state.items.length; i++) {
+                if (state.items[i].id === old_id) {
+                    state.items[i] = Object.apply({}, state.items[i], {
+                        id: action.file.id
+                    });
+                }
+            }
+            return state;
+        
         case 'RECEIVED_FILES':
             for (let i = 0; i < action.items.length; i++) {
                 let item = action.items[i];
