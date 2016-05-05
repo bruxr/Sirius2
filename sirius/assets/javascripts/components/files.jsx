@@ -18,8 +18,8 @@ export default class Files extends React.Component {
         this.context.store.subscribe(() => {
             let state = this.context.store.getState().files;
             this.setState({
-                isFetching: state.isFetching,
-                files: state.items
+                isFetching: state.get('isFetching'),
+                files: state.get('items').toJS()
             });
         });
         this.context.store.dispatch(fetchFiles());
@@ -35,8 +35,8 @@ export default class Files extends React.Component {
             totalFiles = this.state.files.length;
             for (let i = 0; i < totalFiles; i++) {
                 let file = this.state.files[i];
-                filesList.push(<File key={file.id} id={file.id + ''} name={file.name} size={file.size} type={file.type} date={file.date} />);
-                totalSize += file.size;
+                filesList.push(<File key={file.id} id={file.id + ''} name={file.name} size={file.filesize} type={file.type} date={file.date} />);
+                totalSize += file.filesize;
             }
         }
         

@@ -2,7 +2,7 @@ import fetch from '../fetch';
 
 export function fetchFiles() {
     function shouldFetch(files) {
-        return !files.isFetching && files.items.length === 0;
+        return !files.get('isFetching') && files.get('items').size === 0;
     }
     
     return function(dispatch, getState) {
@@ -33,9 +33,10 @@ export function receivedFiles(files) {
     }
 }
 
-export function pushFile(file) {    
+export function pushFile(file) {
     return function(dispatch, getState) {
-        dispatch(uploadingFile(file));
+        let tempId = '?' + (+new Date());
+        dispatch(uploadingFile(tempId, file));
         return new Promise(function(resolve) {
             let state = getState();
             let project_id = state.project.id;
@@ -47,7 +48,7 @@ export function pushFile(file) {
             xhr.onload = function(e) {
                 if (e.target.status === 200) {
                     let resp = JSON.parse(e.target.responseText);
-                    dispatch(uploadedFile(resp.file, file));
+                    dispatch(uploadedFile(tempId, resp.file));
                     resolve(resp.file);
                 }
             }
@@ -56,17 +57,18 @@ export function pushFile(file) {
     }
 }
 
-export function uploadingFile(file) {
+export function uploadingFile(tempId, file) {
     return {
         type: 'UPLOADING_FILE',
-        file: file
+        tempId,
+        file
     }
 }
 
-export function uploadedFile(file, old_file) {
+export function uploadedFile(tempId, file) {
     return {
         type: 'UPLOADED_FILE',
-        file: file,
-        old_file: old_file
+        tempId,
+        file
     }
 }
