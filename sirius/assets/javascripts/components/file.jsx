@@ -16,17 +16,17 @@ export default class File extends React.Component {
         var name = '';
         var actions = '';
         if (this.state.isUploading) {
-            name = this.props.name;
+            name = <td className="file-name file-uploading">this.props.name</td>;
         } else {
             cb = <input type="checkbox" className="cb" date-file-id={this.props.id} />
-            name = <a href="#">{this.props.name}</a>
+            name = <td className="file-name"><a href="#">{this.props.name}</a></td>
             actions = <a href="#" data-file-id={this.props.id}>Delete</a>
         }
 
         return (
             <tr className="file">
                 <td className="cb-col">{cb}</td>
-                <td>{name}</td>
+                {name}
                 <td>{humanFileSize(this.props.size)}</td>
                 <td>{this.props.date.fromNow()}</td>
                 <td>{actions}</td>
