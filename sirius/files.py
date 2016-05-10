@@ -102,8 +102,8 @@ def retrieve(project_id, file_id):
     project = Project.get_by_id(long(project_id))
     if not project:
         return abort(404)
-    
-    file = Project.get_by_id(long(file_id), parent=project.key)
+
+    file = File.get_by_id(long(file_id), parent=project.key)
     if not file:
         return abort(404)
     
