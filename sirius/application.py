@@ -1,8 +1,8 @@
-from flask import Flask
-import projects.projects as projects
-import integrations.integrations as integrations
 import files
 import worker
+import projects
+import integrations
+from flask import Flask
 
 # Initialize app
 app = Flask('sirius')

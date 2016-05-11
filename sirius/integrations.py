@@ -1,8 +1,6 @@
 import re
-from models import Integration
-from sirius.projects.models import Project
+from models import Integration, Project
 from flask import Blueprint, abort, jsonify, redirect, request
-from google.appengine.ext import ndb
 
 blueprint = Blueprint('integrations', __name__,
                 template_folder='templates')

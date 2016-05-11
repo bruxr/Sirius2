@@ -1,4 +1,3 @@
-import tasks
 from flask import Blueprint, request
 
 blueprint = Blueprint('worker', __name__)

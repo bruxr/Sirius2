@@ -19,7 +19,7 @@ def index():
     """
     
     projects = Project.get_all()
-    return render_template('index.html', projects=projects)
+    return render_template('projects/index.html', projects=projects)
 
 @app.route('/projects', methods=['POST'])
 def create():
@@ -62,7 +62,7 @@ def show(project_id, path):
         return abort(404)
     else:
         pjson = json.dumps(project.json(), ensure_ascii=False)
-        return render_template('show.html', project=project, project_json=pjson)
+        return render_template('projects/show.html', project=project, project_json=pjson)
 
 @app.route('/projects/<int:project_id>', methods=['PATCH'])
 def update(project_id):

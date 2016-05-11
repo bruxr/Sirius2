@@ -1,7 +1,6 @@
 import os
 from flask import Flask
 from sirius.application import app
-import sirius.projects.projects as projects
 
 # Sanity checks
 if (os.environ.get('APP_KEY') == None):

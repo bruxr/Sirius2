@@ -1,10 +1,9 @@
 import re
 import logging
 import storage
-from models import File
-from sirius.projects.models import Project
-from flask import Blueprint, abort, jsonify, redirect, request
+from models import File, Project
 from werkzeug import secure_filename
+from flask import Blueprint, abort, jsonify, redirect, request
 
 blueprint = Blueprint('files', __name__)
 
