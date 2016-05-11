@@ -5,8 +5,8 @@ export const Project = Immutable.Record({
     id: null,
     name: null,
     description: null,
-    created_at: new Date(),
-    updated_at: new Date()
+    createdAt: null,
+    updatedAt: null
 }, 'Project');
 
 export default function(state, action) {

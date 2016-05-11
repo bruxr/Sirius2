@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import App from './components/app.jsx';
@@ -19,10 +20,17 @@ class Sirius {
     // Constructor. setups the app.
     constructor(project) {
         let logger = createLogger({ collapsed: true });
+        let projectObj = new Project({
+            id: project.id,
+            name: project.name,
+            description: project.desc,
+            createdAt: moment.utc(project.created),
+            updatedAt: moment.utc(project.updated)
+        });
 
         this.store = createStore(
             reducers,
-            { project: new Project(project) },
+            { project: projectObj },
             applyMiddleware(thunk, logger)
         );
     }
