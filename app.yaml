@@ -15,6 +15,10 @@ handlers:
 - url: /assets
   static_dir: public/assets
 
+- url: /work
+  script: main.app
+  login: admin
+
 # This handler tells app engine how to route requests to a WSGI application.
 # The script value is in the format <path.to.module>.<wsgi_application>
 # where <wsgi_application> is a WSGI application object.

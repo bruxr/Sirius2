@@ -2,6 +2,7 @@ from flask import Flask
 import projects.projects as projects
 import integrations.integrations as integrations
 import files
+import worker
 
 # Initialize app
 app = Flask('sirius')
@@ -10,6 +11,7 @@ app = Flask('sirius')
 app.register_blueprint(projects.app)
 app.register_blueprint(integrations.blueprint)
 app.register_blueprint(files.blueprint)
+app.register_blueprint(worker.blueprint)
 
 @app.route('/')
 def hello():
