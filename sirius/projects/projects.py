@@ -1,5 +1,7 @@
 import json
 from models import Project
+from google.appengine.ext import ndb
+from google.appengine.api import taskqueue
 from flask import Blueprint, abort, redirect, render_template, request, url_for
 
 app = Blueprint('projects', __name__,
@@ -37,8 +39,13 @@ def create():
     desc = request.form['desc'].strip()
 
     project = Project(name=name, url=url, desc=desc)
-    project.put()
 
+    @ndb.transactional
+    def insert_project():
+        project.put()
+        taskqueue.add(url='/work/setup_sentry', params={'project_id': project.key.id()}, transactional=True)
+
+    insert_project()
     return redirect('/a/' + str(project.key.id()))
 
 @app.route('/a/<int:project_id>', methods=['GET'], defaults={'path': ''})
