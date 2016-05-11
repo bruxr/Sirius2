@@ -1,32 +1,35 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<h1>Projects</h1>
-<a href="#create-project">Create a Project</a>
+    <div class="projects">
+        <header class="page-header">
+            <h2 class="page-header">Projects</h2>
+        </header>
 
-{% for project in projects %}
-<div class="project">
-    <h3><a href="{{project.path()}}">{{project.name}}</a></h3>
-    <p>{{project.desc}}</p>
-</div>
-{% endfor %}
+        {% for project in projects %}
+        <div class="project">
+            <h3><a href="/a/{{project.key.id()}}">{{project.name}}</a></h3>
+            <p>{{project.desc}}</p>
+        </div>
+        {% endfor %}
 
-<div id="create-project">
-    <h2>Create a Project</h2>
-    <form action="/projects" method="post">
-        <p>
-            <label for="name">Name</label>
-            <input type="text" name="name" id="name" class="form-control" required>
-        </p>
-        <p>
-            <label for="url">URL</label>
-            <input type="url" name="url" id="url" class="form-control" required>
-        </p>
-        <p>
-            <label for="desc">Description</label>
-            <textarea name="desc" id="desc" cols="30" rows="10" class="form-control"></textarea>
-        </p>
-        <button class="btn btn-primary">Add Project</button>
-    </form>
-</div>
+        <div id="create-project">
+            <h3>Create a Project</h3>
+            <form action="/projects" method="post" class="pure-form">
+                <p>
+                    <label for="name">Name</label>
+                    <input type="text" name="name" id="name" class="form-control" required>
+                </p>
+                <p>
+                    <label for="url">URL</label>
+                    <input type="url" name="url" id="url" class="form-control" required>
+                </p>
+                <p>
+                    <label for="desc">Description</label>
+                    <textarea name="desc" id="desc" cols="30" rows="10" class="form-control"></textarea>
+                </p>
+                <button class="pure-button pure-button-primary">Add Project</button>
+            </form>
+        </div>
+    </div>
 {% endblock %}
