@@ -19,7 +19,7 @@ export default class File extends React.Component {
             name = <td className="file-name file-uploading">this.props.name</td>;
         } else {
             cb = <input type="checkbox" className="cb" date-file-id={this.props.id} />
-            name = <td className="file-name"><a href="#">{this.props.name}</a></td>
+            name = <td className="file-name"><a href={this.props.link}>{this.props.name}</a></td>
             actions = <a href="#" data-file-id={this.props.id}>Delete</a>
         }
 

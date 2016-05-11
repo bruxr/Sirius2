@@ -29,13 +29,24 @@ export default class Files extends React.Component {
         let filesList = [];
         let totalFiles = 0;
         let totalSize = 0;
+        let project = this.context.store.getState().project;
         if (this.state.isFetching) {
             filesList.push(<tr key="nf"><td colSpan="5">Please wait...</td></tr>)
         } else {
             totalFiles = this.state.files.length;
             for (let i = 0; i < totalFiles; i++) {
                 let file = this.state.files[i];
-                filesList.push(<File key={file.id} id={file.id + ''} name={file.name} size={file.filesize} type={file.type} date={file.date} />);
+                let fileLink = '/projects/' + project.get('id') + '/files/' + file.id;
+                filesList.push(
+                    <File key={file.id}
+                          id={file.id + ''}
+                          name={file.name}
+                          size={file.filesize}
+                          type={file.type}
+                          date={file.date}
+                          link={fileLink}
+                          />
+                );
                 totalSize += file.filesize;
             }
         }
