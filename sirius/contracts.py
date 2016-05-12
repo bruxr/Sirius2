@@ -58,15 +58,20 @@ def create(project_id):
     contract.name = body['name'].strip()
     contract.desc = body['desc'].strip()
     contract.amount = invoice_total
-    contract.rate = int(body['rate'])
     contract.rate_type = int(body['rate_type'])
     contract.invoices = invoices
+
+    if body['rate'] is not None:
+        contract.rate = int(body['rate'])
 
     @ndb.transactional
     def insert_contract():
         contract.put()
-        url = '/projects/{0}/contracts/{1}/setup'.format(project.key.id(), contract.key.id())
-        taskqueue.add(url=url, transactional=True)
+        params = {
+            'project_id': project.key.id(),
+            'contract_id': contract.key.id()
+        }
+        #taskqueue.add(url='/work/freshbooks_sync', params=params, transactional=True)
 
     insert_contract()
     return (jsonify(contract.json()), 201)
