@@ -2,6 +2,52 @@ import json
 from crypt import encrypt, decrypt
 from google.appengine.ext import ndb
 
+class Contract(ndb.Model):
+    """Represents a single contract. Contracts are created
+    for a single work order and encapsulates invoices.
+
+    Attributes:
+        name -- contract name
+        desc -- contract description
+        amount -- total contract amount in cents
+        alloted_time -- for fixed-rate contracts. number of minutes alloted for a contract. null for floating type contracts.
+        rate -- USD per hour. in cents
+        rate_type -- floating (1) or fixed (2)
+        invoices -- array of invoices in (ID, name, status, amount) form
+        started_at -- the first time the contract has started
+        ended_at -- the recent time when the time has stopped
+    """
+    name = ndb.StringProperty(required=True, indexed=False)
+    desc = ndb.TextProperty()
+    amount = ndb.IntegerProperty(default=0)
+    time = ndb.IntegerProperty(default=0)
+    alloted_time = ndb.IntegerProperty()
+    rate = ndb.IntegerProperty()
+    rate_type = ndb.IntegerProperty()
+    invoices = ndb.JsonProperty(default=[])
+    started_at = ndb.DateTimeProperty()
+    ended_at = ndb.DateTimeProperty()
+
+    @classmethod
+    def get_all(cls, project):
+        """Retrieves contracts stored in the database."""
+        return cls.query(ancestor=project).fetch()
+
+    def json(self):
+        """Returns a hash depicting the JSON representation of this contract"""
+        return {
+            'id': self.key.id(),
+            'name': self.name,
+            'description': self.description,
+            'amount': self.size,
+            'alloted_time': self.alloted_time,
+            'rate': self.rate,
+            'rate_type': self.rate_type,
+            'invoices': self.invoices,
+            'started_at': self.date.isoformat(),
+            'ended_at': self.date.isoformat()
+        }
+
 class File(ndb.Model):
     """Represents a single project file, resource or media.
     

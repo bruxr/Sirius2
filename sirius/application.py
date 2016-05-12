@@ -1,6 +1,7 @@
 import files
 import worker
 import projects
+import contracts
 import integrations
 from flask import Flask
 
@@ -12,6 +13,7 @@ app.register_blueprint(projects.app)
 app.register_blueprint(integrations.blueprint)
 app.register_blueprint(files.blueprint)
 app.register_blueprint(worker.blueprint)
+app.register_blueprint(contracts.blueprint)
 
 @app.route('/')
 def hello():
