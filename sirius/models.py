@@ -35,7 +35,7 @@ class Contract(ndb.Model):
 
     def json(self):
         """Returns a hash depicting the JSON representation of this contract"""
-        return {
+        json = {
             'id': self.key.id(),
             'name': self.name,
             'desc': self.desc,
@@ -43,10 +43,26 @@ class Contract(ndb.Model):
             'alloted_time': self.alloted_time,
             'rate': self.rate,
             'rate_type': self.rate_type,
-            'invoices': self.invoices,
-            'started_at': self.started_at.isoformat(),
-            'ended_at': self.ended_at.isoformat()
+            'invoices': [],
+            'started_at': None,
+            'ended_at': None
         }
+
+        for index, invoice in enumerate(self.invoices):
+            json['invoices'].append({
+                'id': index,
+                'name': invoice[1],
+                'status': invoice[2],
+                'amount': invoice[3]
+            })
+
+        if self.started_at is not None:
+            json['started_at'] = self.started_at.isoformat()
+
+        if self.ended_at is not None:
+            json['ended_at'] = self.ended_at.isoformat()
+
+        return json
 
 class File(ndb.Model):
     """Represents a single project file, resource or media.
