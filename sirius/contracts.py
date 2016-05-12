@@ -71,7 +71,7 @@ def create(project_id):
             'project_id': project.key.id(),
             'contract_id': contract.key.id()
         }
-        #taskqueue.add(url='/work/freshbooks_sync', params=params, transactional=True)
+        taskqueue.add(url='/work/freshbooks_sync', params=params, transactional=True)
 
     insert_contract()
     return (jsonify(contract.json()), 201)
