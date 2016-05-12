@@ -21,8 +21,8 @@ class Contract(ndb.Model):
     desc = ndb.TextProperty()
     amount = ndb.IntegerProperty(default=0)
     time = ndb.IntegerProperty(default=0)
-    alloted_time = ndb.IntegerProperty()
-    rate = ndb.IntegerProperty()
+    alloted_time = ndb.IntegerProperty(default=None)
+    rate = ndb.IntegerProperty(default=None)
     rate_type = ndb.IntegerProperty()
     invoices = ndb.JsonProperty(default=[])
     started_at = ndb.DateTimeProperty()
@@ -38,14 +38,14 @@ class Contract(ndb.Model):
         return {
             'id': self.key.id(),
             'name': self.name,
-            'description': self.description,
-            'amount': self.size,
+            'desc': self.desc,
+            'amount': self.amount,
             'alloted_time': self.alloted_time,
             'rate': self.rate,
             'rate_type': self.rate_type,
             'invoices': self.invoices,
-            'started_at': self.date.isoformat(),
-            'ended_at': self.date.isoformat()
+            'started_at': self.started_at.isoformat(),
+            'ended_at': self.ended_at.isoformat()
         }
 
 class File(ndb.Model):
