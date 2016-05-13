@@ -10,6 +10,7 @@ def work(task_name):
     Arguments:
         task_name -- name of the task
     """
-    task = getattr(getattr(tasks, task_name), task_name)
+    module = getattr(tasks, task_name)
+    task = getattr(module, task_name)
     task(request.form)
     return ('', 204)

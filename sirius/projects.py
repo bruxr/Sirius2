@@ -44,8 +44,8 @@ def create():
     @ndb.transactional
     def insert_project():
         project.put()
-        url = '/projects/' + project.key.id() + '/setup'
-        taskqueue.add(url=url, params={'project_id': project.key.id()}, transactional=True)
+        params = {'project_id': project.key.id()}
+        taskqueue.add(url='/work/sentry_setup', params=params, transactional=True)
 
     insert_project()
     return redirect('/a/' + str(project.key.id()))
@@ -89,55 +89,3 @@ def destroy(project_id):
     """
      
     abort(503)
-
-# TODO: move this to tasks, use urllib2 and test.
-"""
-@app.route('/projects/<int:project_id>/setup', methods=['POST'])
-def setup(project_id):
-    project_id = long(project_id)
-    project = Project.get_by_id(project_id)
-    if project is None:
-        abort(404)
-
-    requests_toolbelt.adapters.appengine.monkeypatch()
-
-    # Common Sentry vars
-    org = os.environ['SENTRY_ORG']
-    team = os.environ['SENTRY_TEAM']
-    api_base = 'https://app.getsentry.com/api/0'
-    headers = {
-        'Authorization': 'Basic ' + os.environ['SENTRY_KEY'],
-        'Content-Type': 'application/json'
-    }
-
-    # Create a project in Sentry
-    payload = {'name': project.name}
-    url = '{0}/teams/{1}/{2}/projects/'.format(api_base, org, team)
-    result = requests.post(url, json=payload, headers=headers)
-    if result.status_code != 201:
-        raise RuntimeError('Failed to create a project in Sentry. Received: ' + result.text, result.status_code)
-
-    # Register a client key for the project
-    project_slug = result.json()['slug']
-    payload = {'name': 'Default'}
-    url = '{0}/projects/{1}/{2}/keys/'.format(api_base, org, project_slug)
-    result = requests.post(url, json=payload, headers=headers)
-    if result.status_code != 201:
-        raise RuntimeError('Failed to create a client key in Sentry. Received: ' + result.text, result.status_code, project_id)
-
-    # Create an integration
-    if 'Development' in os.environ['SERVER_SOFTWARE']:
-        app_url = 'http://'
-    else:
-        app_url = 'https://'
-    app_url += app_identity.get_default_version_hostname()
-    
-    project_dsn = result.json()['dsn']['secret']
-    payload = {'kind': 'sentry', 'data': {'slug': project_slug, 'dsn': project_dsn} }
-    url = '{0}/projects/{1}/integrations'.format(app_url, project_id)
-    requests.post(url, json=payload, headers=headers)
-    if result.status_code != 201:
-        raise RuntimeError('Failed to create sentry integration.', result.status_code, project_id)
-
-    return ('', 204)
-"""
