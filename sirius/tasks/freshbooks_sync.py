@@ -24,18 +24,18 @@ def freshbooks_sync(data):
     for invoice in contract.invoices:
         if invoice[0] is None:
             name = '{0} - {1}'.format(contract.name, invoice[1])
-            invoice_id = _create_invoice(project.url, name, invoice[3])
+            invoice_id = _create_invoice(name, invoice[3], notes=project.url)
             invoice = (invoice_id, invoice[1], 'saved', invoice[3])
 
     contract.put()
 
-def _create_invoice(notes, name, amount):
+def _create_invoice(name, amount, notes=''):
     """Creates an invoice in Freshbooks.
 
     Arguments:
-        notes -- invoice notes
         name -- name of the invoice
         amount -- invoice amount
+        notes -- invoice notes
 
     Returns:
         invoice ID
