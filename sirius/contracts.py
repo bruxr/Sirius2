@@ -141,8 +141,11 @@ def update(project_id, contract_id):
     def update_contract():
         contract.put()
         for index, invoice in enumerate(contract.invoices):
-            url = '/projects/{0}/contracts/{1}/{2}/sync'.format(project_id, contract.key.id(), index)
-            taskqueue.add(url=url, transactional=True)
+            params = {
+                'project_id': project.key.id(),
+                'contract_id': contract.key.id()
+            }
+            taskqueue.add(url='/work/freshbooks_sync', params=params, transactional=True)
 
     update_contract()
     return jsonify(contract.json())
