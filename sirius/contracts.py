@@ -169,8 +169,9 @@ def destroy(project_id, contract_id):
     @ndb.transactional
     def delete_contract():
         for index, invoice in enumerate(contract.invoices):
-            url = '/projects/{0}/contracts/{1}/{2}'.format(project_id, contract.key.id(), index)
-            taskqueue.add(url=url, method='DELETE', transactional=True)
+            if invoice[0] is None:
+                continue
+            taskqueue.add(url='/work/freshbooks_delete', params={'invoice_id': invoice[0]}, transactional=True)
         contract.key.delete()
 
     delete_contract()
