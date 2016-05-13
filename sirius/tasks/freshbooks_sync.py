@@ -23,8 +23,9 @@ def freshbooks_sync(data):
 
     for invoice in contract.invoices:
         if invoice[0] is None:
-            invoice[0] = _create_invoice(project.url, invoice[1], invoice[3])
-            invoice[2] = 'saved'
+            name = '{0} - {1}'.format(contract.name, invoice[1])
+            invoice_id = _create_invoice(project.url, name, invoice[3])
+            invoice = (invoice_id, invoice[1], 'saved', invoice[3])
 
     contract.put()
 
@@ -39,17 +40,18 @@ def _create_invoice(notes, name, amount):
     Returns:
         invoice ID
     """
-    return freshbooks.invoice.create(
+    response = freshbooks.invoice.create(
         invoice=dict(
             client_id=os.environ['FRESHBOOKS_CLIENT_ID'],
             status='draft',
             notes=notes,
             lines=[
                 api.types.line(
-                    name=name,
+                    description=name,
                     unit_cost=amount,
                     quantity='1'
                 )
             ]
         )
     )
+    return int(response.invoice_id)
