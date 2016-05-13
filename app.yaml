@@ -28,3 +28,9 @@ handlers:
 libraries:
 - name: pycrypto
   version: "2.6"
+
+- name: lxml
+  version: "2.3"
+
+- name: ssl
+  version: "2.7"
