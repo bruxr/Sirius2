@@ -22,10 +22,12 @@ def freshbooks_sync(data):
         raise RecordNotFoundError('Contract', contract_id)
 
     for invoice in contract.invoices:
+        name = '{0} - {1}'.format(contract.name, invoice[1])
         if invoice[0] is None:
-            name = '{0} - {1}'.format(contract.name, invoice[1])
             invoice_id = _create_invoice(name, invoice[3], notes=project.url)
-            invoice = (invoice_id, invoice[1], 'saved', invoice[3])
+        else:
+            invoice_id = _update_invoice(invoice[1], name, invoice[3], notes=project.url)
+        invoice = (invoice_id, invoice[1], 'saved', invoice[3])
 
     contract.put()
 
@@ -44,6 +46,33 @@ def _create_invoice(name, amount, notes=''):
         invoice=dict(
             client_id=os.environ['FRESHBOOKS_CLIENT_ID'],
             status='draft',
+            notes=notes,
+            lines=[
+                api.types.line(
+                    description=name,
+                    unit_cost=amount,
+                    quantity='1'
+                )
+            ]
+        )
+    )
+    return int(response.invoice_id)
+
+def _update_invoice(id, name, amount, notes=''):
+    """Updates an existing invoice in Freshbooks.
+
+    Arguments:
+        id -- invoice ID
+        name -- new invoice name
+        amount -- new invoice amount
+        notes -- new invoice notes
+
+    Returns:
+        invoice ID
+    """
+    response = freshbooks.invoice.update(
+        invoice=dict(
+            invoice_id=id,
             notes=notes,
             lines=[
                 api.types.line(
