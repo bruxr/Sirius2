@@ -1,9 +1,7 @@
 import os
 import json
-import requests
 from google.appengine.ext import ndb
 from models import Project, Integration
-import requests_toolbelt.adapters.appengine
 from google.appengine.api import app_identity, taskqueue, urlfetch
 from flask import Blueprint, abort, redirect, render_template, request, url_for
 
@@ -92,6 +90,8 @@ def destroy(project_id):
      
     abort(503)
 
+# TODO: move this to tasks, use urllib2 and test.
+"""
 @app.route('/projects/<int:project_id>/setup', methods=['POST'])
 def setup(project_id):
     project_id = long(project_id)
@@ -140,3 +140,4 @@ def setup(project_id):
         raise RuntimeError('Failed to create sentry integration.', result.status_code, project_id)
 
     return ('', 204)
+"""
