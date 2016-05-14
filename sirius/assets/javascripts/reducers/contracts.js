@@ -5,12 +5,12 @@ const Contract = Immutable.Record({
     description: null,
     amount: 0,
     time: 0,
-    alloted_time: null,
+    allotedTime: null,
     rate: null,
-    rate_type: null,
+    rateType: null,
     invoices: [],
-    started_at: null,
-    ended_at: null
+    startedAt: null,
+    endedAt: null
 }, 'Contract');
 
 const Invoice = Immutable.Record({
