@@ -8,7 +8,7 @@ export function fetchContracts() {
     return function(dispatch, getState) {
         const state = getState();
         if (shouldFetch(state.contracts)) {
-            dispatch(fetchContracts());
+            dispatch(fetchingContracts());
             let project_id = state.project.get('id');
             return fetch(`/projects/${project_id}/contracts`)
                 .then(function(resp) {
