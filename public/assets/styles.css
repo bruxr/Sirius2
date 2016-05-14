@@ -27,6 +27,11 @@ label {
     margin-left: -1rem;
 }
 
+/* Buttons */
+.pure-button.pure-button-primary:hover {
+    color: #fff;
+}
+
 /* Page Header */
 .page-header  {
     margin-bottom: 30px;
