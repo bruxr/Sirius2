@@ -11,15 +11,14 @@ export default class Contracts extends React.Component {
     }
 
     componentDidMount() {
-        /*this.context.store.subscribe(() => {
+        this.context.store.subscribe(() => {
             const state = this.context.store.getState().contracts;
             this.setState({
                 isFetching: state.get('isFetching'),
-                items: state.get('items')
+                contracts: state.get('items')
             });
         });
         this.context.store.dispatch(fetchContracts());
-        */
     }
 
     render() {
