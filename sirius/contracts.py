@@ -1,4 +1,3 @@
-from utils import protect_task_url
 from google.appengine.ext import ndb
 from models import Contract, Project
 from google.appengine.api import taskqueue
