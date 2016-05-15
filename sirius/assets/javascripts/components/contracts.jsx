@@ -18,14 +18,32 @@ export default class Contracts extends React.Component {
         this.context.store.subscribe(() => {
             const state = this.context.store.getState().contracts;
             this.setState({
-                isFetching: state.get('isFetching'),
-                contracts: state.get('items')
+                isFetching: state.isFetching,
+                contracts: state.items
             });
         });
         this.context.store.dispatch(fetchContracts());
     }
 
     render() {
+        let contracts = [];
+        for (let i = 0; i < this.state.contracts.length; i++) {
+            let contract = this.state.contracts[i];
+            contracts.push(<Contract
+                  key={contract.id}
+                  id={contract.id}
+                  name={contract.name}
+                  desc={contract.description}
+                  amount={contract.amount}
+                  time={contract.time}
+                  allottedTime={contract.allotedTime}
+                  rate={contract.rate}
+                  rateType={contract.rateType}
+                  invoices={contract.invoices}
+                  startedAt={contract.startedAt}
+                  endedAt={contract.endedAt} />
+            );
+        }
         return (
             <div className="project-contracts">
                 <header className="page-header">
@@ -36,19 +54,7 @@ export default class Contracts extends React.Component {
                 <a href="#" className="pure-button pure-button-primary" onClick={this.newContract}>New Contract</a>
 
                 <div className="contracts-list">
-                    {this.state.contracts.map((contract) => {
-                        <Contract id={contract.get('id')}
-                                  name={contract.get('name')}
-                                  desc={contract.get('description')}
-                                  amount={contract.get('amount')}
-                                  time={contract.get('time')}
-                                  allottedTime={contract.get('allotedTime')}
-                                  rate={contract.get('rate')}
-                                  rateType={contract.get('rateType')}
-                                  invoices={contract.get('invoices')}
-                                  startedAt={contract.get('startedAt')}
-                                  endedAt={contract.get('endedAt')} />  
-                    })}
+                    {contracts}
                 </div>
             </div>
         )

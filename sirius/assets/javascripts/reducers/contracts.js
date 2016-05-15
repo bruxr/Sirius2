@@ -1,6 +1,7 @@
 import Immutable from 'immutable';
 
-const Contract = Immutable.Record({
+const CONTRACT = {
+    id: null,
     name: null,
     description: null,
     amount: 0,
@@ -11,7 +12,7 @@ const Contract = Immutable.Record({
     invoices: [],
     startedAt: null,
     endedAt: null
-}, 'Contract');
+};
 
 const Invoice = Immutable.Record({
     id: null,
@@ -22,13 +23,23 @@ const Invoice = Immutable.Record({
 
 export default function(state, action) {
     if (typeof state === 'undefined') {
-        return Immutable.Map({
+        return {
             isFetching: false,
-            items: Immutable.List()
-        });
+            items: []
+        };
     }
 
-    switch(action) {
+    switch(action.type) {
+        case 'NEW_CONTRACT':
+            var contract = Object.assign({}, CONTRACT, {
+                id: '?' + (+new Date())
+            });
+            var items = state.items.slice(0);
+            items.push(contract);
+            return Object.assign({}, state, {
+                items
+            });
+
         default:
             return state;
     }

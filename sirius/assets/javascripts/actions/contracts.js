@@ -2,7 +2,7 @@ import fetch from '../fetch';
 
 export function fetchContracts() {
     function shouldFetch(contracts) {
-        return !contracts.get('isFetching') && contracts.get('items').size === 0;
+        return !contracts.isFetching && contracts.items.length === 0;
     }
 
     return function(dispatch, getState) {
@@ -30,5 +30,11 @@ export function receivedContracts(contracts) {
     return {
         type: 'RECEIVED_CONTRACTS',
         items: contracts
+    }
+}
+
+export function newContract() {
+    return {
+        type: 'NEW_CONTRACT'
     }
 }
