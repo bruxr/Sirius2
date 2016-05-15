@@ -27,6 +27,17 @@ label {
     margin-left: -1rem;
 }
 
+/* Forms */
+label {
+    font-weight: bold;
+}
+
+label input,
+label textarea,
+label select {
+    font-weight: normal;
+}
+
 /* Buttons */
 .pure-button.pure-button-primary:hover {
     color: #fff;
@@ -86,6 +97,18 @@ label {
     border: 1px solid #ccc;
 }
 
+.contract .contract-form {
+    display: none;
+}
+
+.contract.editing .contract-display {
+    display: none;
+}
+
+.contract.editing .contract-form {
+    display: block;
+}
+
 .contract-header, .contract-actions {
     margin: 15px;
 }
@@ -128,6 +151,23 @@ label {
 .contract-total {
     color: #777;
     text-align: right;
+}
+
+.contract-form fieldset {
+    padding: 0 15px;
+}
+
+.contract-form fieldset:first-child {
+    padding-top: 15px;
+}
+
+.contract-form fieldset:last-child {
+    padding-bottom: 15px;
+}
+
+.contract-form input,
+.contract-form textarea {
+    width: 100%;
 }
 
 /* Files */
