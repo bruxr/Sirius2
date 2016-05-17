@@ -8,6 +8,7 @@ api_version: 1
 threadsafe: yes
 
 env_variables:
+  APP_KEY: # 32 bytes
   FRESHBOOKS_URL: 
   FRESHBOOKS_TOKEN: 
   SENTRY_KEY: 
