@@ -7,6 +7,13 @@ runtime: python27
 api_version: 1
 threadsafe: yes
 
+env_variables:
+  FRESHBOOKS_URL: 
+  FRESHBOOKS_TOKEN: 
+  SENTRY_KEY: 
+  SENTRY_ORG: 
+  SENTRY_TEAM: 
+
 # Handlers define how to route requests to your application.
 handlers:
 
