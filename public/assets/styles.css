@@ -39,6 +39,10 @@ label select {
 }
 
 /* Buttons */
+.pure-button:hover {
+    color: #444;
+}
+
 .pure-button.pure-button-primary:hover {
     color: #fff;
 }
