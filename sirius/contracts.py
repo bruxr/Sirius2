@@ -48,7 +48,7 @@ def create(project_id):
     for invoice in body['invoices']:
         amount = int(invoice['amount'])
         invoice_total += amount
-        invoices.append((None, invoice['name'], None, amount))
+        invoices.append((None, invoice['name'], 0, amount))
 
     if body['name'].strip() == '':
         return (jsonify({'error': 'Provide a contract name.'}), 400)
