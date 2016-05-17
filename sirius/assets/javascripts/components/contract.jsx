@@ -5,9 +5,10 @@ export default class Contract extends React.Component {
     
     constructor(props) {
         super(props);
+
         this.state = {
             isEditing: this.isNew
-        }
+        };
     }
 
     render() {
@@ -18,10 +19,26 @@ export default class Contract extends React.Component {
 
         let nameId = 'name-' + this.props.id;
         let descId = 'desc-' + this.props.id;
+        let invoices = '';
+
+        if (this.props.invoices.length === 0) {
+            invoices = <tr>
+                <td colSpan="4" className="contract-empty-state empty-state">No invoices yet.</td>
+            </tr>
+        } else {
+            invoices = this.props.invoices.map(invoice => {
+                return <tr className="contract-invoice-row">
+                    <th>Part 1</th>
+                    <td>Paid</td>
+                    <td>$250</td>
+                    <td>$250</td>
+                </tr>
+            });
+        }
 
         return (
             <div className={classes.join(' ')}>
-                <div className="contract-display">
+                <form className="pure-form pure-form-stacked">
                     <header className="contract-header">
                         <h3 className="contract-name">Theme Build</h3>
                         <div className="contract-desc">Lorem Ipsum asdkasdna</div>
@@ -31,6 +48,16 @@ export default class Contract extends React.Component {
                             <li>Ended 1h ago</li>
                         </ul>
                     </header>
+
+                    <fieldset>
+                        <label htmlFor={nameId}>Name</label>
+                        <input type="text" id={nameId} data-key="name" autoFocus />
+                    </fieldset>
+                    <fieldset>
+                        <label htmlFor={descId}>Description</label>
+                        <textarea id={descId} data-key="desc"></textarea>
+                    </fieldset>
+
                     <table className="contract-table pure-table pure-table-horizontal">
                         <thead>
                             <tr>
@@ -38,64 +65,13 @@ export default class Contract extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr className="contract-invoice-row">
-                                <th>Part 1</th>
-                                <td>Paid</td>
-                                <td>$250</td>
-                                <td>$250</td>
-                            </tr>
-                            <tr className="contract-invoice-row">
-                                <th>Part 2</th>
-                                <td>Sent</td>
-                                <td>$0</td>
-                                <td>$250</td>
-                            </tr>
-                            <tr className="contract-invoice-row">
-                                <th>Part 3 <a href="#" className="contract-invoice-action">Send</a></th>
-                                <td>Saved</td>
-                                <td>$0</td>
-                                <td>$250</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td>$250</td>
-                                <td>$750</td>
-                            </tr>
+                            {invoices}
                         </tbody>
                     </table>
                     <ul className="contract-actions">
                         <li><a href="#" className="pure-button">Start Time</a></li>
                         <li><a href="#" className="pure-button-link">Edit</a></li>
                     </ul>
-                </div>
-                <form className="contract-form pure-form pure-form-stacked">
-                    <fieldset>
-                        <label htmlFor={nameId}>Name</label>
-                        <input type="text" id={nameId} autoFocus />
-                    </fieldset>
-                    <fieldset>
-                        <label htmlFor={descId}>Description</label>
-                        <textarea id={descId}></textarea>
-                    </fieldset>
-                    <table className="contract-table pure-table pure-table-horizontal">
-                        <thead>
-                            <tr>
-                                <th colSpan="4">Invoices</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr className="contract-invoice-row">
-                                <td><input type="text" placeholder="Invoice Name" /></td>
-                                <td><input type="number" min="0" placeholder="Amount" /></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>$0</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <fieldset><button className="pure-button pure-button-primary">Save Changes</button></fieldset>
                 </form>
             </div>
         )
@@ -103,6 +79,33 @@ export default class Contract extends React.Component {
 
     isNew() {
         return this.props.id.charAt(0) === '?';
+    }
+
+    createEmptyInvoice() {
+        let invoices = this.state.invoices;
+        invoices.push([invoices.length, '', '']);
+        this.setState({
+            invoices
+        });
+    }
+
+    addInvoice(e) {
+        e.preventDefault();
+        this.createEmptyInvoice();
+    }
+
+    updateTotal(e) {
+        let invoicesTotal = 0;
+        let amounts = document.getElementsByClassName('invoice-amount');
+        for (let i = 0; i < amounts.length; i++) {
+            let amt = parseInt(amounts[i].value);
+            if (!isNaN(amt)) {
+                invoicesTotal += amt;
+            }
+        }
+        this.setState({
+            invoicesTotal
+        });
     }
 
 }
