@@ -1,6 +1,6 @@
 import os
 from refreshbooks import api
-from sirius.models import Contract, Project
+from sirius.models import Contract, Invoice, Project
 from sirius.errors import RecordNotFoundError
 
 freshbooks = api.TokenClient(
@@ -22,12 +22,12 @@ def freshbooks_sync(data):
         raise RecordNotFoundError('Contract', contract_id)
 
     for invoice in contract.invoices:
-        name = '{0} - {1}'.format(contract.name, invoice[1])
-        if invoice[0] is None:
-            invoice_id = _create_invoice(name, invoice[3], notes=project.url)
+        name = '{0} - {1}'.format(contract.name, invoice.name)
+        if invoice.freshbooks_id is None:
+            invoice.freshbooks_id = _create_invoice(name, invoice.amount, notes=project.url)
+            invoice.status = 1
         else:
-            invoice_id = _update_invoice(invoice[1], name, invoice[3], notes=project.url)
-        invoice = (invoice_id, invoice[1], 1, invoice[3])
+            _update_invoice(invoice.freshbooks_id, name, invoice.amount, notes=project.url)
 
     contract.put()
 

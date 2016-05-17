@@ -2,6 +2,23 @@ import json
 from crypt import encrypt, decrypt
 from google.appengine.ext import ndb
 
+class Invoice(ndb.Model):
+    """Represents a single invoice under a Contract.
+
+    Invoices are not persisted as full-fledged entities in the Datastore.
+    Instead they are saved under their parent contracts.
+
+    Properties:
+        freshbooks_id -- Freshbooks invoice ID
+        name -- invoice name
+        amount -- invoice amount, in cents
+        status -- invoice status. 0 - waiting, 1 - saved, 2 - sent, 3 - paid
+    """
+    freshbooks_id = ndb.IntegerProperty(default=None)
+    name = ndb.StringProperty(required=True)
+    amount = ndb.IntegerProperty(required=True)
+    status = ndb.IntegerProperty(default=0)
+
 class Contract(ndb.Model):
     """Represents a single contract. Contracts are created
     for a single work order and encapsulates invoices.
@@ -24,7 +41,7 @@ class Contract(ndb.Model):
     alloted_time = ndb.IntegerProperty(default=None, indexed=False)
     rate = ndb.IntegerProperty(default=None, indexed=False)
     rate_type = ndb.IntegerProperty(indexed=False)
-    invoices = ndb.JsonProperty(default=[])
+    invoices = ndb.LocalStructuredProperty(Invoice, repeated=True)
     started_at = ndb.DateTimeProperty(indexed=False)
     ended_at = ndb.DateTimeProperty(indexed=False)
 
@@ -51,9 +68,9 @@ class Contract(ndb.Model):
         for index, invoice in enumerate(self.invoices):
             json['invoices'].append({
                 'id': index,
-                'name': invoice[1],
-                'status': invoice[2],
-                'amount': invoice[3]
+                'name': invoice.name,
+                'status': invoice.status,
+                'amount': invoice.amount
             })
 
         if self.started_at is not None:

@@ -1,5 +1,5 @@
 from google.appengine.ext import ndb
-from models import Contract, Project
+from models import Contract, Invoice, Project
 from google.appengine.api import taskqueue
 from flask import abort, Blueprint, jsonify, request
 
@@ -46,9 +46,12 @@ def create(project_id):
     invoices = []
     invoice_total = 0
     for invoice in body['invoices']:
-        amount = int(invoice['amount'])
-        invoice_total += amount
-        invoices.append((None, invoice['name'], 0, amount))
+        amt = int(invoice['amount'])
+        invoices.append(Invoice(
+            name=invoice['name'],
+            amount=amt
+        ))
+        invoice_total += amt
 
     if body['name'].strip() == '':
         return (jsonify({'error': 'Provide a contract name.'}), 400)
