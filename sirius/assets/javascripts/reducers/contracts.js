@@ -1,3 +1,4 @@
+import moment from 'moment';
 import Immutable from 'immutable';
 
 const CONTRACT = {
@@ -30,6 +31,27 @@ export default function(state, action) {
     }
 
     switch(action.type) {
+        case 'RECEIVED_CONTRACTS':
+            var items = action.items.map(item => {
+                return Object.assign({}, CONTRACT, {
+                    id: item.id,
+                    name: item.name,
+                    description: item.description,
+                    amount: item.amount,
+                    time: item.time,
+                    allotedTime: item.alloted_time === null ? undefined : item.alloted_time,
+                    rate: item.rate === null ? undefined : item.rate,
+                    rateType: item.rate_type,
+                    invoices: item.invoices.slice(0),
+                    startedAt: item.started_at === null ? undefined : moment.utc(item.started_at),
+                    endedAt: item.ended_at === null ? undefined : moment.utc(item.ended_at)
+                });
+            });
+            return Object.assign({}, state, {
+                isFetching: false,
+                items
+            });
+
         case 'NEW_CONTRACT':
             var contract = Object.assign({}, CONTRACT, {
                 id: '?' + (+new Date())

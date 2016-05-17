@@ -13,25 +13,27 @@ export default class Contract extends React.Component {
 
     render() {
         let classes = ['contract'];
+        let nameId = 'name-' + this.props.id;
+        let descId = 'desc-' + this.props.id;
+        let time = typeof this.props.time === 'undefined' ? 'Not started yet.' : `${this.props.time} minutes`;
+        let started = typeof this.props.startedAt === 'undefined' ? '' : 'Started ' + this.props.startedAt.fromNow(true);
+        let ended = typeof this.props.endedAt === 'undefined' ? '' : 'Started ' + this.props.startedAt.fromNow(true);
+        let invoices = '';
+
         if (this.state.isEditing) {
             classes.push('editing');
         }
 
-        let nameId = 'name-' + this.props.id;
-        let descId = 'desc-' + this.props.id;
-        let invoices = '';
-
         if (this.props.invoices.length === 0) {
             invoices = <tr>
-                <td colSpan="4" className="contract-empty-state empty-state">No invoices yet.</td>
+                <td colSpan="3" className="contract-empty-state empty-state">No invoices yet.</td>
             </tr>
         } else {
             invoices = this.props.invoices.map(invoice => {
-                return <tr className="contract-invoice-row">
-                    <th>Part 1</th>
-                    <td>Paid</td>
-                    <td>$250</td>
-                    <td>$250</td>
+                return <tr key={invoice.id} className="contract-invoice-row">
+                    <th>{invoice.name}</th>
+                    <td>Status</td>
+                    <td>${invoice.amount}</td>
                 </tr>
             });
         }
@@ -40,12 +42,12 @@ export default class Contract extends React.Component {
             <div className={classes.join(' ')}>
                 <form className="pure-form pure-form-stacked">
                     <header className="contract-header">
-                        <h3 className="contract-name">Theme Build</h3>
-                        <div className="contract-desc">Lorem Ipsum asdkasdna</div>
+                        <h3 className="contract-name">{this.props.name}</h3>
+                        <div className="contract-desc">{this.props.description}</div>
                         <ul className="contract-meta">
-                            <li>Worked for 2h 5m</li>
-                            <li>Started 2d ago</li>
-                            <li>Ended 1h ago</li>
+                            <li>{time}</li>
+                            <li>{started}</li>
+                            <li>{ended}</li>
                         </ul>
                     </header>
 
