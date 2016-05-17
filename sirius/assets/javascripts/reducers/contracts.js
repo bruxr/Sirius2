@@ -36,7 +36,7 @@ export default function(state, action) {
                 return Object.assign({}, CONTRACT, {
                     id: item.id,
                     name: item.name,
-                    description: item.description,
+                    description: item.desc,
                     amount: item.amount,
                     time: item.time,
                     allotedTime: item.alloted_time === null ? undefined : item.alloted_time,

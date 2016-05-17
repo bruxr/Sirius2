@@ -33,7 +33,7 @@ export default class Contracts extends React.Component {
                   key={contract.id}
                   id={contract.id}
                   name={contract.name}
-                  desc={contract.description}
+                  description={contract.description}
                   amount={contract.amount}
                   time={contract.time}
                   allottedTime={contract.allotedTime}
