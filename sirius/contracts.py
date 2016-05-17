@@ -1,7 +1,7 @@
 from google.appengine.ext import ndb
 from models import Contract, Project
 from google.appengine.api import taskqueue
-from flask import Blueprint, jsonify, request
+from flask import abort, Blueprint, jsonify, request
 
 blueprint = Blueprint('contracts', __name__)
 
