@@ -54,7 +54,7 @@ export default function(state, action) {
 
         case 'NEW_CONTRACT':
             var contract = Object.assign({}, CONTRACT, {
-                id: '?' + (+new Date())
+                id: (+new Date()) * -1
             });
             var items = state.items.slice(0);
             items.push(contract);

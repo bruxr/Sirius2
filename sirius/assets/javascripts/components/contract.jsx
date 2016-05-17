@@ -7,7 +7,7 @@ export default class Contract extends React.Component {
         super(props);
 
         this.state = {
-            isEditing: this.isNew
+            isEditing: this.isNew()
         };
     }
 
@@ -80,7 +80,7 @@ export default class Contract extends React.Component {
     }
 
     isNew() {
-        return this.props.id.charAt(0) === '?';
+        return this.props.id < 0;
     }
 
     createEmptyInvoice() {
@@ -113,7 +113,7 @@ export default class Contract extends React.Component {
 }
 
 File.propTypes = {
-    id: React.PropTypes.string,
+    id: React.PropTypes.number,
     name: React.PropTypes.string,
     description: React.PropTypes.string,
     amount: React.PropTypes.number,
