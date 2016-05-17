@@ -43,6 +43,17 @@ label select {
     color: #fff;
 }
 
+.pure-button-link, .pure-button-link:focus {
+    background: none;
+    color: #0078e7;
+}
+
+.pure-button-link:hover {
+    background: none;
+    color: #e91e63;
+    text-decoration: underline;
+}
+
 /* Page Header */
 .page-header  {
     margin-bottom: 30px;
@@ -131,6 +142,7 @@ label select {
 .contract-table {
     border-left: none;
     border-right: none;
+    margin: 15px 0;
     width: 100%;
 }
 
