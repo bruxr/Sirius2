@@ -27,7 +27,7 @@ def freshbooks_sync(data):
             invoice_id = _create_invoice(name, invoice[3], notes=project.url)
         else:
             invoice_id = _update_invoice(invoice[1], name, invoice[3], notes=project.url)
-        invoice = (invoice_id, invoice[1], 'saved', invoice[3])
+        invoice = (invoice_id, invoice[1], 1, invoice[3])
 
     contract.put()
 
