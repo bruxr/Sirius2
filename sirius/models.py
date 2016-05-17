@@ -18,15 +18,15 @@ class Contract(ndb.Model):
         ended_at -- the recent time when the time has stopped
     """
     name = ndb.StringProperty(required=True, indexed=False)
-    desc = ndb.TextProperty()
-    amount = ndb.IntegerProperty(default=0)
-    time = ndb.IntegerProperty(default=0)
-    alloted_time = ndb.IntegerProperty(default=None)
-    rate = ndb.IntegerProperty(default=None)
-    rate_type = ndb.IntegerProperty()
+    desc = ndb.TextProperty(indexed=False)
+    amount = ndb.IntegerProperty(default=0, indexed=False)
+    time = ndb.IntegerProperty(default=0, indexed=False)
+    alloted_time = ndb.IntegerProperty(default=None, indexed=False)
+    rate = ndb.IntegerProperty(default=None, indexed=False)
+    rate_type = ndb.IntegerProperty(indexed=False)
     invoices = ndb.JsonProperty(default=[])
-    started_at = ndb.DateTimeProperty()
-    ended_at = ndb.DateTimeProperty()
+    started_at = ndb.DateTimeProperty(indexed=False)
+    ended_at = ndb.DateTimeProperty(indexed=False)
 
     @classmethod
     def get_all(cls, project):
