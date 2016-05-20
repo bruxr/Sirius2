@@ -28,6 +28,11 @@ label {
 }
 
 /* Forms */
+.pure-form-stacked input,
+.pure-form-stacked textarea {
+    width: 100%;
+}
+
 label {
     font-weight: bold;
 }
@@ -69,6 +74,34 @@ label select {
 
 .page-header p {
     margin-top: 5px;
+}
+
+/* Modals */
+.modal-curtain {
+    background: rgba(0, 0, 0, 0.85);
+    height: 100vh;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    z-index: 15;
+}
+
+.modal {
+    background-color: #fff;
+    display: none;
+    max-height: 60vh;
+    left: 25vw;
+    overflow: auto;
+    padding: 15px;
+    position: fixed;
+    top: 20vh;
+    width: 50vw;
+    z-index: 20;
+}
+
+.modal h2 {
+    margin-top: 0;
 }
 
 /* Integrations */
