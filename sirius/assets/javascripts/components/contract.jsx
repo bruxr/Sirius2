@@ -5,10 +5,18 @@ export default class Contract extends React.Component {
     
     constructor(props) {
         super(props);
-
         this.state = {
-            isEditing: this.isNew()
+            isEditing: this.isNew(),
+            invoices: []
         };
+
+        this.state.invoices = this.props.invoices.map(invoice => {
+            return Object.assign({}, invoice);
+        });
+
+        this.addInvoice = this.addInvoice.bind(this);
+        this.edit = this.edit.bind(this);
+        this.cancelEdit = this.cancelEdit.bind(this);
     }
 
     render() {
@@ -24,18 +32,34 @@ export default class Contract extends React.Component {
             classes.push('editing');
         }
 
-        if (this.props.invoices.length === 0) {
+        if (this.state.invoices.length === 0) {
             invoices = <tr>
                 <td colSpan="3" className="contract-empty-state empty-state">No invoices yet.</td>
             </tr>
         } else {
-            invoices = this.props.invoices.map(invoice => {
+            invoices = this.state.invoices.map(invoice => {
                 return <tr key={invoice.id} className="contract-invoice-row">
-                    <th>{invoice.name}</th>
-                    <td>Status</td>
-                    <td>${invoice.amount}</td>
+                    <th className="invoice-display">{invoice.name}</th>
+                    <td className="invoice-display">Status</td>
+                    <td className="invoice-display">${invoice.amount}</td>
+                    <td className="invoice-input"><input type="text" data-key="name" defaultValue={invoice.name} placeholder="Invoice Name" /></td>
+                    <td className="invoice-input"><input type="number" data-key="amount" min="0" defaultValue={invoice.amount} placeholder="Invoice Amount" /></td>
                 </tr>
             });
+            invoices.push(<tr key="invoice-total">
+                <td className="invoice-display"></td>
+                <td className="invoice-display">Total</td>
+                <td className="invoice-display">${this.props.amount}</td>
+            </tr>);
+            invoices.push(<tr key="invoice-paid">
+                <td className="invoice-display"></td>
+                <td className="invoice-display">Paid</td>
+                <td className="invoice-display">$0</td>
+            </tr>);
+            invoices.push(<tr key="invoice-input-utils">
+                <td className="invoice-input-util"><a href="#" onClick={this.addInvoice}>Add Invoice</a></td>
+                <td className="invoice-input-util">{this.props.amount}</td>
+            </tr>);
         }
 
         return (
@@ -53,11 +77,11 @@ export default class Contract extends React.Component {
 
                     <fieldset>
                         <label htmlFor={nameId}>Name</label>
-                        <input type="text" id={nameId} data-key="name" autoFocus />
+                        <input type="text" id={nameId} data-key="name" defaultValue={this.props.name} required />
                     </fieldset>
                     <fieldset>
                         <label htmlFor={descId}>Description</label>
-                        <textarea id={descId} data-key="desc"></textarea>
+                        <textarea id={descId} data-key="desc" defaultValue={this.props.description}></textarea>
                     </fieldset>
 
                     <table className="contract-table pure-table pure-table-horizontal">
@@ -72,7 +96,11 @@ export default class Contract extends React.Component {
                     </table>
                     <ul className="contract-actions">
                         <li><a href="#" className="pure-button">Start Time</a></li>
-                        <li><a href="#" className="pure-button-link">Edit</a></li>
+                        <li><a href="#" className="pure-button-link" onClick={this.edit}>Edit</a></li>
+                    </ul>
+                    <ul className="contract-form-actions">
+                        <li><button className="pure-button">Save Changes</button></li>
+                        <li><a href="#" className="pure-button-link" onClick={this.cancelEdit}>Cancel</a></li>
                     </ul>
                 </form>
             </div>
@@ -83,17 +111,18 @@ export default class Contract extends React.Component {
         return this.props.id < 0;
     }
 
-    createEmptyInvoice() {
+    addInvoice(e) {
+        e.preventDefault();
         let invoices = this.state.invoices;
-        invoices.push([invoices.length, '', '']);
+        invoices.push({
+            amount: '',
+            id: invoices.length * -1,
+            name: '',
+            status: 0
+        });
         this.setState({
             invoices
         });
-    }
-
-    addInvoice(e) {
-        e.preventDefault();
-        this.createEmptyInvoice();
     }
 
     updateTotal(e) {
@@ -107,6 +136,20 @@ export default class Contract extends React.Component {
         }
         this.setState({
             invoicesTotal
+        });
+    }
+
+    edit(e) {
+        e.preventDefault();
+        this.setState({
+            isEditing: true
+        });
+    }
+
+    cancelEdit(e) {
+        e.preventDefault();
+        this.setState({
+            isEditing: false
         });
     }
 

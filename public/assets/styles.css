@@ -110,30 +110,61 @@ label select {
 
 .contract {
     border: 1px solid #ccc;
+    padding: 15px 0;
 }
 
-.contract .contract-form {
+.contract fieldset,
+.contract .invoice-input,
+.contract .invoice-input-util,
+.contract .contract-form-actions {
     display: none;
 }
 
-.contract.editing .contract-display {
-    display: none;
-}
-
-.contract.editing .contract-form {
+.contract.editing fieldset,
+.contract.editing .contract-form-actions {
     display: block;
 }
 
-.contract-header, .contract-actions {
+.contract.editing .invoice-input,
+.contract.editing .invoice-input-util {
+    display: table-cell;
+}
+
+.contract.editing .contract-header,
+.contract.editing .invoice-display,
+.contract.editing .contract-actions {
+    display: none;
+}
+
+.contract input,
+.contract textarea {
+    width: 100%;
+}
+
+.contract-header,
+.contract-actions,
+.contract-form-actions {
     margin: 15px;
 }
 
-.contract-meta, .contract-actions {
+.contract-header {
+    margin-top: 0;
+}
+
+.contract-name {
+    margin-top: 0;
+}
+
+.contract-meta,
+.contract-actions,
+.contract-form-actions {
     list-style-type: none;
     padding: 0;
 }
 
-.contract-meta li, .contract-actions li {
+.contract-meta li,
+.contract-actions li,
+.contract-form-actions li {
     display: inline-block;
     margin-right: 15px;
 }
@@ -169,21 +200,8 @@ label select {
     text-align: right;
 }
 
-.contract-form fieldset {
+.contract fieldset {
     padding: 0 15px;
-}
-
-.contract-form fieldset:first-child {
-    padding-top: 15px;
-}
-
-.contract-form fieldset:last-child {
-    padding-bottom: 15px;
-}
-
-.contract-form input,
-.contract-form textarea {
-    width: 100%;
 }
 
 /* Files */
