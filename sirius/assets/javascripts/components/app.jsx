@@ -6,7 +6,7 @@ import Snapshots from './snapshots.jsx';
 export default class App extends React.Component {
     
     constructor(props) {
-        super(props)
+        super(props);
     }
 
     render() {
@@ -19,4 +19,8 @@ export default class App extends React.Component {
         )
     }
 
+}
+
+App.contextTypes = {
+    store: React.PropTypes.object
 }
