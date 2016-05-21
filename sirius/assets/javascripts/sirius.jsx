@@ -6,12 +6,6 @@ import App from './components/app.jsx';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
-import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router'
-
-import Overview from './components/overview.jsx';
-import Integrations from './components/integrations.jsx';
-import Contracts from './components/contracts.jsx';
-import Files from './components/files.jsx';
 
 import reducers from './reducers/reducers';
 import { Project } from './reducers/project';
