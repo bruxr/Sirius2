@@ -1,32 +1,87 @@
 import React from 'react';
-import { Link } from 'react-router';
 
-export default React.createClass({
-    contextTypes: {
-        store: React.PropTypes.object
-    },
-  
-    getInitialState: function() {
-        return sirius_project;
-    },
-  
-    render: function() {
-        return (
-            <div className="project-app">
-                <header className="main-header">
-                    <nav className="pure-menu pure-menu-horizontal">
-                        <h3 className="pure-menu-heading pure-menu-link">{this.state.name}</h3>
-                        <ul className="pure-menu-list">
-                            <li className="pure-menu-item"><Link to={`/a/${this.state.id}`} className="pure-menu-link">Overview</Link></li>
-                            <li className="pure-menu-item"><Link to={`/a/${this.state.id}/integrations`} className="pure-menu-link">Integrations</Link></li>
-                            <li className="pure-menu-item"><Link to={`/a/${this.state.id}/contracts`} className="pure-menu-link">Contracts</Link></li>
-                            <li className="pure-menu-item"><Link to={`/a/${this.state.id}/files`} className="pure-menu-link">Files</Link></li>
-                            <li className="pure-menu-item"><Link to={`/a/${this.state.id}/settings`} className="pure-menu-link">Settings</Link></li>
-                        </ul>
-                    </nav>
-                </header>
-                {this.props.children}
-            </div>
-        );
+export default class App extends React.Component {
+    
+    constructor(props) {
+        super(props)
     }
-});
+
+    render() {
+        return (
+            <div className="project">
+                <section className="project-section project-section_main">
+                    <div className="row">
+                        <div className="col-md-8">
+                            <h1>Sirius</h1>
+                            <a href="#" className="project-url">sirius.com</a>
+                        </div>
+                        <div className="col-md-4">
+                            <a href="#" className="btn btn-primary">Deploy</a>
+                            <a href="#" className="btn btn-secondary">Snapshot</a>
+                            <div className="dropdown">
+                                <a href="#" className="btn btn-secondary dropdown-toggle">Project</a>
+                                <div className="dropdown-menu">
+                                    <a href="#" className="dropdown-item">Edit SFTP</a>
+                                    <a href="#" className="dropdown-item">Edit Repository</a>
+                                    <a href="#" className="dropdown-item">Archive Project</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="project-desc">
+                        A very sirius project
+                    </div>
+
+                    <div className="project-meta">
+                        <small className="text-muted">
+                            Last updated 2 hours ago &middot; 
+                            Created 1 week ago
+                        </small>
+                    </div>
+                </section>
+
+                <section className="project-section project-section_repo">
+                    <h2>Repository</h2>
+                    <dl>
+                        <dt>URL</dt>
+                        <dd><a href="#">bitbucket.com/bruxr/Sirius</a></dd>
+                        <dt>Last Commit</dt>
+                        <dd><a href="#">5ac32a</a> 30 minutes ago</dd>
+                    </dl>
+                </section>
+
+                <section className="project-section project-section_snapshots">
+                    <h2>Snapshots</h2>
+                    <table className="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Filename</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Size</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row"><a href="#">192835-050216-snapshot.zip</a></th>
+                                <td>May 2 2016</td>
+                                <td>1.2 MB</td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><a href="#">192835-050416-snapshot.zip</a></th>
+                                <td>May 4 2016</td>
+                                <td>1.3 MB</td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><a href="#">192835-050616-snapshot.zip</a></th>
+                                <td>May 6 2016</td>
+                                <td>1 MB</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        )
+    }
+
+}
