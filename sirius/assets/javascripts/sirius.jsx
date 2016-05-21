@@ -46,14 +46,7 @@ class Sirius {
     _render() {
         render(
             <Provider store={this.store}>
-                <Router history={browserHistory}>
-                    <Route path={`/a/${sirius_project.id}`} component={App}>
-                        <IndexRoute component={Overview} />
-                        <Route path="integrations" component={Integrations} />
-                        <Route path="contracts" component={Contracts} />
-                        <Route path="files" component={Files} />
-                    </Route>
-                </Router>
+                <App />
             </Provider>
         , document.getElementById('project'));
     }

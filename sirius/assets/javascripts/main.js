@@ -1,4 +1,4 @@
 import Sirius from './sirius.jsx';
 
-let sirius = new Sirius(sirius_project);
+let sirius = new Sirius(SIRIUS_PROJECT);
 sirius.start();
