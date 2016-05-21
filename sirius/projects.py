@@ -40,14 +40,8 @@ def create():
     desc = request.form['desc'].strip()
 
     project = Project(name=name, url=url, desc=desc)
-
-    @ndb.transactional
-    def insert_project():
-        project.put()
-        params = {'project_id': project.key.id()}
-        taskqueue.add(url='/work/sentry_setup', params=params, transactional=True)
-
-    insert_project()
+    project.put()
+    
     return redirect('/a/' + str(project.key.id()))
 
 @app.route('/a/<int:project_id>', methods=['GET'], defaults={'path': ''})
