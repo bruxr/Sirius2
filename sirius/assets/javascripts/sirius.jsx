@@ -8,24 +8,25 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 
 import reducers from './reducers/reducers';
-import { Project } from './reducers/project';
 
 class Sirius {
 
     // Constructor. setups the app.
-    constructor(project) {
-        let logger = createLogger({ collapsed: true });
-        let projectObj = new Project({
-            id: project.id,
-            name: project.name,
-            description: project.desc,
-            createdAt: moment.utc(project.created),
-            updatedAt: moment.utc(project.updated)
+    constructor(proj) {
+        const logger = createLogger({
+            collapsed: true
         });
+        const project = {
+            id: proj.id,
+            name: proj.name,
+            description: proj.desc,
+            createdAt: moment.utc(proj.created),
+            updatedAt: moment.utc(proj.updated)
+        };
 
         this.store = createStore(
             reducers,
-            { project: projectObj },
+            { project },
             applyMiddleware(thunk, logger)
         );
     }
