@@ -14,11 +14,11 @@ export default class Details extends React.Component {
                     <div className="project-header__actions">
                         <button className="btn_primary">Deploy</button>
                         <button>Snapshot</button>
-                        <select>
-                            <option selected>Actions...</option>
-                            <option>SFTP Details</option>
-                            <option>Repository Details</option>
-                            <option>Archive Project</option>
+                        <select defaultValue="">
+                            <option value="">Actions...</option>
+                            <option value="sftp">SFTP Details</option>
+                            <option value="repo">Repository Details</option>
+                            <option value="archive">Archive Project</option>
                         </select>
                     </div>
                 </div>
