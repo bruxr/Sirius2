@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 
+import addonsReducer from './addons';
 import routingReducer from './routing';
 import projectReducer from './project';
-import integrationsReducer from './integrations';
 import contractsReducer from './contracts';
 import filesReducer from './files';
 
