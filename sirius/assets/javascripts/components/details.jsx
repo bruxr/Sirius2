@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 
 export default class Details extends React.Component {
 
@@ -7,8 +8,8 @@ export default class Details extends React.Component {
             <section className="project-section project-section_main">
                 <div className="row">
                     <div className="col-md-8">
-                        <h1>Sirius</h1>
-                        <a href="#" className="project-url">sirius.com</a>
+                        <h1>{this.props.name}</h1>
+                        <a href={this.props.url} className="project-url" target="_blank" rel="noopener noreferrer">{this.cleanUrl(this.props.url)}</a>
                     </div>
                     <div className="col-md-4">
                         <a href="#" className="btn btn-primary">Deploy</a>
@@ -37,5 +38,19 @@ export default class Details extends React.Component {
             </section>
         );
     }
+
+    cleanUrl(url) {
+        url = url.replace(/^https?:\/\//, '');
+        url = url.replace(/\/$/, '');
+        return url;
+    }
     
+}
+
+Details.propTypes = {
+    name: React.PropTypes.string,
+    desc: React.PropTypes.string,
+    url: React.PropTypes.string,
+    updated: React.PropTypes.instanceOf(moment),
+    created: React.PropTypes.instanceOf(moment)
 }

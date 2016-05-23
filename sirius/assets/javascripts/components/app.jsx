@@ -4,21 +4,28 @@ import Repository from './repository.jsx';
 import Snapshots from './snapshots.jsx';
 
 export default class App extends React.Component {
-    
-    constructor(props) {
-        super(props);
-    }
 
     render() {
+        const project = this.props.project;
         return (
             <div className="project">
-                <Details />
+                <Details
+                    name={project.name}
+                    desc={project.desc}
+                    url={project.url}
+                    created={project.created}
+                    updated={project.updated}
+                />
                 <Repository />
                 <Snapshots />
             </div>
         )
     }
 
+}
+
+App.propTypes = {
+    project: React.PropTypes.object
 }
 
 App.contextTypes = {
