@@ -2,6 +2,34 @@ import json
 from crypt import encrypt, decrypt
 from google.appengine.ext import ndb
 
+class Addon(ndb.Model):
+    """Represents a single project add-on.
+
+    Properties:
+        kind -- type/kind of add-on.
+        data -- add-on data or details.
+    """
+    kind = ndb.StringProperty(required=True, indexed=False)
+    data = ndb.TextProperty()
+
+    @classmethod
+    def get_all(cls, project):
+        return cls.query(ancestor=project).fetch()
+
+    def data(self, data=None):
+        if data:
+            data = json.dumps(data)
+            self.data = encrypt(data)
+        else:
+            return decrypt(self.data)
+
+    def json(self):
+        return {
+            'id': self.key.id(),
+            'kind': self.kind,
+            'data': self.data()
+        }
+
 class Invoice(ndb.Model):
     """Represents a single invoice under a Contract.
 
@@ -120,38 +148,11 @@ class File(ndb.Model):
             'date': self.date.isoformat()
         }
 
-class Integration(ndb.Model):
-    kind = ndb.StringProperty(required=True, indexed=False)
-    data = ndb.TextProperty()
-
-    @classmethod
-    def get_all(cls, project):
-        return cls.query(ancestor=project).fetch()
-
-    def set_data(self, data):
-        self._data = data
-
-        if not isinstance(data, basestring):
-            data = json.dumps(data)
-        self.data = encrypt(data)
-
-    def get_data(self):
-        if not hasattr(self, '_data'):
-            self._data = decrypt(self.data)
-            self._data = json.loads(self._data)
-
-        return self._data
-
-    def json(self):
-        return { 'id': self.key.id(), 'kind': self.kind, 'data': self.get_data() }
-
 class Project(ndb.Model):
     name = ndb.StringProperty(required=True, indexed=False)
     url = ndb.TextProperty(required=True)
     desc = ndb.TextProperty()
     status = ndb.IntegerProperty(choices=[0, 1], indexed=False, default=1)
-    sftp = ndb.TextProperty()
-    repo = ndb.TextProperty()
     commit = ndb.StringProperty(indexed=False)
     created = ndb.DateTimeProperty(auto_now_add=True, indexed=False)
     updated = ndb.DateTimeProperty(auto_now=True)
@@ -159,66 +160,6 @@ class Project(ndb.Model):
     @classmethod
     def get_all(cls):
         return cls.query().order(-cls.updated)
-
-    def sftp(self, **kwargs):
-        """Retrieves or sets the SFTP credentials of a project.
-
-        Invoke with no arguments to retrieve the credentials or
-        pass the following to overwrite the credentials.
-
-        Arguments:
-            host -- host
-            user -- user
-            pass -- password
-            port -- optional port. defaults to 22
-            path -- optional path. defaults to '/'
-        """
-        if kwargs:
-            creds = {
-                'host': kwargs['host'],
-                'user': kwargs['user'],
-                'pass': kwargs['pass']
-            }
-
-            if 'port' in kwargs:
-                creds['port'] = kwargs['port']
-
-            if 'path' in kwargs:
-                creds['path'] = kwargs['path']
-
-            self.sftp = encrypt(json.dumps(creds))
-        else:
-            if self.sftp:
-                return decrypt(self.sftp)
-            else:
-                return None
-
-    def repo(self, **kwargs):
-        """Retrieves or sets the project's repository details.
-
-        Invoke with no argument to retrieve the details or
-        pass the following args to overwrite the project's
-        repository details.
-
-        Arguments:
-            url -- repository URL
-            last_commit -- last deployed commit
-            last_commit_date -- date of last deploy commit
-        """
-        if kwargs:
-            details = decrypt(self.rep)
-
-            fields = ['url', 'last_commit', 'last_commit_date']
-            for field in fields:
-                if field in kwargs:
-                    details[field] = kwargs[field]
-
-            self.repo = encrypt(details)
-        else:
-            if self.repo:
-                return decrypt(self.repo)
-            else:
-                return None
 
     def path(self):
         return '/projects/' + str(self.key.id())

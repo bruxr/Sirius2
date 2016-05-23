@@ -2,7 +2,7 @@ import files
 import worker
 import projects
 import contracts
-import integrations
+import addons
 from flask import Flask
 
 # Initialize app
@@ -10,7 +10,7 @@ app = Flask('sirius')
 
 # Add blueprints
 app.register_blueprint(projects.app)
-app.register_blueprint(integrations.blueprint)
+app.register_blueprint(addons.blueprint)
 app.register_blueprint(files.blueprint)
 app.register_blueprint(worker.blueprint)
 app.register_blueprint(contracts.blueprint)
