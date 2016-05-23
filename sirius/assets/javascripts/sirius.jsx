@@ -16,18 +16,19 @@ class Sirius {
         const logger = createLogger({
             collapsed: true
         });
-        this.project = {
+        const project = {
             id: proj.id,
             name: proj.name,
             desc: proj.desc,
             url: proj.url,
+            status: proj.status,
             created: moment.utc(proj.created),
             updated: moment.utc(proj.updated)
         };
 
         this.store = createStore(
             reducers,
-            { project: this.project },
+            { project },
             applyMiddleware(thunk, logger)
         );
     }
@@ -40,9 +41,10 @@ class Sirius {
 
     // Performs rendering.
     _render() {
+        const project = this.store.getState().project;
         render(
             <Provider store={this.store}>
-                <App project={this.project} />
+                <App project={project} />
             </Provider>
         , document.getElementById('project'));
     }
