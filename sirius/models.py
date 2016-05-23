@@ -74,7 +74,6 @@ class Project(ndb.Model):
     url = ndb.TextProperty(required=True)
     desc = ndb.TextProperty()
     status = ndb.IntegerProperty(choices=[0, 1], indexed=False, default=1)
-    commit = ndb.StringProperty(indexed=False)
     created = ndb.DateTimeProperty(auto_now_add=True, indexed=False)
     updated = ndb.DateTimeProperty(auto_now=True)
 
