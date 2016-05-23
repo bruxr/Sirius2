@@ -1,7 +1,7 @@
 import os
 import json
 from google.appengine.ext import ndb
-from models import Project, Integration
+from models import Project
 from google.appengine.api import app_identity, taskqueue, urlfetch
 from flask import Blueprint, abort, redirect, render_template, request, url_for
 
