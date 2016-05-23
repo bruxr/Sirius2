@@ -5,3 +5,11 @@ body {
 .project-section {
     margin-bottom: 30px;
 }
+
+.project-actions .btn {
+    margin-right: 5px;
+}
+
+.project-actions .dropdown {
+    display: inline-block;
+}

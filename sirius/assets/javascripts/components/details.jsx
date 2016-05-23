@@ -7,11 +7,11 @@ export default class Details extends React.Component {
         return (
             <section className="project-section project-section_main">
                 <div className="row">
-                    <div className="col-md-8">
+                    <div className="col-md-7">
                         <h1>{this.props.name}</h1>
                         <a href={this.props.url} className="project-url" target="_blank" rel="noopener noreferrer">{this.cleanUrl(this.props.url)}</a>
                     </div>
-                    <div className="col-md-4">
+                    <div className="project-actions col-md-5">
                         <a href="#" className="btn btn-primary">Deploy</a>
                         <a href="#" className="btn btn-secondary">Snapshot</a>
                         <div className="dropdown">
