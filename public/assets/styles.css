@@ -1,15 +1,95 @@
+/* Base */
 body {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #111;
+    font: 15px sans-serif;
 }
 
+a {
+    color: #2196f3;
+}
+
+a:hover {
+    color: #ff4081;
+}
+
+button {
+    cursor: pointer;
+}
+
+dt {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+dd {
+    margin-bottom: 10px;
+    margin-left: 15px;
+}
+
+/* Tables */
+table {
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+    border-spcing: 0;
+    width: 100%;
+}
+
+table thead {
+    background-color: #eee;
+}
+
+table th,
+table td {
+    border: 0;
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+.btn_primary {
+    font-weight: bold;
+}
+
+.text-muted {
+    color: #888;
+}
+
+/* Layout */
+.wrap {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 800px;
+}
+
+/* Project */
 .project-section {
     margin-bottom: 30px;
 }
 
-.project-actions .btn {
+/* Project details */
+.project-header {
+    margin-bottom: 15px;
+    display: flex;
+}
+
+.project-header > div {
+    width: 50%;
+}
+
+.project-header__name {
+    font-size: 2rem;
+    margin: 0 0 5px 0;
+}
+
+.project-header__actions {
+    padding-top: 1rem;
+    text-align: right;
+}
+
+.project-header__actions button {
     margin-right: 5px;
 }
 
-.project-actions .dropdown {
-    display: inline-block;
+.project-desc {
+    margin-bottom: 15px;
 }

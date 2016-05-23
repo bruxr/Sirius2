@@ -6,22 +6,20 @@ export default class Details extends React.Component {
     render() {
         return (
             <section className="project-section project-section_main">
-                <div className="row">
-                    <div className="col-md-7">
-                        <h1>{this.props.name}</h1>
+                <div className="project-header">
+                    <div className="project-header__info">
+                        <h1 className="project-header__name">{this.props.name}</h1>
                         <a href={this.props.url} className="project-url" target="_blank" rel="noopener noreferrer">{this.cleanUrl(this.props.url)}</a>
                     </div>
-                    <div className="project-actions col-md-5">
-                        <a href="#" className="btn btn-primary">Deploy</a>
-                        <a href="#" className="btn btn-secondary">Snapshot</a>
-                        <div className="dropdown">
-                            <a href="#" className="btn btn-secondary dropdown-toggle">Project</a>
-                            <div className="dropdown-menu">
-                                <a href="#" className="dropdown-item">Edit SFTP</a>
-                                <a href="#" className="dropdown-item">Edit Repository</a>
-                                <a href="#" className="dropdown-item">Archive Project</a>
-                            </div>
-                        </div>
+                    <div className="project-header__actions">
+                        <button className="btn_primary">Deploy</button>
+                        <button>Snapshot</button>
+                        <select>
+                            <option selected>Actions...</option>
+                            <option>SFTP Details</option>
+                            <option>Repository Details</option>
+                            <option>Archive Project</option>
+                        </select>
                     </div>
                 </div>
 

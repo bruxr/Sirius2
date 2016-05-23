@@ -6,7 +6,7 @@ export default class Repository extends React.Component {
         return (
             <section className="project-section project-section_snapshots">
                 <h2>Snapshots</h2>
-                <table className="table table-bordered">
+                <table>
                     <thead>
                         <tr>
                             <th scope="col">Filename</th>
