@@ -6,6 +6,6 @@ import filesReducer from './files';
 
 export default combineReducers({
     project: projectReducer,
-    integrations: integrationsReducer,
+    addons: addonsReducer,
     files: filesReducer
 });
