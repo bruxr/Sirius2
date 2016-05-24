@@ -1,4 +1,4 @@
-export default function get(url, opts) {
+export function get(url, opts) {
 
     const headers = Object.assign({
         'Accept': 'application/json'
