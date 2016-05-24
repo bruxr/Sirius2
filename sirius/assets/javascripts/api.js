@@ -1,14 +1,16 @@
 export function get(url, opts) {
-
+    const o = Object.assign({
+        headers: {}
+    }, opts)
     const headers = Object.assign({
         'Accept': 'application/json'
-    }, opts.headers);
+    }, o.headers);
     const options = Object.assign({
         method: 'GET',
         mode: 'same-origin',
         credentials: 'same-origin',
         headers
-    }, opts);
+    }, o);
   
     return new Promise((resolve, reject) => {
         fetch(url, options).then(resp => {
