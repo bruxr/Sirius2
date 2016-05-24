@@ -7,7 +7,7 @@ export function deleteAddon(addonId) {
         if (addonId < 0) {
             dispatch(deletedAddon(addonId));
         } else {
-            return api.delete(`/projects/${projectId}/integrations/${addonId}`)
+            return api.delet(`/projects/${projectId}/integrations/${addonId}`)
                 .then(resp => {
                     dispatch(deletedAddon(addonId));
                 }, resp => {
@@ -92,13 +92,11 @@ export function saveAddon(id, kind, data) {
         let push;
         
         if (id < 0) {
-            push = fetch(`/projects/${projectId}/integrations`, {
-                method: 'POST',
+            push = api.post(`/projects/${projectId}/integrations`, {
                 body
             });
         } else {
-            push = fetch(`/projects/${projectId}/integrations/${id}`, {
-                method: 'PATCH',
+            push = api.patch(`/projects/${projectId}/integrations/${id}`, {
                 body
             });
         }
