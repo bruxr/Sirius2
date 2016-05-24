@@ -34,7 +34,7 @@ export default function(state, action) {
         case 'REQUEST_ADDONS':
             return state.set('isFetching', true);
 
-        case 'RECEIVE_INTEGRATIONS':
+        case 'RECEIVE_ADDONS':
             var items = state.get('items').withMutations(items => {
                 for (item of action.items) {
                     let addon = new Addon({
@@ -47,7 +47,7 @@ export default function(state, action) {
             });
             return state.set('items', items);
 
-        case 'CHANGED_INTEGRATION':
+        case 'CHANGED_ADDON':
             var items = state.get('items');
             var addon = items.get(action.addon.kind)
                             .set('data', action.addon.data);
