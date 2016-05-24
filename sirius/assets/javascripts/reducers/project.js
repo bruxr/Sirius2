@@ -15,24 +15,7 @@ export const Project = Immutable.Record({
 export default function(state, action) {
     if (_.isUndefined(state)) {
         return new Project();  
-    }
-  
-    switch (action.type) {
-
-        case 'LOAD_PROJECT':
-            const project = action.project;
-            return new Project({
-                id: project.id,
-                name: project.name,
-                url: project.url,
-                desc: project.desc,
-                status: project.status,
-                createdAt: moment.utc(project.created),
-                updatedAt: moment.utc(project.updated)
-            });
-
-        default:
-            return state;
-
+    } else {
+        return state;
     }
 }
