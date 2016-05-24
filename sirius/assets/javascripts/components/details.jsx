@@ -8,8 +8,8 @@ const Details = (props) =>
                 <a href={props.project.url} className="project-url" target="_blank" rel="noopener noreferrer">{props.project.url.replace(/^https?:\/\//, '').replace(/\/$/, '')}</a>
             </div>
             <div className="project-header__actions">
-                <button className="btn_primary">Deploy</button>
-                <button>Snapshot</button>
+                <button className="btn_primary" disabled>Deploy</button>
+                <button disabled>Snapshot</button>
                 <select defaultValue="">
                     <option value="">Actions...</option>
                     <option value="sftp">SFTP Details</option>
