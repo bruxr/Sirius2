@@ -5,7 +5,7 @@ import createLogger from 'redux-logger';
 import App from './components/app.jsx';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import Project from './reducers/project';
+import { Project } from './reducers/project';
 import { createStore, applyMiddleware } from 'redux';
 import reducers from './reducers/reducers';
 
