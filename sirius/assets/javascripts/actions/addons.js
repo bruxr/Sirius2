@@ -51,7 +51,7 @@ export function fetchAddons() {
   
     return function(dispatch, getState) {
         const state = getState();
-        const projectId = state.project.id;
+        const projectId = state.project.get('id');
         if (shouldFetch(state)) {
             dispatch(fetchingAddons());
             return api.get(`/projects/${projectId}/addons`)
