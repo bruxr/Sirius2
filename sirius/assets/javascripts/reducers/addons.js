@@ -28,14 +28,8 @@ export default function(state, action) {
                 id: action.id,
                 kind: action.kind
             });
-            var items = state.get('items');
-            if (items.has(addon.kind)) {
-                throw new Error(`Addon ${addon.kind} already exists for project.`);
-                return state;
-            } else {
-                items = items.set(addon.kind, addon);
-                return state.set('items', items);
-            }
+            var items = state.get('items').set(addon.kind, addon);
+            return state.set('items', items);
 
         case 'REQUEST_ADDONS':
             return state.set('isFetching', true);
