@@ -25,7 +25,7 @@ export default function(state, action) {
 
         case 'NEW_ADDON':
             var addon = new Addon({
-                id: (+new Date()) * -1,
+                id: action.id,
                 kind: action.kind
             });
             var items = state.get('items');

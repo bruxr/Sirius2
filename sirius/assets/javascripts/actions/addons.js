@@ -32,9 +32,11 @@ export function deletedAddon(id) {
 }
 
 export function newAddon(kind) {
+    const id = (+new Date()) * -1;
     return {
         type: 'NEW_ADDON',
-        kind
+        kind,
+        id
     }
 }
 
