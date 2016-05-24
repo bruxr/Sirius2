@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { fetchAddons } from '../actions/addons';
 import Details from '../components/details.jsx';
 
 const mapStateToProps = (state) => {
@@ -8,6 +9,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
+    dispatch(fetchAddons());
     return {
         
     }
