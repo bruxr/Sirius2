@@ -27,8 +27,8 @@ class Sirius {
 
     // Starts the app and renders the component hierarchy.
     start() {
-        console.info('Sirius started.');
         this._render();
+        console.info('Sirius is ready...');
     }
 
     // Performs rendering.
