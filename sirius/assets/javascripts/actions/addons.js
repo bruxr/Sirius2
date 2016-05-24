@@ -1,4 +1,4 @@
-import api from '../api';
+import * as api from '../api';
 
 export function deleteAddon(addonId) {
     return function(dispatch, getState) {
