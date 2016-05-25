@@ -6,7 +6,7 @@ import App from './components/app.jsx';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { Project } from './reducers/project';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import reducers from './reducers/reducers';
 
 class Sirius {
@@ -25,11 +25,17 @@ class Sirius {
             createdAt: moment.utc(proj.created),
             updatedAt: moment.utc(proj.updated)
         });
+        const isDev = function() {
+            return window.devToolsExtension && document.location.hostname === 'localhost'
+        }
 
         this.store = createStore(
             reducers,
             { project },
-            applyMiddleware(thunk, logger)
+            compose(
+                applyMiddleware(thunk, logger),
+                isDev() ? window.devToolsExtension() : f => f
+            )
         );
     }
 
