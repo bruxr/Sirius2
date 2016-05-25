@@ -5,11 +5,15 @@ from google.appengine.ext import ndb
 class Addon(ndb.Model):
     """Represents a single project add-on.
 
+    The add-on type is stored as the entity's ID:
+        sftp = Addon(id='sftp')
+
+    This ensures that there can be no duplicate
+    addons under a project.
+
     Properties:
-        kind -- type/kind of add-on.
         data -- add-on data or details.
     """
-    kind = ndb.StringProperty(required=True, indexed=False)
     data = ndb.TextProperty()
 
     @classmethod
@@ -26,7 +30,6 @@ class Addon(ndb.Model):
     def json(self):
         return {
             'id': self.key.id(),
-            'kind': self.kind,
             'data': self.data()
         }
 

@@ -17,9 +17,9 @@ def index(project_id):
     if not project:
         return abort(404)
 
-    addons = []
-    for i in Addon.get_all(project.key):
-        addons.append(i.json())
+    addons = {}
+    for addon in Addon.get_all(project.key):
+        addons[addon.key.id()] = addon.json()
 
     return jsonify(addon=addons)
 
@@ -35,13 +35,17 @@ def create(project_id):
         return abort(404)
 
     body = request.get_json()
-    addon = Addon(parent=project.key)
-    addon.kind = body['kind'].strip()
+
+    addon = Addon.get_by_id(id=body['kind'], parent=parent.key)
+    if addon:
+        return ('Add-on already exists.', 409)
+
+    addon = Addon(id=body['kind'], parent=project.key)
     addon.data(body['data'])
     addon.put()
     return jsonify(addon=addon.json())
 
-@blueprint.route('/projects/<int:project_id>/addon/<int:addon>', methods=['PATCH'])
+@blueprint.route('/projects/<int:project_id>/addon/<addon_id>', methods=['PATCH'])
 def show(project_id, addon_id):
     """Update addon API.
     
@@ -54,7 +58,7 @@ def show(project_id, addon_id):
     if not project:
         return abort(404)
     
-    addon = Addon.get_by_id(long(addon_id), parent=project.key)
+    addon = Addon.get_by_id(addon_id, parent=project.key)
     if not addon:
         return abort(404)
 
@@ -63,7 +67,7 @@ def show(project_id, addon_id):
     addon.put()
     return jsonify(addon=addon.json())
 
-@blueprint.route('/projects/<int:project_id>/addon/<int:addon_id>', methods=['DELETE'])
+@blueprint.route('/projects/<int:project_id>/addon/<addon_id>', methods=['DELETE'])
 def destroy(project_id, addon_id):
     """Delete addon API.
     
@@ -74,7 +78,7 @@ def destroy(project_id, addon_id):
     if not project:
         return abort(404)
     
-    addon = Addon.get_by_id(long(addon_id), parent=project.key)
+    addon = Addon.get_by_id(addon_id, parent=project.key)
     if not addon:
         return abort(404)
 
