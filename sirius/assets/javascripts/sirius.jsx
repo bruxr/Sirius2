@@ -33,7 +33,7 @@ class Sirius {
             reducers,
             { project },
             compose(
-                applyMiddleware(thunk, logger),
+                applyMiddleware(thunk),
                 isDev() ? window.devToolsExtension() : f => f
             )
         );
