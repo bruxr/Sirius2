@@ -42,13 +42,7 @@ export function newAddon(kind) {
 
 export function fetchAddons() {
     function shouldFetch(state) {
-        let isFetching = state.addons.get('isFetching');
-        let itemCount = state.addons.get('items').size;
-        if (!isFetching && itemCount === 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return true
     }
   
     return function(dispatch, getState) {
