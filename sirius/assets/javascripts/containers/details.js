@@ -9,7 +9,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    dispatch(fetchAddons());
     return {
         
     }
