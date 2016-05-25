@@ -1,7 +1,6 @@
 import React from 'react';
 import moment from 'moment';
 import thunk from 'redux-thunk';
-import createLogger from 'redux-logger';
 import App from './components/app.jsx';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
@@ -13,9 +12,6 @@ class Sirius {
 
     // Constructor. setups the app.
     constructor(proj) {
-        const logger = createLogger({
-            collapsed: true
-        });
         const project = new Project({
             id: proj.id,
             name: proj.name,
