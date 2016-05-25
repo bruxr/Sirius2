@@ -1,6 +1,6 @@
 import React from 'react';
 import Details from '../containers/details';
-import Repository from './repository.jsx';
+import Repo from '../containers/repo';
 import Snapshots from './snapshots.jsx';
 
 export default class App extends React.Component {
@@ -9,7 +9,7 @@ export default class App extends React.Component {
         return (
             <div className="project">
                 <Details />
-                <Repository />
+                <Repo />
                 <Snapshots />
             </div>
         )
