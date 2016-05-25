@@ -9,26 +9,7 @@ const Sftp = Immutable.Record({
     path: '/'
 })
 
-const buildSftp = (addon) => {
-    const data = addon.data
-    const attrs = {
-        host: addon.host,
-        user: addon.user,
-        password: addon.pass,
-    }
-
-    if (!_.isUndefined(data.port)) {
-        attrs.port = data.port
-    }
-
-    if (!_.isUndefined(data.path)) {
-        attrs.path = data.path
-    }
-
-    return new Sftp(attrs)
-}
-
-const repoReducer = (state, action) => {
+const sftpReducer = (state, action) => {
     if (_.isUndefined(state)) {
         return Immutable.Map({
             isEditing: false,
@@ -39,13 +20,26 @@ const repoReducer = (state, action) => {
     switch ( action.type ) {
 
         case 'RECEIVED_ADDONS':
-            for (addon of action.items) {
-                if (addon.kind === 'sftp') {
-                    var sftp = buildSftp(addon)
-                    return state.set('object', sftp)
-                }
+            if (_.isUndefined(action.items['sftp'])) {
+                return state
             }
-            return state
+
+            var addon = action.items['sftp']
+            var attrs = attrs = {
+                host: addon.host,
+                user: addon.user,
+                password: addon.pass,
+            }
+
+            if (!_.isUndefined(data.port)) {
+                attrs.port = data.port
+            }
+
+            if (!_.isUndefined(data.path)) {
+                attrs.path = data.path
+            }
+
+            return state.set('object', new Sftp(attrs))
             break;
 
         default:
@@ -54,4 +48,4 @@ const repoReducer = (state, action) => {
     }
 }
 
-export default repoReducer
+export default sftpReducer
