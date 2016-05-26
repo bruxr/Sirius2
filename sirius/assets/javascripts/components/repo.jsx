@@ -25,11 +25,11 @@ const Repo = (props) => {
             <section className="project-section project-section_repo">
                 <h2>Repository</h2>
                 <form>
-                    <fieldset>
+                    <fieldset className="form-group">
                         <label htmlFor="repo-url">Repository</label>
-                        <select disabled={props.isFetchingHosted}>{repos}</select>
+                        <select className="form-control" disabled={props.isFetchingHosted}>{repos}</select>
                     </fieldset>
-                    <button>Save Changes</button>
+                    <button className="btn btn-primary">Save Changes</button>
                 </form>
             </section>
         )
