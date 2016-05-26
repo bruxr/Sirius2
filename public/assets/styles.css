@@ -22,3 +22,12 @@ label {
 .project-actions {
     text-align: right;
 }
+
+.project-actions .btn {
+    margin-right: 5px;
+}
+
+.project-actions select {
+    display: inline-block;
+    width: auto;
+}
