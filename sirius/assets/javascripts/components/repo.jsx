@@ -13,12 +13,12 @@ const Repo = (props) => {
         if (props.isFetchingHosted) {
             repos.push(<option key="norepos">Fetching list...</option>)
         } else {
-            repos.push(<optgroup label="BitBucket" />)
+            repos.push(<optgroup key="bitbucket" label="BitBucket" />)
             _.each(props.hosted.bitbucket, (repo, index) => {
                 repos.push(<option key={`bitbucket-${index}`} value={repo.url}>{repo.name}</option>)
             });
 
-            repos.push(<optgroup label="GitHub" />)
+            repos.push(<optgroup key="github" label="GitHub" />)
         }
 
         return (
