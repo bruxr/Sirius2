@@ -1,0 +1,14 @@
+body {
+    color: #111;
+    font-family: sans-serif;
+}
+
+.wrap {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Project */
+.project-section {
+    margin-bottom: 30px;
+}
