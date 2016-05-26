@@ -10,7 +10,17 @@ const Details = (props) =>
             <div className="project-header__actions">
                 <button className="btn_primary" disabled>Deploy</button>
                 <button disabled>Snapshot</button>
-                <select defaultValue="">
+                <select
+                    defaultValue=""
+                    onChange={(e) => {
+                        switch (e.target.value) {
+                            case 'repo':
+                                props.changeRepo()
+                                break
+                        }
+                        e.target.value = ''
+                    }}
+                >
                     <option value="">Actions...</option>
                     <option value="sftp">SFTP Details</option>
                     <option value="repo">Repository Details</option>
@@ -30,7 +40,8 @@ const Details = (props) =>
     </section>
 
 Details.propTypes = {
-    project: React.PropTypes.object
+    project: React.PropTypes.object,
+    changeRepo: React.PropTypes.func
 }
 
 export default Details

@@ -3,20 +3,31 @@ import React from 'react'
 import moment from 'moment'
 
 const Repo = (props) => {
+    console.log(props)
     if (_.isUndefined(props.repo)) {
         return <noscript />
     }
 
     if (props.isEditing) {
+        let repos = []
+        if (props.isFetchingHosted) {
+            repos.push(<option key="norepos">Fetching list...</option>)
+        } else {
+            repos.push(<optgroup label="BitBucket" />)
+            props.hosted.bitbucket.map(repo => {
+                repos.push(<option key={repo.url}>{repo.name}</option>)
+            });
+
+            repos.push(<optgroup label="GitHub" />)
+        }
+
         return (
             <section className="project-section project-section_repo">
                 <h2>Repository</h2>
                 <form>
                     <fieldset>
                         <label htmlFor="repo-url">Repository</label>
-                        <select disabled>
-                            <option>Fetching list...</option>
-                        </select>
+                        <select disabled={props.isFetchingHosted}>{repos}</select>
                     </fieldset>
                     <button>Save Changes</button>
                 </form>
@@ -39,6 +50,17 @@ const Repo = (props) => {
 
 Repo.propTypes = {
     isEditing: React.PropTypes.bool,
+    isFetchingHosted: React.PropTypes.bool,
+    hosted: React.PropTypes.shape({
+        bitbucket: React.PropTypes.arrayOf(React.PropTypes.shape({
+            name: React.PropTypes.string,
+            url: React.PropTypes.string
+        })),
+        github: React.PropTypes.arrayOf(React.PropTypes.shape({
+            name: React.PropTypes.string,
+            url: React.PropTypes.string
+        }))
+    }),
     repo: React.PropTypes.shape({
         url: React.PropTypes.string,
         isDeploying: React.PropTypes.bool,

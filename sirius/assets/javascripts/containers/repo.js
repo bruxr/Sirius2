@@ -3,9 +3,16 @@ import { fetchAddons } from '../actions/addons';
 import Repo from '../components/repo.jsx';
 
 const mapStateToProps = (state) => {
+    const repo = state.repo.toJS()
+    const hosted = repo.hosted
     return {
-        isEditing: state.repo.get('isEditing'),
-        repo: state.repo.get('object')
+        isEditing: repo.isEditing,
+        isFetchingHosted: hosted.isFetching,
+        hosted: {
+            bitbucket: hosted.bitbucket,
+            github: []
+        },
+        repo: repo.object
     }
 }
 

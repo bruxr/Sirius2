@@ -1,6 +1,7 @@
 import _ from 'underscore'
 import moment from 'moment'
 import Immutable from 'immutable'
+import { ADD_REPO, FETCHING_HOSTED_REPOS, EDIT_REPO, RECEIVED_HOSTED_REPOS } from '../actions/repo'
 
 const Repo = Immutable.Record({
     id: null,
@@ -13,12 +14,26 @@ const Repo = Immutable.Record({
 const repoReducer = (state, action) => {
     if (_.isUndefined(state)) {
         return Immutable.Map({
+            hosted: Immutable.Map({
+                isFetching: false,
+                bitbucket: Immutable.List()
+            }),
             isEditing: false,
             object: undefined
         })
     }
 
     switch ( action.type ) {
+
+        case ADD_REPO:
+            return state.set('object', new Repo())
+
+        case EDIT_REPO:
+            return state.set('isEditing', true)
+
+        case FETCHING_HOSTED_REPOS:
+            var hosted = state.get('hosted').set('isFetching', true)
+            return state.set('hosted', hosted)
 
         case 'RECEIVED_ADDONS':
             if (_.isUndefined(action.items['repo'])) {
@@ -42,6 +57,19 @@ const repoReducer = (state, action) => {
 
             return state.set('object', new Repo(attrs))
             break;
+
+        case RECEIVED_HOSTED_REPOS:
+            var hosted = state.get('hosted')
+            var bitbucket = hosted.get('bitbucket').withMutations(list => {
+                action.repos.bitbucket.map(repo => {
+                    list.push(repo)
+                })
+            })
+            
+            hosted = hosted.set('isFetching', false)
+            hosted = hosted.set('bitbucket', bitbucket)
+
+            return state.set('hosted', hosted)
 
         default:
             return state
