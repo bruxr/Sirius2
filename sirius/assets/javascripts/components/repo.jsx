@@ -29,7 +29,7 @@ const Repo = (props) => {
                         <label htmlFor="repo-url">Repository</label>
                         <select className="form-control" disabled={props.isFetchingHosted}>{repos}</select>
                     </fieldset>
-                    <button className="btn btn-primary">Save Changes</button>
+                    <button className="btn btn-primary" disabled={props.isFetchingHosted}>Save Changes</button>
                 </form>
             </section>
         )
