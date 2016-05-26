@@ -3,7 +3,6 @@ import React from 'react'
 import moment from 'moment'
 
 const Repo = (props) => {
-    console.log(props)
     if (_.isUndefined(props.repo)) {
         return <noscript />
     }
