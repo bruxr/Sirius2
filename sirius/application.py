@@ -2,6 +2,7 @@ import files
 import worker
 import projects
 import addons
+import utils
 from flask import Flask
 
 # Initialize app
@@ -12,6 +13,7 @@ app.register_blueprint(projects.app)
 app.register_blueprint(addons.blueprint)
 app.register_blueprint(files.blueprint)
 app.register_blueprint(worker.blueprint)
+app.register_blueprint(utils.blueprint)
 
 @app.route('/')
 def hello():

@@ -7,17 +7,34 @@ const Repo = (props) => {
         return <noscript />
     }
 
-    return (
-        <section className="project-section project-section_repo">
-            <h2>Repository</h2>
-            <dl>
-                <dt>URL</dt>
-                <dd><a href="#">bitbucket.com/bruxr/Sirius</a></dd>
-                <dt>Last Commit</dt>
-                <dd><a href="#">5ac32a</a> 30 minutes ago</dd>
-            </dl>
-        </section>
-    )
+    if (props.isEditing) {
+        return (
+            <section className="project-section project-section_repo">
+                <h2>Repository</h2>
+                <form>
+                    <fieldset>
+                        <label htmlFor="repo-url">Repository</label>
+                        <select disabled>
+                            <option>Fetching list...</option>
+                        </select>
+                    </fieldset>
+                    <button>Save Changes</button>
+                </form>
+            </section>
+        )
+    } else {
+        return (
+            <section className="project-section project-section_repo">
+                <h2>Repository</h2>
+                <dl>
+                    <dt>URL</dt>
+                    <dd><a href="#">URL GOES HERE</a></dd>
+                    <dt>Last Commit</dt>
+                    <dd><a href="#">COMMIT GOES HERE</a> COMMIT DATE GOES HERE</dd>
+                </dl>
+            </section>
+        )
+    }
 }
 
 Repo.propTypes = {
