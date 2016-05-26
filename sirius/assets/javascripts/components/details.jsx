@@ -11,7 +11,7 @@ const Details = (props) =>
                 <button className="btn btn-primary" disabled>Deploy</button>
                 <button className="btn btn-secondary" disabled>Snapshot</button>
                 <select
-                    className="form-input"
+                    className="form-control"
                     defaultValue=""
                     onChange={(e) => {
                         switch (e.target.value) {
