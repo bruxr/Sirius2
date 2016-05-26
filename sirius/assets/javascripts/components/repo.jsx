@@ -14,8 +14,8 @@ const Repo = (props) => {
             repos.push(<option key="norepos">Fetching list...</option>)
         } else {
             repos.push(<optgroup label="BitBucket" />)
-            props.hosted.bitbucket.map(repo => {
-                repos.push(<option key={repo.url}>{repo.name}</option>)
+            _.each(props.hosted.bitbucket, (repo, index) => {
+                repos.push(<option key={`bitbucket-${index}`} value={repo.url}>{repo.name}</option>)
             });
 
             repos.push(<optgroup label="GitHub" />)
