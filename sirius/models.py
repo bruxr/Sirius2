@@ -29,7 +29,7 @@ class Addon(ndb.Model):
         Args:
             data - addon data.
         """
-        self.data = encrypt(data)
+        self.data = encrypt(json.dumps(data))
 
     def get_data(self):
         """Retrieve addon information/data.
@@ -40,7 +40,7 @@ class Addon(ndb.Model):
         Returns:
             Dictionary containing addon data.
         """
-        return decrypt(self.data)
+        return json.loads(decrypt(self.data))
 
     def json(self):
         return {
