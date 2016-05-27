@@ -20,17 +20,32 @@ class Addon(ndb.Model):
     def get_all(cls, project):
         return cls.query(ancestor=project).fetch()
 
-    def data(self, data=None):
-        if data:
-            data = json.dumps(data)
-            self.data = encrypt(data)
-        else:
-            return decrypt(self.data)
+    def set_data(self, data):
+        """Set information/data about the addon.
+
+        Use this instead of setting the properly directly
+        so sensitive info are encrypted when stored.
+
+        Args:
+            data - addon data.
+        """
+        self.data = encrypt(data)
+
+    def get_data(self):
+        """Retrieve addon information/data.
+
+        Use this instead of accessing the data property
+        directly so encrypted info is automatically decrypted
+
+        Returns:
+            Dictionary containing addon data.
+        """
+        return decrypt(self.data)
 
     def json(self):
         return {
             'id': self.key.id(),
-            'data': self.data()
+            'data': self.get_data()
         }
 
 class File(ndb.Model):
