@@ -1,7 +1,7 @@
 import _ from 'underscore'
 import moment from 'moment'
 import Immutable from 'immutable'
-import { ADD_REPO, FETCHING_HOSTED_REPOS, EDIT_REPO, RECEIVED_HOSTED_REPOS } from '../actions/repo'
+import { ADD_REPO, FETCHING_HOSTED_REPOS, EDIT_REPO, EXIT_EDIT_REPO, RECEIVED_HOSTED_REPOS, SET_REPO } from '../actions/repo'
 
 const Repo = Immutable.Record({
     id: null,
@@ -31,6 +31,9 @@ const repoReducer = (state, action) => {
         case EDIT_REPO:
             return state.set('isEditing', true)
 
+        case EXIT_EDIT_REPO:
+            return state.set('isEditing', false)
+
         case FETCHING_HOSTED_REPOS:
             var hosted = state.get('hosted').set('isFetching', true)
             return state.set('hosted', hosted)
@@ -40,19 +43,19 @@ const repoReducer = (state, action) => {
                 return state
             }
 
-            var addon = action.items['repo']
+            var addon = action.items.repo
             var attrs = {
                 kind: addon.kind,
-                url: data.url
+                url: addon.data.url
             }
 
-            if (!_.isUndefined(data.is_deploying)) {
-                attrs.isDeploying = data.is_deploying
+            if (!_.isUndefined(addon.data.is_deploying)) {
+                attrs.isDeploying = addon.data.is_deploying
             }
 
-            if (!_.isUndefined(data.last_commit)) {
-                attrs.lastCommit = data.last_commit
-                attrs.lastCommitDate = moment.utc(data.last_commit_date)
+            if (!_.isUndefined(addon.data.last_commit)) {
+                attrs.lastCommit = addon.data.last_commit
+                attrs.lastCommitDate = moment.utc(addon.data.last_commit_date)
             }
 
             return state.set('object', new Repo(attrs))
@@ -70,6 +73,13 @@ const repoReducer = (state, action) => {
             hosted = hosted.set('bitbucket', bitbucket)
 
             return state.set('hosted', hosted)
+
+        case SET_REPO:
+            debugger
+            var object = state.get('object')
+            object = object.set('id', action.id)
+            object = object.set('url', action.repo)
+            return state.set('object', object)
 
         default:
             return state

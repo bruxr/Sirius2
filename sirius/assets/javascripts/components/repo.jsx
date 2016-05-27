@@ -23,10 +23,16 @@ const Repo = (props) => {
         return (
             <section className="project-section project-section_repo">
                 <h2>Repository</h2>
-                <form>
+                <form
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        const repo = document.getElementById('repo-url').value
+                        props.onSetRepo(repo)
+                    }}
+                >
                     <fieldset className="form-group">
                         <label htmlFor="repo-url">Repository</label>
-                        <select className="form-control" disabled={props.isFetchingHosted}>{repos}</select>
+                        <select id="repo-url" className="form-control" disabled={props.isFetchingHosted}>{repos}</select>
                     </fieldset>
                     <button className="btn btn-primary" disabled={props.isFetchingHosted}>Save Changes</button>
                 </form>
@@ -38,7 +44,7 @@ const Repo = (props) => {
                 <h2>Repository</h2>
                 <dl>
                     <dt>URL</dt>
-                    <dd><a href="#">URL GOES HERE</a></dd>
+                    <dd><a href={props.repo.url}>{props.repo.url}</a></dd>
                     <dt>Last Commit</dt>
                     <dd><a href="#">COMMIT GOES HERE</a> COMMIT DATE GOES HERE</dd>
                 </dl>
@@ -65,7 +71,8 @@ Repo.propTypes = {
         isDeploying: React.PropTypes.bool,
         lastCommit: React.PropTypes.string,
         lastCommitDate: React.PropTypes.instanceOf(moment)
-    })
+    }),
+    onSetRepo: React.PropTypes.func 
 }
 
 export default Repo
