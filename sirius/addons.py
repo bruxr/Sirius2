@@ -36,6 +36,12 @@ def create(project_id):
 
     body = request.get_json()
 
+    if not body:
+        return ('Missing addon details', 400)
+
+    if not body['kind']:
+        return ('Missing addon kind.', 400)
+
     addon = Addon.get_by_id(id=body['kind'], parent=parent.key)
     if addon:
         return ('Add-on already exists.', 409)
