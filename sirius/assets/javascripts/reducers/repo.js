@@ -1,4 +1,3 @@
-import _ from 'underscore'
 import moment from 'moment'
 import Immutable from 'immutable'
 import { ADD_REPO, FETCHING_HOSTED_REPOS, EDIT_REPO, EXIT_EDIT_REPO, RECEIVED_HOSTED_REPOS, SET_REPO } from '../actions/repo'
@@ -12,7 +11,7 @@ const Repo = Immutable.Record({
 })
 
 const repoReducer = (state, action) => {
-    if (_.isUndefined(state)) {
+    if (typeof state === 'undefined') {
         return Immutable.Map({
             hosted: Immutable.Map({
                 isFetching: false,
@@ -39,7 +38,7 @@ const repoReducer = (state, action) => {
             return state.set('hosted', hosted)
 
         case 'RECEIVED_ADDONS':
-            if (_.isUndefined(action.items['repo'])) {
+            if (typeof action.items.repo === 'undefined') {
                 return state
             }
 
@@ -49,11 +48,11 @@ const repoReducer = (state, action) => {
                 url: addon.data.url
             }
 
-            if (!_.isUndefined(addon.data.is_deploying)) {
+            if (typeof addon.data.is_deploying !== 'undefined') {
                 attrs.isDeploying = addon.data.is_deploying
             }
 
-            if (!_.isUndefined(addon.data.last_commit)) {
+            if (typeof addon.data.last_commit !== 'undefined') {
                 attrs.lastCommit = addon.data.last_commit
                 attrs.lastCommitDate = moment.utc(addon.data.last_commit_date)
             }

@@ -28,7 +28,7 @@ function buildSftp(data) {
 }
 
 const sftpReducer = (state, action) => {
-    if (_.isUndefined(state)) {
+    if (typeof state === 'undefined') {
         return Immutable.Map({
             isEditing: false,
             object: undefined
