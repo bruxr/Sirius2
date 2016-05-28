@@ -6,8 +6,19 @@ export const SAVED_SFTP = 'SAVED_SFTP'
 export const EXIT_EDIT_SFTP = 'EXIT_EDIT_SFTP'
 
 export function editSftp() {
-    return {
-        type: EDIT_SFTP
+    return function(dispatch, getState) {
+        const sftp = getState().sftp.get('object')
+        if (typeof sftp === 'undefined') {
+            dispatch(savingSftp({
+                host: '',
+                user: '',
+                password: ''
+            }))
+        }
+
+        dispatch({
+            type: EDIT_SFTP
+        })
     }
 }
 
