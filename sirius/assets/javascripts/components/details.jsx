@@ -18,6 +18,9 @@ const Details = (props) =>
                             case 'repo':
                                 props.changeRepo()
                                 break
+                            case 'sftp':
+                                props.onEditSftp()
+                                break
                         }
                         e.target.value = ''
                     }}
@@ -42,7 +45,8 @@ const Details = (props) =>
 
 Details.propTypes = {
     project: React.PropTypes.object,
-    changeRepo: React.PropTypes.func
+    changeRepo: React.PropTypes.func,
+    onEditSftp: React.PropTypes.func
 }
 
 export default Details

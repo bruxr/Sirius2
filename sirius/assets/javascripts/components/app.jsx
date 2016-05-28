@@ -1,6 +1,7 @@
 import React from 'react';
 import Details from '../containers/details';
 import Repo from '../containers/repo';
+import Sftp from '../containers/sftp'
 import Snapshots from './snapshots.jsx';
 
 export default class App extends React.Component {
@@ -10,6 +11,7 @@ export default class App extends React.Component {
             <div className="project">
                 <Details />
                 <Repo />
+                <Sftp />
                 <Snapshots />
             </div>
         )

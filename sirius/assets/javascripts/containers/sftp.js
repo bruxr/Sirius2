@@ -1,11 +1,10 @@
 import { connect } from 'react-redux';
 import { fetchAddons } from '../actions/addons';
-import Sftp from '../components/repo.jsx';
+import Sftp from '../components/sftp.jsx';
 
 const mapStateToProps = (state) => {
     return {
-        isEditing: state.repo.get('isEditing'),
-        repo: state.repo.get('object')
+        isEditing: state.sftp.get('isEditing')
     }
 }
 

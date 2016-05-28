@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { editSftp } from '../actions/sftp'
 import { fetchAddons } from '../actions/addons';
 import { changeRepo } from '../actions/repo';
 import Details from '../components/details.jsx';
@@ -13,6 +14,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         changeRepo: () => {
             dispatch(changeRepo())
+        },
+        onEditSftp() {
+            dispatch(editSftp())
         }
     }
 }
