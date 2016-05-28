@@ -43,10 +43,9 @@ def create(project_id):
         return ('Missing addon kind.', 400)
 
     addon = Addon.get_by_id(id=body['kind'], parent=project.key)
-    if addon:
-        return ('Add-on already exists.', 409)
+    if addon is None:
+        addon = Addon(id=body['kind'], parent=project.key)
 
-    addon = Addon(id=body['kind'], parent=project.key)
     addon.set_data(body['data'])
     addon.put()
     return jsonify(addon=addon.json())
