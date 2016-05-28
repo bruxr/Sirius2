@@ -1,5 +1,8 @@
 import * as api from '../api';
 
+export const FETCHING_ADDONS = 'FETCHING_ADDONS'
+export const RECEIVED_ADDONS = 'RECEIVED_ADDONS'
+
 export function deleteAddon(addonId) {
     return function(dispatch, getState) {
         const projectId = getState().project.get('id');
@@ -42,7 +45,7 @@ export function newAddon(kind) {
 
 export function fetchAddons() {
     function shouldFetch(state) {
-        return true
+        return state.addons.get('isFetching') === false
     }
   
     return function(dispatch, getState) {
@@ -64,13 +67,13 @@ export function fetchAddons() {
 
 export function fetchingAddons() {
     return {
-        type: 'FETCHING_ADDONS'
+        type: FETCHING_ADDONS
     }
 }
 
 export function receivedAddons(addons) {
     return {
-        type: 'RECEIVED_ADDONS',
+        type: RECEIVED_ADDONS,
         items: addons
     }
 }
