@@ -1,5 +1,5 @@
-import _ from 'underscore'
 import Immutable from 'immutable'
+import { EDIT_SFTP, EXIT_EDIT_SFTP, SAVING_SFTP } from '../actions/sftp'
 
 const Sftp = Immutable.Record({
     host: null,
@@ -9,6 +9,24 @@ const Sftp = Immutable.Record({
     path: '/'
 })
 
+function buildSftp(data) {
+    let attrs = {
+        host: data.host,
+        user: data.user,
+        password: data.pass,
+    }
+
+    if (typeof data.port !== 'undefined') {
+        attrs.port = data.port
+    }
+
+    if (typeof data.path !== 'undefined') {
+        attrs.path = data.path
+    }
+
+    return new Sftp(attrs)
+}
+
 const sftpReducer = (state, action) => {
     if (_.isUndefined(state)) {
         return Immutable.Map({
@@ -17,30 +35,24 @@ const sftpReducer = (state, action) => {
         })
     }
 
-    switch ( action.type ) {
+    switch (action.type) {
+
+        case EDIT_SFTP:
+            return state.set('isEditing', true)
+
+        case EXIT_EDIT_SFTP:
+            return state.set('isEditing', false)
 
         case 'RECEIVED_ADDONS':
-            if (_.isUndefined(action.items['sftp'])) {
+            if (typeof action.items['sftp'] === 'undefined') {
                 return state
             }
 
-            var addon = action.items['sftp']
-            var attrs = attrs = {
-                host: addon.host,
-                user: addon.user,
-                password: addon.pass,
-            }
+            var addon = action.items['sftp'].data
+            return state.set('object', buildSftp(addon))
 
-            if (!_.isUndefined(data.port)) {
-                attrs.port = data.port
-            }
-
-            if (!_.isUndefined(data.path)) {
-                attrs.path = data.path
-            }
-
-            return state.set('object', new Sftp(attrs))
-            break;
+        case SAVING_SFTP:
+            return state.set('object', buildSftp(action.sftp))
 
         default:
             return state
