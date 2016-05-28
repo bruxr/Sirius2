@@ -3,8 +3,10 @@ import { fetchAddons } from '../actions/addons';
 import Sftp from '../components/sftp.jsx';
 
 const mapStateToProps = (state) => {
+    const sftp = typeof state.sftp.get('object') !== 'undefined' ? state.sftp.get('object').toJS() : undefined
     return {
-        isEditing: state.sftp.get('isEditing')
+        isEditing: state.sftp.get('isEditing'),
+        sftp
     }
 }
 
