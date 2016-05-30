@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { saveRepo } from '../actions/repo'
+import { deployRepo, saveRepo } from '../actions/repo'
 import { fetchAddons } from '../actions/addons';
 import Repo from '../components/repo.jsx';
 
@@ -23,6 +23,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onSetRepo: repo => {
             dispatch(saveRepo(repo))
+        },
+        deployRepo: () => {
+            dispatch(deployRepo(repo))
         }
     }
 }

@@ -88,7 +88,8 @@ Repo.propTypes = {
         lastCommit: React.PropTypes.string,
         lastCommitDate: React.PropTypes.instanceOf(moment)
     }),
-    onSetRepo: React.PropTypes.func 
+    onSetRepo: React.PropTypes.func,
+    deployRepo: React.PropTypes.func
 }
 
 export default Repo

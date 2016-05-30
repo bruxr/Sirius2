@@ -4,6 +4,7 @@ import * as api2 from '../api2'
 
 export const ADD_REPO = 'ADD_REPO'
 export const CHANGE_REPO = 'CHANGE_REPO'
+export const DEPLOY_REPO = 'DEPLOY_REPO'
 export const EDIT_REPO = 'EDIT_REPO'
 export const EXIT_EDIT_REPO = 'EXIT_EDIT_REPO'
 export const FETCHING_HOSTED_REPOS = 'FETCHING_HOSTED_REPOS'
@@ -25,6 +26,22 @@ export function changeRepo() {
             dispatch(addRepo())
         }
         dispatch(editRepo())
+    }
+}
+
+export function deployRepo() {
+    function canDeploy(state) {
+        const repo = state.repo.get('object')
+        return repo !== 'undefined' && !repo.get('isDeploying')
+    }
+
+    return function(dispatch, getState) {
+        const state = getState()
+        if (canDeploy(state)) {
+            dispatch({
+                type: DEPLOY_REPO
+            })
+        }
     }
 }
 
