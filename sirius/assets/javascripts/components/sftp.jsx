@@ -24,23 +24,23 @@ function sftpForm(props) {
         >
             <fieldset className="form-group">
                 <label htmlFor="repo-host">Host</label>
-                <input type="text" className="form-control" data-key="host" value={props.sftp.host} />
+                <input type="text" className="form-control" data-key="host" defaultValue={props.sftp.host} />
             </fieldset>
             <fieldset className="form-group">
                 <label htmlFor="repo-user">Username</label>
-                <input type="text" className="form-control" data-key="user" value={props.sftp.user} />
+                <input type="text" className="form-control" data-key="user" defaultValue={props.sftp.user} />
             </fieldset>
             <fieldset className="form-group">
                 <label htmlFor="repo-password">Password</label>
-                <input type="text" className="form-control" data-key="password" value={props.sftp.password} />
+                <input type="text" className="form-control" data-key="password" defaultValue={props.sftp.password} />
             </fieldset>
             <fieldset className="form-group">
                 <label htmlFor="repo-port">Port</label>
-                <input type="number" className="form-control" data-key="port" value={props.sftp.port} />
+                <input type="number" className="form-control" data-key="port" defaultValue={props.sftp.port} />
             </fieldset>
             <fieldset className="form-group">
                 <label htmlFor="repo-path">Path</label>
-                <input type="text" className="form-control" data-key="path" value={props.sftp.path} />
+                <input type="text" className="form-control" data-key="path" defaultValue={props.sftp.path} />
             </fieldset>
             <button className="btn btn-primary">Save Changes</button>
         </form>
