@@ -59,18 +59,24 @@ function sftpForm(props) {
 
 function sftpView(props) {
     return (
-        <dl>
-            <dt>Host</dt>
-            <dd>{props.sftp.host}</dd>
-            <dt>Username</dt>
-            <dd>{props.sftp.user}</dd>
-            <dt>Password</dt>
-            <dd>{props.sftp.password}</dd>
-            <dt>Port</dt>
-            <dd>{props.sftp.port}</dd>
-            <dt>Path</dt>
-            <dd>{props.sftp.path}</dd>
-        </dl>
+        <div className="project-section__body">
+            <dl>
+                <dt>Host</dt>
+                <dd>{props.sftp.host}</dd>
+                <dt>Username</dt>
+                <dd>{props.sftp.user}</dd>
+                <dt>Password</dt>
+                <dd>{props.sftp.password}</dd>
+                <dt>Port</dt>
+                <dd>{props.sftp.port}</dd>
+                <dt>Path</dt>
+                <dd>{props.sftp.path}</dd>
+            </dl>
+            <ul className="project-section__actions nav nav-pills">
+                <li className="nav-item"><a href="#" className="btn btn-primary">Snapshot</a></li>
+                <li className="nav-item"><a href="#" className="nav-link">Edit</a></li>
+            </ul>
+        </div>
     )
 }
 

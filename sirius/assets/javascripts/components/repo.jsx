@@ -47,12 +47,18 @@ function repoForm(props) {
 
 function repoView(props) {
     return (
-        <dl>
-            <dt>URL</dt>
-            <dd><a href={props.repo.url}>{props.repo.url}</a></dd>
-            <dt>Last Commit</dt>
-            <dd><a href="#">COMMIT GOES HERE</a> COMMIT DATE GOES HERE</dd>
-        </dl>
+        <div className="project-section__body">
+            <dl>
+                <dt>URL</dt>
+                <dd><a href={props.repo.url}>{props.repo.url}</a></dd>
+                <dt>Last Commit</dt>
+                <dd><a href="#">COMMIT GOES HERE</a> COMMIT DATE GOES HERE</dd>
+            </dl>
+            <ul className="project-section__actions nav nav-pills">
+                <li className="nav-item"><a href="#" className="btn btn-primary">Deploy</a></li>
+                <li className="nav-item"><a href="#" className="nav-link">Edit</a></li>
+            </ul>
+        </div>
     )
 }
 
