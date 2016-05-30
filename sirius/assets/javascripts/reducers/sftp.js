@@ -13,7 +13,7 @@ function buildSftp(data) {
     let attrs = {
         host: data.host,
         user: data.user,
-        password: data.pass,
+        password: data.password,
     }
 
     if (typeof data.port !== 'undefined') {
