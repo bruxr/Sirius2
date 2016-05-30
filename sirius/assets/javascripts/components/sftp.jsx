@@ -17,9 +17,19 @@ function sftpForm(props) {
     return (
         <form
             onSubmit={(e) => {
-                e.preventDefault();
-                const repo = document.getElementById('repo-url').value
-                props.onSetRepo(repo)
+                e.preventDefault()
+                const inputs = e.target.querySelectorAll('[data-key]')
+                const data = {}
+                for (let i = 0; i < inputs.length; i++) {
+                    const input = inputs[i]
+                    let value = input.value
+                    if (input.type === 'number') {
+                        value = parseInt(value)
+                    }
+                    data[input.dataset.key] = value
+                }
+                props.saveSftp(data)
+                props.exitEditSftp()
             }}
         >
             <fieldset className="form-group">
@@ -72,7 +82,9 @@ Sftp.propTypes = {
         password: React.PropTypes.string,
         port: React.PropTypes.number,
         path: React.PropTypes.string,
-    })
+    }),
+    saveSftp: React.PropTypes.func,
+    exitEditSftp: React.PropTypes.func
 }
 
 export default Sftp
