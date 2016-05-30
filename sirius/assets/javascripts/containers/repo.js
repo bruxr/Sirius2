@@ -7,6 +7,7 @@ const mapStateToProps = (state) => {
     const repo = state.repo.toJS()
     const hosted = repo.hosted
     return {
+        canDeploy: typeof state.sftp.get('object') !== 'undefined',
         isEditing: repo.isEditing,
         isFetchingHosted: hosted.isFetching,
         hosted: {

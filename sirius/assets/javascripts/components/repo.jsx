@@ -46,6 +46,13 @@ function repoForm(props) {
 }
 
 function repoView(props) {
+    const actions = [
+        <li key="edit" className="nav-item"><a href="#" className="nav-link">Edit</a></li>
+    ]
+    if (props.canDeploy) {
+        actions.unshift(<li key="deploy" className="nav-item"><a href="#" className="btn btn-primary">Deploy</a></li>)
+    }
+
     return (
         <div className="project-section__body">
             <dl>
@@ -55,14 +62,14 @@ function repoView(props) {
                 <dd><a href="#">COMMIT GOES HERE</a> COMMIT DATE GOES HERE</dd>
             </dl>
             <ul className="project-section__actions nav nav-pills">
-                <li className="nav-item"><a href="#" className="btn btn-primary">Deploy</a></li>
-                <li className="nav-item"><a href="#" className="nav-link">Edit</a></li>
+                {actions}
             </ul>
         </div>
     )
 }
 
 Repo.propTypes = {
+    canDeploy: React.PropTypes.bool,
     isEditing: React.PropTypes.bool,
     isFetchingHosted: React.PropTypes.bool,
     hosted: React.PropTypes.shape({
