@@ -74,7 +74,6 @@ const repoReducer = (state, action) => {
             return state.set('hosted', hosted)
 
         case SET_REPO:
-            debugger
             var object = state.get('object')
             object = object.set('id', action.id)
             object = object.set('url', action.repo)
